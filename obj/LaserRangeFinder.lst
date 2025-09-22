@@ -1,0 +1,1716 @@
+
+LaserRangeFinder.elf:     file format elf32-littleriscv
+LaserRangeFinder.elf
+architecture: riscv:rv32, flags 0x00000112:
+EXEC_P, HAS_SYMS, D_PAGED
+start address 0x00000000
+
+Program Header:
+    LOAD off    0x00001000 vaddr 0x00000000 paddr 0x00000000 align 2**12
+         filesz 0x00000004 memsz 0x00000004 flags r-x
+    LOAD off    0x00001800 vaddr 0x20003800 paddr 0x00000004 align 2**12
+         filesz 0x0000072c memsz 0x0000072c flags r-x
+    LOAD off    0x00002730 vaddr 0x00000730 paddr 0x00000730 align 2**12
+         filesz 0x000002e4 memsz 0x000002e4 flags r-x
+    LOAD off    0x00002f2c vaddr 0x20003f2c paddr 0x00000a14 align 2**12
+         filesz 0x00000000 memsz 0x000000d4 flags rw-
+    LOAD off    0x00003000 vaddr 0x20004000 paddr 0x00000a14 align 2**12
+         filesz 0x00000018 memsz 0x00000080 flags rw-
+    LOAD off    0x00003e00 vaddr 0x20007e00 paddr 0x20007e00 align 2**12
+         filesz 0x00000000 memsz 0x00000200 flags rw-
+
+Sections:
+Idx Name            Size      VMA       LMA       File off  Algn  Flags
+  0 .init           00000004  00000000  00000000  00001000  2**1  CONTENTS, ALLOC, LOAD, READONLY, CODE
+  1 .highcodelalign 00000000  00000004  00000004  00003018  2**0  CONTENTS
+  2 .highcode       0000072c  20003800  00000004  00001800  2**1  CONTENTS, ALLOC, LOAD, READONLY, CODE
+  3 .text           000002e4  00000730  00000730  00002730  2**2  CONTENTS, ALLOC, LOAD, READONLY, CODE
+  4 .fini           00000000  00000a14  00000a14  00003018  2**0  CONTENTS, ALLOC, LOAD, CODE
+  5 .dalign         000000d4  20003f2c  00000a14  00002f2c  2**0  ALLOC
+  6 .dlalign        00000000  00000a14  00000a14  00003018  2**0  CONTENTS
+  7 .data           00000018  20004000  00000a14  00003000  2**2  CONTENTS, ALLOC, LOAD, DATA
+  8 .bss            00000068  20004018  00000a2c  00003018  2**2  ALLOC
+  9 .stack          00000200  20007e00  20007e00  00003e00  2**0  ALLOC
+ 10 .debug_info     00003d1b  00000000  00000000  00003018  2**0  CONTENTS, READONLY, DEBUGGING
+ 11 .debug_abbrev   00000b53  00000000  00000000  00006d33  2**0  CONTENTS, READONLY, DEBUGGING
+ 12 .debug_loc      00000818  00000000  00000000  00007886  2**0  CONTENTS, READONLY, DEBUGGING
+ 13 .debug_aranges  00000188  00000000  00000000  000080a0  2**3  CONTENTS, READONLY, DEBUGGING
+ 14 .debug_ranges   00000140  00000000  00000000  00008228  2**3  CONTENTS, READONLY, DEBUGGING
+ 15 .debug_line     000022dc  00000000  00000000  00008368  2**0  CONTENTS, READONLY, DEBUGGING
+ 16 .debug_str      00000d87  00000000  00000000  0000a644  2**0  CONTENTS, READONLY, DEBUGGING
+ 17 .comment        00000033  00000000  00000000  0000b3cb  2**0  CONTENTS, READONLY
+ 18 .debug_frame    00000274  00000000  00000000  0000b400  2**2  CONTENTS, READONLY, DEBUGGING
+SYMBOL TABLE:
+00000000 l    d  .init	00000000 .init
+00000004 l    d  .highcodelalign	00000000 .highcodelalign
+20003800 l    d  .highcode	00000000 .highcode
+00000730 l    d  .text	00000000 .text
+00000a14 l    d  .fini	00000000 .fini
+20003f2c l    d  .dalign	00000000 .dalign
+00000a14 l    d  .dlalign	00000000 .dlalign
+20004000 l    d  .data	00000000 .data
+20004018 l    d  .bss	00000000 .bss
+20007e00 l    d  .stack	00000000 .stack
+00000000 l    d  .debug_info	00000000 .debug_info
+00000000 l    d  .debug_abbrev	00000000 .debug_abbrev
+00000000 l    d  .debug_loc	00000000 .debug_loc
+00000000 l    d  .debug_aranges	00000000 .debug_aranges
+00000000 l    d  .debug_ranges	00000000 .debug_ranges
+00000000 l    d  .debug_line	00000000 .debug_line
+00000000 l    d  .debug_str	00000000 .debug_str
+00000000 l    d  .comment	00000000 .comment
+00000000 l    d  .debug_frame	00000000 .debug_frame
+00000000 l    df *ABS*	00000000 ./Startup/startup_CH573.o
+20003800 l       .highcode	00000000 _vector_base
+00000000 l    df *ABS*	00000000 Main.c
+00000000 l    df *ABS*	00000000 CH57x_sys.c
+00000000 l    df *ABS*	00000000 ISP573.c
+20003b42 l       .highcode	00000000 .loop17
+20003b50 l       .highcode	00000000 .loop28
+20003b5e l       .highcode	00000000 .loop39
+20003dec l       .highcode	00000000 .loop406
+00000000 l    df *ABS*	00000000 CH57x_gpio.c
+00000000 l    df *ABS*	00000000 CH57x_uart1.c
+000009ac g     F .text	00000028 UART1_SendString
+20003b5e g     F .highcode	0000000e FLASH_ROM_OUT
+20004818 g       .data	00000000 __global_pointer$
+20003afc g     F .highcode	0000000e mDelayuS
+20003ab6  w    F .highcode	00000046 HardFault_Handler
+2000389c  w      .highcode	00000000 GPIOB_IRQHandler
+2000389a  w      .highcode	00000000 GPIOA_IRQHandler
+20003894  w      .highcode	00000000 SysTick_Handler
+000009d4 g     F .text	0000002a UART1_RecvString
+20003890  w      .highcode	00000000 NMI_Handler
+200038bc g     F .highcode	000000a6 UART1_IRQHandler
+20004018 g       .bss	00000000 _sbss
+00000200 g       *ABS*	00000000 __stack_size
+20003b50 g     F .highcode	0000000e FLASH_ROM_IN
+200038aa  w      .highcode	00000000 UART0_IRQHandler
+00000004 g       .init	00000000 _einit
+200038a0  w      .highcode	00000000 BB_IRQHandler
+20003bec g     F .highcode	00000340 FLASH_EEPROM_CMD
+20003898  w      .highcode	00000000 TMR0_IRQHandler
+20003b32 g     F .highcode	00000010 FLASH_ROM_BEG
+20003b0a g     F .highcode	00000028 mDelaymS
+20007e00 g       .stack	00000000 _heap_end
+20003b6c g     F .highcode	00000048 FLASH_ROM_ADDR
+200038ae  w      .highcode	00000000 RTC_IRQHandler
+20004080 g       .bss	00000000 _ebss
+0000097a g     F .text	00000032 UART1_DefInit
+20003bb4 g     F .highcode	00000038 FLASH_ROM_WAIT
+200038b6  w      .highcode	00000000 UART2_IRQHandler
+200038b2  w      .highcode	00000000 PWMX_IRQHandler
+00000000 g       .init	00000000 _start
+200038b0  w      .highcode	00000000 ADC_IRQHandler
+20003800 g       .highcode	00000000 _highcode_vma_start
+200038a8  w      .highcode	00000000 TMR2_IRQHandler
+20004000 g       .data	00000000 _data_vma
+20003962 g     F .highcode	00000118 SetSysClock
+200038a4  w      .highcode	00000000 USB_IRQHandler
+00000802 g     F .text	00000060 main
+20004018 g     O .bss	00000001 trigB
+00000004 g       .highcodelalign	00000000 _highcode_lma
+200038a2  w      .highcode	00000000 LLE_IRQHandler
+00000000 g       .init	00000000 _sinit
+200038ba  w      .highcode	00000000 WDOG_BAT_IRQHandler
+2000401c g     O .bss	00000064 RxBuff
+200038b4  w      .highcode	00000000 TMR3_IRQHandler
+20008000 g       .stack	00000000 _eusrstack
+20003896  w      .highcode	00000000 SW_Handler
+00000862 g     F .text	000000a6 GPIOA_ModeCfg
+00000908 g     F .text	00000042 GetSysClock
+20004018 g       .data	00000000 _edata
+2000389e  w      .highcode	00000000 SPI0_IRQHandler
+20004080 g       .bss	00000000 _end
+20003f2c g       .highcode	00000000 _highcode_vma_end
+00000a14 g       .dlalign	00000000 _data_lma
+20004000 g     O .data	00000014 TxBuff
+00000730  w      .text	00000000 handle_reset
+200038b8  w      .highcode	00000000 UART3_IRQHandler
+20003b42 g     F .highcode	0000000e FLASH_ROM_END
+200038a6  w      .highcode	00000000 TMR1_IRQHandler
+20003a7a g     F .highcode	0000003c SYS_ResetExecute
+0000094a g     F .text	00000030 UART1_BaudRateCfg
+
+
+
+Disassembly of section .init:
+
+00000000 <_sinit>:
+_start():
+d:\EVT\LaserRangeFinder\obj/../Startup/startup_CH573.S:17
+   0:	7300006f          	j	730 <handle_reset>
+
+Disassembly of section .highcode:
+
+20003800 <_highcode_vma_start>:
+	...
+_vector_base():
+d:\EVT\LaserRangeFinder\obj/../Startup/startup_CH573.S:25
+20003808:	0880006f          	j	20003890 <NMI_Handler>
+d:\EVT\LaserRangeFinder\obj/../Startup/startup_CH573.S:26
+2000380c:	2aa0006f          	j	20003ab6 <HardFault_Handler>
+	...
+d:\EVT\LaserRangeFinder\obj/../Startup/startup_CH573.S:35
+20003830:	0640006f          	j	20003894 <SysTick_Handler>
+20003834:	0000                	unimp
+20003836:	0000                	unimp
+d:\EVT\LaserRangeFinder\obj/../Startup/startup_CH573.S:37
+20003838:	05e0006f          	j	20003896 <SW_Handler>
+2000383c:	0000                	unimp
+2000383e:	0000                	unimp
+d:\EVT\LaserRangeFinder\obj/../Startup/startup_CH573.S:40
+20003840:	0580006f          	j	20003898 <TMR0_IRQHandler>
+d:\EVT\LaserRangeFinder\obj/../Startup/startup_CH573.S:41
+20003844:	0560006f          	j	2000389a <GPIOA_IRQHandler>
+d:\EVT\LaserRangeFinder\obj/../Startup/startup_CH573.S:42
+20003848:	0540006f          	j	2000389c <GPIOB_IRQHandler>
+d:\EVT\LaserRangeFinder\obj/../Startup/startup_CH573.S:43
+2000384c:	0520006f          	j	2000389e <SPI0_IRQHandler>
+d:\EVT\LaserRangeFinder\obj/../Startup/startup_CH573.S:44
+20003850:	0500006f          	j	200038a0 <BB_IRQHandler>
+d:\EVT\LaserRangeFinder\obj/../Startup/startup_CH573.S:45
+20003854:	04e0006f          	j	200038a2 <LLE_IRQHandler>
+d:\EVT\LaserRangeFinder\obj/../Startup/startup_CH573.S:46
+20003858:	04c0006f          	j	200038a4 <USB_IRQHandler>
+2000385c:	0000                	unimp
+2000385e:	0000                	unimp
+d:\EVT\LaserRangeFinder\obj/../Startup/startup_CH573.S:48
+20003860:	0460006f          	j	200038a6 <TMR1_IRQHandler>
+d:\EVT\LaserRangeFinder\obj/../Startup/startup_CH573.S:49
+20003864:	0440006f          	j	200038a8 <TMR2_IRQHandler>
+d:\EVT\LaserRangeFinder\obj/../Startup/startup_CH573.S:50
+20003868:	0420006f          	j	200038aa <UART0_IRQHandler>
+d:\EVT\LaserRangeFinder\obj/../Startup/startup_CH573.S:51
+2000386c:	0500006f          	j	200038bc <UART1_IRQHandler>
+d:\EVT\LaserRangeFinder\obj/../Startup/startup_CH573.S:52
+20003870:	03e0006f          	j	200038ae <RTC_IRQHandler>
+d:\EVT\LaserRangeFinder\obj/../Startup/startup_CH573.S:53
+20003874:	03c0006f          	j	200038b0 <ADC_IRQHandler>
+20003878:	0000                	unimp
+2000387a:	0000                	unimp
+d:\EVT\LaserRangeFinder\obj/../Startup/startup_CH573.S:55
+2000387c:	0360006f          	j	200038b2 <PWMX_IRQHandler>
+d:\EVT\LaserRangeFinder\obj/../Startup/startup_CH573.S:56
+20003880:	0340006f          	j	200038b4 <TMR3_IRQHandler>
+d:\EVT\LaserRangeFinder\obj/../Startup/startup_CH573.S:57
+20003884:	0320006f          	j	200038b6 <UART2_IRQHandler>
+d:\EVT\LaserRangeFinder\obj/../Startup/startup_CH573.S:58
+20003888:	0300006f          	j	200038b8 <UART3_IRQHandler>
+d:\EVT\LaserRangeFinder\obj/../Startup/startup_CH573.S:59
+2000388c:	02e0006f          	j	200038ba <WDOG_BAT_IRQHandler>
+
+20003890 <NMI_Handler>:
+NMI_Handler():
+d:\EVT\LaserRangeFinder\obj/../Startup/startup_CH573.S:87
+20003890:	a001                	j	20003890 <NMI_Handler>
+d:\EVT\LaserRangeFinder\obj/../Startup/startup_CH573.S:88
+20003892:	a001                	j	20003892 <NMI_Handler+0x2>
+
+20003894 <SysTick_Handler>:
+SysTick_Handler():
+d:\EVT\LaserRangeFinder\obj/../Startup/startup_CH573.S:89
+20003894:	a001                	j	20003894 <SysTick_Handler>
+
+20003896 <SW_Handler>:
+SW_Handler():
+d:\EVT\LaserRangeFinder\obj/../Startup/startup_CH573.S:90
+20003896:	a001                	j	20003896 <SW_Handler>
+
+20003898 <TMR0_IRQHandler>:
+TMR0_IRQHandler():
+d:\EVT\LaserRangeFinder\obj/../Startup/startup_CH573.S:91
+20003898:	a001                	j	20003898 <TMR0_IRQHandler>
+
+2000389a <GPIOA_IRQHandler>:
+GPIOA_IRQHandler():
+d:\EVT\LaserRangeFinder\obj/../Startup/startup_CH573.S:92
+2000389a:	a001                	j	2000389a <GPIOA_IRQHandler>
+
+2000389c <GPIOB_IRQHandler>:
+GPIOB_IRQHandler():
+d:\EVT\LaserRangeFinder\obj/../Startup/startup_CH573.S:93
+2000389c:	a001                	j	2000389c <GPIOB_IRQHandler>
+
+2000389e <SPI0_IRQHandler>:
+SPI0_IRQHandler():
+d:\EVT\LaserRangeFinder\obj/../Startup/startup_CH573.S:94
+2000389e:	a001                	j	2000389e <SPI0_IRQHandler>
+
+200038a0 <BB_IRQHandler>:
+BB_IRQHandler():
+d:\EVT\LaserRangeFinder\obj/../Startup/startup_CH573.S:95
+200038a0:	a001                	j	200038a0 <BB_IRQHandler>
+
+200038a2 <LLE_IRQHandler>:
+LLE_IRQHandler():
+d:\EVT\LaserRangeFinder\obj/../Startup/startup_CH573.S:96
+200038a2:	a001                	j	200038a2 <LLE_IRQHandler>
+
+200038a4 <USB_IRQHandler>:
+USB_IRQHandler():
+d:\EVT\LaserRangeFinder\obj/../Startup/startup_CH573.S:97
+200038a4:	a001                	j	200038a4 <USB_IRQHandler>
+
+200038a6 <TMR1_IRQHandler>:
+TMR1_IRQHandler():
+d:\EVT\LaserRangeFinder\obj/../Startup/startup_CH573.S:98
+200038a6:	a001                	j	200038a6 <TMR1_IRQHandler>
+
+200038a8 <TMR2_IRQHandler>:
+TMR2_IRQHandler():
+d:\EVT\LaserRangeFinder\obj/../Startup/startup_CH573.S:99
+200038a8:	a001                	j	200038a8 <TMR2_IRQHandler>
+
+200038aa <UART0_IRQHandler>:
+UART0_IRQHandler():
+d:\EVT\LaserRangeFinder\obj/../Startup/startup_CH573.S:100
+200038aa:	a001                	j	200038aa <UART0_IRQHandler>
+d:\EVT\LaserRangeFinder\obj/../Startup/startup_CH573.S:101
+200038ac:	a001                	j	200038ac <UART0_IRQHandler+0x2>
+
+200038ae <RTC_IRQHandler>:
+RTC_IRQHandler():
+d:\EVT\LaserRangeFinder\obj/../Startup/startup_CH573.S:102
+200038ae:	a001                	j	200038ae <RTC_IRQHandler>
+
+200038b0 <ADC_IRQHandler>:
+ADC_IRQHandler():
+d:\EVT\LaserRangeFinder\obj/../Startup/startup_CH573.S:103
+200038b0:	a001                	j	200038b0 <ADC_IRQHandler>
+
+200038b2 <PWMX_IRQHandler>:
+PWMX_IRQHandler():
+d:\EVT\LaserRangeFinder\obj/../Startup/startup_CH573.S:104
+200038b2:	a001                	j	200038b2 <PWMX_IRQHandler>
+
+200038b4 <TMR3_IRQHandler>:
+TMR3_IRQHandler():
+d:\EVT\LaserRangeFinder\obj/../Startup/startup_CH573.S:105
+200038b4:	a001                	j	200038b4 <TMR3_IRQHandler>
+
+200038b6 <UART2_IRQHandler>:
+UART2_IRQHandler():
+d:\EVT\LaserRangeFinder\obj/../Startup/startup_CH573.S:106
+200038b6:	a001                	j	200038b6 <UART2_IRQHandler>
+
+200038b8 <UART3_IRQHandler>:
+UART3_IRQHandler():
+d:\EVT\LaserRangeFinder\obj/../Startup/startup_CH573.S:107
+200038b8:	a001                	j	200038b8 <UART3_IRQHandler>
+
+200038ba <WDOG_BAT_IRQHandler>:
+WDOG_BAT_IRQHandler():
+d:\EVT\LaserRangeFinder\obj/../Startup/startup_CH573.S:108
+200038ba:	a001                	j	200038ba <WDOG_BAT_IRQHandler>
+
+200038bc <UART1_IRQHandler>:
+UART1_IRQHandler():
+d:\CH573FEVT\LaserRangeFinder\obj/../src/Main.c:78
+__attribute__((section(".highcode")))
+void UART1_IRQHandler(void)
+{
+    volatile uint8_t i;
+
+    switch(UART1_GetITFlag())
+200038bc:	40003737          	lui	a4,0x40003
+200038c0:	40474783          	lbu	a5,1028(a4) # 40003404 <_eusrstack+0x1fffb404>
+200038c4:	4699                	li	a3,6
+200038c6:	8bbd                	andi	a5,a5,15
+200038c8:	02d78c63          	beq	a5,a3,20003900 <UART1_IRQHandler+0x44>
+200038cc:	4731                	li	a4,12
+d:\CH573FEVT\LaserRangeFinder\obj/../src/Main.c:75
+{
+200038ce:	1141                	addi	sp,sp,-16
+200038d0:	06e78263          	beq	a5,a4,20003934 <UART1_IRQHandler+0x78>
+200038d4:	4711                	li	a4,4
+200038d6:	02e79263          	bne	a5,a4,200038fa <UART1_IRQHandler+0x3e>
+d:\CH573FEVT\LaserRangeFinder\obj/../src/Main.c:87
+            UART1_GetLinSTA();
+            break;
+        }
+
+        case UART_II_RECV_RDY: // 数据达到设置触发点
+            for(i = 0; i != trigB; i++)
+200038da:	000107a3          	sb	zero,15(sp)
+d:\CH573FEVT\LaserRangeFinder\obj/../src/Main.c:89
+            {
+                RxBuff[i] = UART1_RecvByte();
+200038de:	40003737          	lui	a4,0x40003
+200038e2:	00000697          	auipc	a3,0x0
+200038e6:	73a68693          	addi	a3,a3,1850 # 2000401c <RxBuff>
+d:\CH573FEVT\LaserRangeFinder\obj/../src/Main.c:87 (discriminator 1)
+            for(i = 0; i != trigB; i++)
+200038ea:	00f14783          	lbu	a5,15(sp)
+200038ee:	00000617          	auipc	a2,0x0
+200038f2:	72a64603          	lbu	a2,1834(a2) # 20004018 <_edata>
+200038f6:	00f61963          	bne	a2,a5,20003908 <UART1_IRQHandler+0x4c>
+d:\CH573FEVT\LaserRangeFinder\obj/../src/Main.c:108
+            break;
+
+        default:
+            break;
+    }
+}
+200038fa:	0141                	addi	sp,sp,16
+200038fc:	30200073          	mret
+d:\CH573FEVT\LaserRangeFinder\obj/../src/Main.c:82
+            UART1_GetLinSTA();
+20003900:	40574783          	lbu	a5,1029(a4) # 40003405 <_eusrstack+0x1fffb405>
+d:\CH573FEVT\LaserRangeFinder\obj/../src/Main.c:83
+            break;
+20003904:	30200073          	mret
+d:\CH573FEVT\LaserRangeFinder\obj/../src/Main.c:89 (discriminator 3)
+                RxBuff[i] = UART1_RecvByte();
+20003908:	00f14783          	lbu	a5,15(sp)
+2000390c:	40874603          	lbu	a2,1032(a4)
+20003910:	97b6                	add	a5,a5,a3
+20003912:	00c78023          	sb	a2,0(a5)
+d:\CH573FEVT\LaserRangeFinder\obj/../src/Main.c:90 (discriminator 3)
+                UART1_SendByte(RxBuff[i]);
+20003916:	00f14783          	lbu	a5,15(sp)
+2000391a:	97b6                	add	a5,a5,a3
+2000391c:	0007c783          	lbu	a5,0(a5)
+20003920:	40f70423          	sb	a5,1032(a4)
+d:\CH573FEVT\LaserRangeFinder\obj/../src/Main.c:87 (discriminator 3)
+            for(i = 0; i != trigB; i++)
+20003924:	00f14783          	lbu	a5,15(sp)
+20003928:	0785                	addi	a5,a5,1
+2000392a:	0ff7f793          	andi	a5,a5,255
+2000392e:	00f107a3          	sb	a5,15(sp)
+20003932:	bf65                	j	200038ea <UART1_IRQHandler+0x2e>
+d:\CH573FEVT\LaserRangeFinder\obj/../src/Main.c:95
+            i = UART1_RecvString(RxBuff);
+20003934:	00000517          	auipc	a0,0x0
+20003938:	6e850513          	addi	a0,a0,1768 # 2000401c <RxBuff>
+2000393c:	dfffd097          	auipc	ra,0xdfffd
+20003940:	098080e7          	jalr	152(ra) # 9d4 <UART1_RecvString>
+20003944:	0ff57513          	andi	a0,a0,255
+20003948:	00a107a3          	sb	a0,15(sp)
+d:\CH573FEVT\LaserRangeFinder\obj/../src/Main.c:96
+            UART1_SendString(RxBuff, i);
+2000394c:	00f14583          	lbu	a1,15(sp)
+20003950:	00000517          	auipc	a0,0x0
+20003954:	6cc50513          	addi	a0,a0,1740 # 2000401c <RxBuff>
+20003958:	dfffd097          	auipc	ra,0xdfffd
+2000395c:	054080e7          	jalr	84(ra) # 9ac <UART1_SendString>
+d:\CH573FEVT\LaserRangeFinder\obj/../src/Main.c:108
+}
+20003960:	bf69                	j	200038fa <UART1_IRQHandler+0x3e>
+
+20003962 <SetSysClock>:
+sys_safe_access_enable():
+d:/CH573FEVT/LaserRangeFinder/StdPeriphDriver/inc/CH57x_sys.h:178
+ * @NOTE: 进入安全访问模式后约16个系统主频周期都处于安全模式下，
+ * 该有效期内可以改写一个或多个安全类寄存器，超出上述有效期后将自动终止安全模式。
+ */
+ __attribute__((always_inline)) static inline void sys_safe_access_enable(void)
+{
+    R8_SAFE_ACCESS_SIG = SAFE_ACCESS_SIG1;
+20003962:	400017b7          	lui	a5,0x40001
+20003966:	05700693          	li	a3,87
+2000396a:	04d78023          	sb	a3,64(a5) # 40001040 <_eusrstack+0x1fff9040>
+d:/CH573FEVT/LaserRangeFinder/StdPeriphDriver/inc/CH57x_sys.h:179
+    R8_SAFE_ACCESS_SIG = SAFE_ACCESS_SIG2;
+2000396e:	fa800713          	li	a4,-88
+20003972:	04e78023          	sb	a4,64(a5)
+d:/CH573FEVT/LaserRangeFinder/StdPeriphDriver/inc/CH57x_sys.h:180
+    asm volatile("fence.i");
+20003976:	0000100f          	fence.i
+SetSysClock():
+d:\CH573FEVT\LaserRangeFinder\obj/../StdPeriphDriver/CH57x_sys.c:29
+__attribute__((section(".highcode")))
+void SetSysClock(SYS_CLKTypeDef sc)
+{
+    uint32_t i;
+    sys_safe_access_enable();
+    R8_PLL_CONFIG &= ~(1 << 5); //
+2000397a:	04b7c603          	lbu	a2,75(a5)
+2000397e:	0df67613          	andi	a2,a2,223
+20003982:	04c785a3          	sb	a2,75(a5)
+sys_safe_access_disable():
+d:/CH573FEVT/LaserRangeFinder/StdPeriphDriver/inc/CH57x_sys.h:185
+}
+
+__attribute__((always_inline)) static inline void sys_safe_access_disable(void)
+{
+    R8_SAFE_ACCESS_SIG = 0;
+20003986:	04078023          	sb	zero,64(a5)
+SetSysClock():
+d:\CH573FEVT\LaserRangeFinder\obj/../StdPeriphDriver/CH57x_sys.c:31
+    sys_safe_access_disable();
+    if(sc & 0x20)
+2000398a:	02057613          	andi	a2,a0,32
+2000398e:	ca3d                	beqz	a2,20003a04 <SetSysClock+0xa2>
+d:\CH573FEVT\LaserRangeFinder\obj/../StdPeriphDriver/CH57x_sys.c:33
+    { // HSE div
+        if(!(R8_HFCK_PWR_CTRL & RB_CLK_XT32M_PON))
+20003990:	00a7c603          	lbu	a2,10(a5)
+20003994:	8a11                	andi	a2,a2,4
+20003996:	e21d                	bnez	a2,200039bc <SetSysClock+0x5a>
+sys_safe_access_enable():
+d:/CH573FEVT/LaserRangeFinder/StdPeriphDriver/inc/CH57x_sys.h:178
+    R8_SAFE_ACCESS_SIG = SAFE_ACCESS_SIG1;
+20003998:	04d78023          	sb	a3,64(a5)
+d:/CH573FEVT/LaserRangeFinder/StdPeriphDriver/inc/CH57x_sys.h:179
+    R8_SAFE_ACCESS_SIG = SAFE_ACCESS_SIG2;
+2000399c:	04e78023          	sb	a4,64(a5)
+d:/CH573FEVT/LaserRangeFinder/StdPeriphDriver/inc/CH57x_sys.h:180
+    asm volatile("fence.i");
+200039a0:	0000100f          	fence.i
+SetSysClock():
+d:\CH573FEVT\LaserRangeFinder\obj/../StdPeriphDriver/CH57x_sys.c:36
+        {
+            sys_safe_access_enable();
+            R8_HFCK_PWR_CTRL |= RB_CLK_XT32M_PON; // HSE power on
+200039a4:	00a7c703          	lbu	a4,10(a5)
+200039a8:	00476713          	ori	a4,a4,4
+200039ac:	00e78523          	sb	a4,10(a5)
+200039b0:	4b000793          	li	a5,1200
+d:\CH573FEVT\LaserRangeFinder\obj/../StdPeriphDriver/CH57x_sys.c:39 (discriminator 3)
+            for(i = 0; i < 1200; i++)
+            {
+                __nop();
+200039b4:	0001                	nop
+d:\CH573FEVT\LaserRangeFinder\obj/../StdPeriphDriver/CH57x_sys.c:40 (discriminator 3)
+                __nop();
+200039b6:	0001                	nop
+200039b8:	17fd                	addi	a5,a5,-1
+d:\CH573FEVT\LaserRangeFinder\obj/../StdPeriphDriver/CH57x_sys.c:37 (discriminator 3)
+            for(i = 0; i < 1200; i++)
+200039ba:	ffed                	bnez	a5,200039b4 <SetSysClock+0x52>
+sys_safe_access_enable():
+d:/CH573FEVT/LaserRangeFinder/StdPeriphDriver/inc/CH57x_sys.h:178
+    R8_SAFE_ACCESS_SIG = SAFE_ACCESS_SIG1;
+200039bc:	400017b7          	lui	a5,0x40001
+200039c0:	05700693          	li	a3,87
+200039c4:	04d78023          	sb	a3,64(a5) # 40001040 <_eusrstack+0x1fff9040>
+d:/CH573FEVT/LaserRangeFinder/StdPeriphDriver/inc/CH57x_sys.h:179
+    R8_SAFE_ACCESS_SIG = SAFE_ACCESS_SIG2;
+200039c8:	fa800713          	li	a4,-88
+200039cc:	04e78023          	sb	a4,64(a5)
+d:/CH573FEVT/LaserRangeFinder/StdPeriphDriver/inc/CH57x_sys.h:180
+    asm volatile("fence.i");
+200039d0:	0000100f          	fence.i
+SetSysClock():
+d:\CH573FEVT\LaserRangeFinder\obj/../StdPeriphDriver/CH57x_sys.c:45
+            }
+        }
+
+        sys_safe_access_enable();
+        R16_CLK_SYS_CFG = (0 << 6) | (sc & 0x1f);
+200039d4:	897d                	andi	a0,a0,31
+200039d6:	00a79423          	sh	a0,8(a5)
+d:\CH573FEVT\LaserRangeFinder\obj/../StdPeriphDriver/CH57x_sys.c:46
+        __nop();
+200039da:	0001                	nop
+d:\CH573FEVT\LaserRangeFinder\obj/../StdPeriphDriver/CH57x_sys.c:47
+        __nop();
+200039dc:	0001                	nop
+d:\CH573FEVT\LaserRangeFinder\obj/../StdPeriphDriver/CH57x_sys.c:48
+        __nop();
+200039de:	0001                	nop
+d:\CH573FEVT\LaserRangeFinder\obj/../StdPeriphDriver/CH57x_sys.c:49
+        __nop();
+200039e0:	0001                	nop
+sys_safe_access_disable():
+d:/CH573FEVT/LaserRangeFinder/StdPeriphDriver/inc/CH57x_sys.h:185
+    R8_SAFE_ACCESS_SIG = 0;
+200039e2:	04078023          	sb	zero,64(a5)
+sys_safe_access_enable():
+d:/CH573FEVT/LaserRangeFinder/StdPeriphDriver/inc/CH57x_sys.h:178
+    R8_SAFE_ACCESS_SIG = SAFE_ACCESS_SIG1;
+200039e6:	04d78023          	sb	a3,64(a5)
+d:/CH573FEVT/LaserRangeFinder/StdPeriphDriver/inc/CH57x_sys.h:179
+    R8_SAFE_ACCESS_SIG = SAFE_ACCESS_SIG2;
+200039ea:	04e78023          	sb	a4,64(a5)
+d:/CH573FEVT/LaserRangeFinder/StdPeriphDriver/inc/CH57x_sys.h:180
+    asm volatile("fence.i");
+200039ee:	0000100f          	fence.i
+SetSysClock():
+d:\CH573FEVT\LaserRangeFinder\obj/../StdPeriphDriver/CH57x_sys.c:52
+        sys_safe_access_disable();
+        sys_safe_access_enable();
+        R8_FLASH_CFG = 0X51;
+200039f2:	40002737          	lui	a4,0x40002
+200039f6:	05100693          	li	a3,81
+d:\CH573FEVT\LaserRangeFinder\obj/../StdPeriphDriver/CH57x_sys.c:76
+        __nop();
+        __nop();
+        __nop();
+        sys_safe_access_disable();
+        sys_safe_access_enable();
+        R8_FLASH_CFG = 0X53;
+200039fa:	80d703a3          	sb	a3,-2041(a4) # 40001807 <_eusrstack+0x1fff9807>
+sys_safe_access_disable():
+d:/CH573FEVT/LaserRangeFinder/StdPeriphDriver/inc/CH57x_sys.h:185
+    R8_SAFE_ACCESS_SIG = 0;
+200039fe:	04078023          	sb	zero,64(a5)
+SetSysClock():
+d:\CH573FEVT\LaserRangeFinder\obj/../StdPeriphDriver/CH57x_sys.c:79
+        sys_safe_access_disable();
+    }
+}
+20003a02:	8082                	ret
+d:\CH573FEVT\LaserRangeFinder\obj/../StdPeriphDriver/CH57x_sys.c:56
+    else if(sc & 0x40)
+20003a04:	04057613          	andi	a2,a0,64
+20003a08:	de6d                	beqz	a2,20003a02 <SetSysClock+0xa0>
+d:\CH573FEVT\LaserRangeFinder\obj/../StdPeriphDriver/CH57x_sys.c:58
+        if(!(R8_HFCK_PWR_CTRL & RB_CLK_PLL_PON))
+20003a0a:	00a7c603          	lbu	a2,10(a5)
+20003a0e:	8a41                	andi	a2,a2,16
+20003a10:	e21d                	bnez	a2,20003a36 <SetSysClock+0xd4>
+sys_safe_access_enable():
+d:/CH573FEVT/LaserRangeFinder/StdPeriphDriver/inc/CH57x_sys.h:178
+    R8_SAFE_ACCESS_SIG = SAFE_ACCESS_SIG1;
+20003a12:	04d78023          	sb	a3,64(a5)
+d:/CH573FEVT/LaserRangeFinder/StdPeriphDriver/inc/CH57x_sys.h:179
+    R8_SAFE_ACCESS_SIG = SAFE_ACCESS_SIG2;
+20003a16:	04e78023          	sb	a4,64(a5)
+d:/CH573FEVT/LaserRangeFinder/StdPeriphDriver/inc/CH57x_sys.h:180
+    asm volatile("fence.i");
+20003a1a:	0000100f          	fence.i
+SetSysClock():
+d:\CH573FEVT\LaserRangeFinder\obj/../StdPeriphDriver/CH57x_sys.c:61
+            R8_HFCK_PWR_CTRL |= RB_CLK_PLL_PON; // PLL power on
+20003a1e:	00a7c703          	lbu	a4,10(a5)
+20003a22:	01076713          	ori	a4,a4,16
+20003a26:	00e78523          	sb	a4,10(a5)
+20003a2a:	7d000793          	li	a5,2000
+d:\CH573FEVT\LaserRangeFinder\obj/../StdPeriphDriver/CH57x_sys.c:64 (discriminator 3)
+                __nop();
+20003a2e:	0001                	nop
+d:\CH573FEVT\LaserRangeFinder\obj/../StdPeriphDriver/CH57x_sys.c:65 (discriminator 3)
+                __nop();
+20003a30:	0001                	nop
+20003a32:	17fd                	addi	a5,a5,-1
+d:\CH573FEVT\LaserRangeFinder\obj/../StdPeriphDriver/CH57x_sys.c:62 (discriminator 3)
+            for(i = 0; i < 2000; i++)
+20003a34:	ffed                	bnez	a5,20003a2e <SetSysClock+0xcc>
+sys_safe_access_enable():
+d:/CH573FEVT/LaserRangeFinder/StdPeriphDriver/inc/CH57x_sys.h:178
+    R8_SAFE_ACCESS_SIG = SAFE_ACCESS_SIG1;
+20003a36:	400017b7          	lui	a5,0x40001
+20003a3a:	05700693          	li	a3,87
+20003a3e:	04d78023          	sb	a3,64(a5) # 40001040 <_eusrstack+0x1fff9040>
+d:/CH573FEVT/LaserRangeFinder/StdPeriphDriver/inc/CH57x_sys.h:179
+    R8_SAFE_ACCESS_SIG = SAFE_ACCESS_SIG2;
+20003a42:	fa800713          	li	a4,-88
+20003a46:	04e78023          	sb	a4,64(a5)
+d:/CH573FEVT/LaserRangeFinder/StdPeriphDriver/inc/CH57x_sys.h:180
+    asm volatile("fence.i");
+20003a4a:	0000100f          	fence.i
+SetSysClock():
+d:\CH573FEVT\LaserRangeFinder\obj/../StdPeriphDriver/CH57x_sys.c:69
+        R16_CLK_SYS_CFG = (1 << 6) | (sc & 0x1f);
+20003a4e:	897d                	andi	a0,a0,31
+20003a50:	04056513          	ori	a0,a0,64
+20003a54:	00a79423          	sh	a0,8(a5)
+d:\CH573FEVT\LaserRangeFinder\obj/../StdPeriphDriver/CH57x_sys.c:70
+        __nop();
+20003a58:	0001                	nop
+d:\CH573FEVT\LaserRangeFinder\obj/../StdPeriphDriver/CH57x_sys.c:71
+        __nop();
+20003a5a:	0001                	nop
+d:\CH573FEVT\LaserRangeFinder\obj/../StdPeriphDriver/CH57x_sys.c:72
+        __nop();
+20003a5c:	0001                	nop
+d:\CH573FEVT\LaserRangeFinder\obj/../StdPeriphDriver/CH57x_sys.c:73
+        __nop();
+20003a5e:	0001                	nop
+sys_safe_access_disable():
+d:/CH573FEVT/LaserRangeFinder/StdPeriphDriver/inc/CH57x_sys.h:185
+    R8_SAFE_ACCESS_SIG = 0;
+20003a60:	04078023          	sb	zero,64(a5)
+sys_safe_access_enable():
+d:/CH573FEVT/LaserRangeFinder/StdPeriphDriver/inc/CH57x_sys.h:178
+    R8_SAFE_ACCESS_SIG = SAFE_ACCESS_SIG1;
+20003a64:	04d78023          	sb	a3,64(a5)
+d:/CH573FEVT/LaserRangeFinder/StdPeriphDriver/inc/CH57x_sys.h:179
+    R8_SAFE_ACCESS_SIG = SAFE_ACCESS_SIG2;
+20003a68:	04e78023          	sb	a4,64(a5)
+d:/CH573FEVT/LaserRangeFinder/StdPeriphDriver/inc/CH57x_sys.h:180
+    asm volatile("fence.i");
+20003a6c:	0000100f          	fence.i
+SetSysClock():
+d:\CH573FEVT\LaserRangeFinder\obj/../StdPeriphDriver/CH57x_sys.c:76
+        R8_FLASH_CFG = 0X53;
+20003a70:	40002737          	lui	a4,0x40002
+20003a74:	05300693          	li	a3,83
+20003a78:	b749                	j	200039fa <SetSysClock+0x98>
+
+20003a7a <SYS_ResetExecute>:
+SYS_ResetExecute():
+d:\CH573FEVT\LaserRangeFinder\obj/../StdPeriphDriver/CH57x_sys.c:141
+ *
+ * @return  none
+ */
+__attribute__((section(".highcode")))
+void SYS_ResetExecute(void)
+{
+20003a7a:	1141                	addi	sp,sp,-16
+d:\CH573FEVT\LaserRangeFinder\obj/../StdPeriphDriver/CH57x_sys.c:142
+    FLASH_ROM_SW_RESET();
+20003a7c:	4681                	li	a3,0
+20003a7e:	4601                	li	a2,0
+20003a80:	4581                	li	a1,0
+20003a82:	4511                	li	a0,4
+d:\CH573FEVT\LaserRangeFinder\obj/../StdPeriphDriver/CH57x_sys.c:141
+{
+20003a84:	c606                	sw	ra,12(sp)
+d:\CH573FEVT\LaserRangeFinder\obj/../StdPeriphDriver/CH57x_sys.c:142
+    FLASH_ROM_SW_RESET();
+20003a86:	229d                	jal	20003bec <FLASH_EEPROM_CMD>
+sys_safe_access_enable():
+d:/CH573FEVT/LaserRangeFinder/StdPeriphDriver/inc/CH57x_sys.h:178
+    R8_SAFE_ACCESS_SIG = SAFE_ACCESS_SIG1;
+20003a88:	400017b7          	lui	a5,0x40001
+20003a8c:	05700713          	li	a4,87
+20003a90:	04e78023          	sb	a4,64(a5) # 40001040 <_eusrstack+0x1fff9040>
+d:/CH573FEVT/LaserRangeFinder/StdPeriphDriver/inc/CH57x_sys.h:179
+    R8_SAFE_ACCESS_SIG = SAFE_ACCESS_SIG2;
+20003a94:	fa800713          	li	a4,-88
+20003a98:	04e78023          	sb	a4,64(a5)
+d:/CH573FEVT/LaserRangeFinder/StdPeriphDriver/inc/CH57x_sys.h:180
+    asm volatile("fence.i");
+20003a9c:	0000100f          	fence.i
+SYS_ResetExecute():
+d:\CH573FEVT\LaserRangeFinder\obj/../StdPeriphDriver/CH57x_sys.c:144
+    sys_safe_access_enable();
+    R8_RST_WDOG_CTRL |= RB_SOFTWARE_RESET;
+20003aa0:	0467c703          	lbu	a4,70(a5)
+20003aa4:	00176713          	ori	a4,a4,1
+20003aa8:	04e78323          	sb	a4,70(a5)
+sys_safe_access_disable():
+d:/CH573FEVT/LaserRangeFinder/StdPeriphDriver/inc/CH57x_sys.h:185
+    R8_SAFE_ACCESS_SIG = 0;
+20003aac:	04078023          	sb	zero,64(a5)
+SYS_ResetExecute():
+d:\CH573FEVT\LaserRangeFinder\obj/../StdPeriphDriver/CH57x_sys.c:146
+    sys_safe_access_disable();
+}
+20003ab0:	40b2                	lw	ra,12(sp)
+20003ab2:	0141                	addi	sp,sp,16
+20003ab4:	8082                	ret
+
+20003ab6 <HardFault_Handler>:
+HardFault_Handler():
+d:\CH573FEVT\LaserRangeFinder\obj/../StdPeriphDriver/CH57x_sys.c:281
+__attribute__((interrupt("WCH-Interrupt-fast")))
+__attribute__((section(".highcode")))
+__attribute__((weak))
+void HardFault_Handler(void)
+{
+    FLASH_ROM_SW_RESET();
+20003ab6:	4681                	li	a3,0
+20003ab8:	4601                	li	a2,0
+20003aba:	4581                	li	a1,0
+20003abc:	4511                	li	a0,4
+20003abe:	223d                	jal	20003bec <FLASH_EEPROM_CMD>
+sys_safe_access_enable():
+d:/CH573FEVT/LaserRangeFinder/StdPeriphDriver/inc/CH57x_sys.h:178
+    R8_SAFE_ACCESS_SIG = SAFE_ACCESS_SIG1;
+20003ac0:	400017b7          	lui	a5,0x40001
+20003ac4:	05700693          	li	a3,87
+20003ac8:	04d78023          	sb	a3,64(a5) # 40001040 <_eusrstack+0x1fff9040>
+d:/CH573FEVT/LaserRangeFinder/StdPeriphDriver/inc/CH57x_sys.h:179
+    R8_SAFE_ACCESS_SIG = SAFE_ACCESS_SIG2;
+20003acc:	fa800713          	li	a4,-88
+20003ad0:	04e78023          	sb	a4,64(a5)
+d:/CH573FEVT/LaserRangeFinder/StdPeriphDriver/inc/CH57x_sys.h:180
+    asm volatile("fence.i");
+20003ad4:	0000100f          	fence.i
+HardFault_Handler():
+d:\CH573FEVT\LaserRangeFinder\obj/../StdPeriphDriver/CH57x_sys.c:283
+    sys_safe_access_enable();
+    R16_INT32K_TUNE = 0xFFFF;
+20003ad8:	567d                	li	a2,-1
+20003ada:	02c79623          	sh	a2,44(a5)
+sys_safe_access_enable():
+d:/CH573FEVT/LaserRangeFinder/StdPeriphDriver/inc/CH57x_sys.h:178
+    R8_SAFE_ACCESS_SIG = SAFE_ACCESS_SIG1;
+20003ade:	04d78023          	sb	a3,64(a5)
+d:/CH573FEVT/LaserRangeFinder/StdPeriphDriver/inc/CH57x_sys.h:179
+    R8_SAFE_ACCESS_SIG = SAFE_ACCESS_SIG2;
+20003ae2:	04e78023          	sb	a4,64(a5)
+d:/CH573FEVT/LaserRangeFinder/StdPeriphDriver/inc/CH57x_sys.h:180
+    asm volatile("fence.i");
+20003ae6:	0000100f          	fence.i
+HardFault_Handler():
+d:\CH573FEVT\LaserRangeFinder\obj/../StdPeriphDriver/CH57x_sys.c:285
+    sys_safe_access_enable();
+    R8_RST_WDOG_CTRL |= RB_SOFTWARE_RESET;
+20003aea:	0467c703          	lbu	a4,70(a5)
+20003aee:	00176713          	ori	a4,a4,1
+20003af2:	04e78323          	sb	a4,70(a5)
+sys_safe_access_disable():
+d:/CH573FEVT/LaserRangeFinder/StdPeriphDriver/inc/CH57x_sys.h:185
+    R8_SAFE_ACCESS_SIG = 0;
+20003af6:	04078023          	sb	zero,64(a5)
+HardFault_Handler():
+d:\CH573FEVT\LaserRangeFinder\obj/../StdPeriphDriver/CH57x_sys.c:287 (discriminator 1)
+    sys_safe_access_disable();
+    while(1);
+20003afa:	a001                	j	20003afa <HardFault_Handler+0x44>
+
+20003afc <mDelayuS>:
+mDelayuS():
+d:\CH573FEVT\LaserRangeFinder\obj/../StdPeriphDriver/CH57x_sys.c:304
+__attribute__((section(".highcode")))
+void mDelayuS(uint16_t t)
+{
+    uint32_t i;
+#if(FREQ_SYS == 60000000)
+    i = t * 15;
+20003afc:	47bd                	li	a5,15
+20003afe:	02f50533          	mul	a0,a0,a5
+d:\CH573FEVT\LaserRangeFinder\obj/../StdPeriphDriver/CH57x_sys.c:326 (discriminator 1)
+#elif(FREQ_SYS == 1000000)
+    i = t >> 2;
+#endif
+    do
+    {
+        __nop();
+20003b02:	0001                	nop
+d:\CH573FEVT\LaserRangeFinder\obj/../StdPeriphDriver/CH57x_sys.c:327 (discriminator 1)
+    } while(--i);
+20003b04:	157d                	addi	a0,a0,-1
+20003b06:	fd75                	bnez	a0,20003b02 <mDelayuS+0x6>
+d:\CH573FEVT\LaserRangeFinder\obj/../StdPeriphDriver/CH57x_sys.c:328
+}
+20003b08:	8082                	ret
+
+20003b0a <mDelaymS>:
+mDelaymS():
+d:\CH573FEVT\LaserRangeFinder\obj/../StdPeriphDriver/CH57x_sys.c:341
+ *
+ * @return  none
+ */
+__attribute__((section(".highcode")))
+void mDelaymS(uint16_t t)
+{
+20003b0a:	1141                	addi	sp,sp,-16
+20003b0c:	c422                	sw	s0,8(sp)
+20003b0e:	c226                	sw	s1,4(sp)
+20003b10:	c606                	sw	ra,12(sp)
+20003b12:	84aa                	mv	s1,a0
+d:\CH573FEVT\LaserRangeFinder\obj/../StdPeriphDriver/CH57x_sys.c:344
+    uint16_t i;
+
+    for(i = 0; i < t; i++)
+20003b14:	4401                	li	s0,0
+d:\CH573FEVT\LaserRangeFinder\obj/../StdPeriphDriver/CH57x_sys.c:344 (discriminator 1)
+20003b16:	00941763          	bne	s0,s1,20003b24 <mDelaymS+0x1a>
+d:\CH573FEVT\LaserRangeFinder\obj/../StdPeriphDriver/CH57x_sys.c:348
+    {
+        mDelayuS(1000);
+    }
+}
+20003b1a:	40b2                	lw	ra,12(sp)
+20003b1c:	4422                	lw	s0,8(sp)
+20003b1e:	4492                	lw	s1,4(sp)
+20003b20:	0141                	addi	sp,sp,16
+20003b22:	8082                	ret
+d:\CH573FEVT\LaserRangeFinder\obj/../StdPeriphDriver/CH57x_sys.c:344 (discriminator 3)
+    for(i = 0; i < t; i++)
+20003b24:	0405                	addi	s0,s0,1
+d:\CH573FEVT\LaserRangeFinder\obj/../StdPeriphDriver/CH57x_sys.c:346 (discriminator 3)
+        mDelayuS(1000);
+20003b26:	3e800513          	li	a0,1000
+d:\CH573FEVT\LaserRangeFinder\obj/../StdPeriphDriver/CH57x_sys.c:344 (discriminator 3)
+    for(i = 0; i < t; i++)
+20003b2a:	0442                	slli	s0,s0,0x10
+d:\CH573FEVT\LaserRangeFinder\obj/../StdPeriphDriver/CH57x_sys.c:346 (discriminator 3)
+        mDelayuS(1000);
+20003b2c:	3fc1                	jal	20003afc <mDelayuS>
+d:\CH573FEVT\LaserRangeFinder\obj/../StdPeriphDriver/CH57x_sys.c:344 (discriminator 3)
+    for(i = 0; i < t; i++)
+20003b2e:	8041                	srli	s0,s0,0x10
+20003b30:	b7dd                	j	20003b16 <mDelaymS+0xc>
+
+20003b32 <FLASH_ROM_BEG>:
+FLASH_ROM_BEG():
+20003b32:	80040323          	sb	zero,-2042(s0)
+20003b36:	4795                	li	a5,5
+20003b38:	80f40323          	sb	a5,-2042(s0)
+20003b3c:	80a40223          	sb	a0,-2044(s0)
+20003b40:	8082                	ret
+
+20003b42 <FLASH_ROM_END>:
+FLASH_ROM_END():
+20003b42:	80640783          	lb	a5,-2042(s0)
+20003b46:	fe07cee3          	bltz	a5,20003b42 <FLASH_ROM_END>
+20003b4a:	80040323          	sb	zero,-2042(s0)
+20003b4e:	8082                	ret
+
+20003b50 <FLASH_ROM_IN>:
+FLASH_ROM_IN():
+20003b50:	80640783          	lb	a5,-2042(s0)
+20003b54:	fe07cee3          	bltz	a5,20003b50 <FLASH_ROM_IN>
+20003b58:	80444503          	lbu	a0,-2044(s0)
+20003b5c:	8082                	ret
+
+20003b5e <FLASH_ROM_OUT>:
+FLASH_ROM_OUT():
+20003b5e:	80640783          	lb	a5,-2042(s0)
+20003b62:	fe07cee3          	bltz	a5,20003b5e <FLASH_ROM_OUT>
+20003b66:	80a40223          	sb	a0,-2044(s0)
+20003b6a:	8082                	ret
+
+20003b6c <FLASH_ROM_ADDR>:
+FLASH_ROM_ADDR():
+20003b6c:	1141                	addi	sp,sp,-16
+20003b6e:	c426                	sw	s1,8(sp)
+20003b70:	c24a                	sw	s2,4(sp)
+20003b72:	c04e                	sw	s3,0(sp)
+20003b74:	c606                	sw	ra,12(sp)
+20003b76:	0bf57713          	andi	a4,a0,191
+20003b7a:	47ad                	li	a5,11
+20003b7c:	89aa                	mv	s3,a0
+20003b7e:	892e                	mv	s2,a1
+20003b80:	4495                	li	s1,5
+20003b82:	00f70663          	beq	a4,a5,20003b8e <FLASH_ROM_ADDR+0x22>
+20003b86:	4519                	li	a0,6
+20003b88:	376d                	jal	20003b32 <FLASH_ROM_BEG>
+20003b8a:	3f65                	jal	20003b42 <FLASH_ROM_END>
+20003b8c:	448d                	li	s1,3
+20003b8e:	854e                	mv	a0,s3
+20003b90:	374d                	jal	20003b32 <FLASH_ROM_BEG>
+20003b92:	59fd                	li	s3,-1
+20003b94:	14fd                	addi	s1,s1,-1
+20003b96:	01349863          	bne	s1,s3,20003ba6 <FLASH_ROM_ADDR+0x3a>
+20003b9a:	40b2                	lw	ra,12(sp)
+20003b9c:	44a2                	lw	s1,8(sp)
+20003b9e:	4912                	lw	s2,4(sp)
+20003ba0:	4982                	lw	s3,0(sp)
+20003ba2:	0141                	addi	sp,sp,16
+20003ba4:	8082                	ret
+20003ba6:	01095513          	srli	a0,s2,0x10
+20003baa:	0ff57513          	andi	a0,a0,255
+20003bae:	3f45                	jal	20003b5e <FLASH_ROM_OUT>
+20003bb0:	0922                	slli	s2,s2,0x8
+20003bb2:	b7cd                	j	20003b94 <FLASH_ROM_ADDR+0x28>
+
+20003bb4 <FLASH_ROM_WAIT>:
+FLASH_ROM_WAIT():
+20003bb4:	1101                	addi	sp,sp,-32
+20003bb6:	cc26                	sw	s1,24(sp)
+20003bb8:	ce06                	sw	ra,28(sp)
+20003bba:	000804b7          	lui	s1,0x80
+20003bbe:	3751                	jal	20003b42 <FLASH_ROM_END>
+20003bc0:	4515                	li	a0,5
+20003bc2:	3f85                	jal	20003b32 <FLASH_ROM_BEG>
+20003bc4:	3771                	jal	20003b50 <FLASH_ROM_IN>
+20003bc6:	3769                	jal	20003b50 <FLASH_ROM_IN>
+20003bc8:	c62a                	sw	a0,12(sp)
+20003bca:	3fa5                	jal	20003b42 <FLASH_ROM_END>
+20003bcc:	4532                	lw	a0,12(sp)
+20003bce:	00157793          	andi	a5,a0,1
+20003bd2:	eb89                	bnez	a5,20003be4 <FLASH_ROM_WAIT+0x30>
+20003bd4:	00156513          	ori	a0,a0,1
+20003bd8:	0ff57513          	andi	a0,a0,255
+20003bdc:	40f2                	lw	ra,28(sp)
+20003bde:	44e2                	lw	s1,24(sp)
+20003be0:	6105                	addi	sp,sp,32
+20003be2:	8082                	ret
+20003be4:	14fd                	addi	s1,s1,-1
+20003be6:	fce9                	bnez	s1,20003bc0 <FLASH_ROM_WAIT+0xc>
+20003be8:	4501                	li	a0,0
+20003bea:	bfcd                	j	20003bdc <FLASH_ROM_WAIT+0x28>
+
+20003bec <FLASH_EEPROM_CMD>:
+FLASH_EEPROM_CMD():
+20003bec:	7139                	addi	sp,sp,-64
+20003bee:	dc26                	sw	s1,56(sp)
+20003bf0:	da4a                	sw	s2,52(sp)
+20003bf2:	d84e                	sw	s3,48(sp)
+20003bf4:	d652                	sw	s4,44(sp)
+20003bf6:	d456                	sw	s5,40(sp)
+20003bf8:	d25a                	sw	s6,36(sp)
+20003bfa:	d05e                	sw	s7,32(sp)
+20003bfc:	ce62                	sw	s8,28(sp)
+20003bfe:	e000e7b7          	lui	a5,0xe000e
+20003c02:	de06                	sw	ra,60(sp)
+20003c04:	cc66                	sw	s9,24(sp)
+20003c06:	ca6a                	sw	s10,20(sp)
+20003c08:	4741                	li	a4,16
+20003c0a:	0407ab83          	lw	s7,64(a5) # e000e040 <_eusrstack+0xc0006040>
+20003c0e:	c622                	sw	s0,12(sp)
+20003c10:	c3b8                	sw	a4,64(a5)
+20003c12:	577d                	li	a4,-1
+20003c14:	0007ab03          	lw	s6,0(a5)
+20003c18:	0047aa83          	lw	s5,4(a5)
+20003c1c:	18e7a023          	sw	a4,384(a5)
+20003c20:	18e7a223          	sw	a4,388(a5)
+20003c24:	400017b7          	lui	a5,0x40001
+20003c28:	05700713          	li	a4,87
+20003c2c:	04e78023          	sb	a4,64(a5) # 40001040 <_eusrstack+0x1fff9040>
+20003c30:	fa800713          	li	a4,-88
+20003c34:	04e78023          	sb	a4,64(a5)
+20003c38:	0447c783          	lbu	a5,68(a5)
+20003c3c:	ff750c13          	addi	s8,a0,-9
+20003c40:	84b6                	mv	s1,a3
+20003c42:	07e2                	slli	a5,a5,0x18
+20003c44:	0ffc7c13          	andi	s8,s8,255
+20003c48:	4685                	li	a3,1
+20003c4a:	8a2a                	mv	s4,a0
+20003c4c:	892e                	mv	s2,a1
+20003c4e:	89b2                	mv	s3,a2
+20003c50:	40002437          	lui	s0,0x40002
+20003c54:	87e1                	srai	a5,a5,0x18
+20003c56:	5701                	li	a4,-32
+20003c58:	0186fa63          	bgeu	a3,s8,20003c6c <FLASH_EEPROM_CMD+0x80>
+20003c5c:	00d50863          	beq	a0,a3,20003c6c <FLASH_EEPROM_CMD+0x80>
+20003c60:	4689                	li	a3,2
+20003c62:	02000713          	li	a4,32
+20003c66:	00d51363          	bne	a0,a3,20003c6c <FLASH_EEPROM_CMD+0x80>
+20003c6a:	5701                	li	a4,-32
+20003c6c:	8fd9                	or	a5,a5,a4
+20003c6e:	0ff7f793          	andi	a5,a5,255
+20003c72:	40001d37          	lui	s10,0x40001
+20003c76:	04fd0223          	sb	a5,68(s10) # 40001044 <_eusrstack+0x1fff9044>
+20003c7a:	4711                	li	a4,4
+20003c7c:	80e40323          	sb	a4,-2042(s0) # 40001806 <_eusrstack+0x1fff9806>
+20003c80:	0ff00513          	li	a0,255
+20003c84:	357d                	jal	20003b32 <FLASH_ROM_BEG>
+20003c86:	4c89                	li	s9,2
+20003c88:	3d6d                	jal	20003b42 <FLASH_ROM_END>
+20003c8a:	118ceb63          	bltu	s9,s8,20003da0 <FLASH_EEPROM_CMD+0x1b4>
+20003c8e:	000707b7          	lui	a5,0x70
+20003c92:	993e                	add	s2,s2,a5
+20003c94:	00078737          	lui	a4,0x78
+20003c98:	5579                	li	a0,-2
+20003c9a:	02e97e63          	bgeu	s2,a4,20003cd6 <FLASH_EEPROM_CMD+0xea>
+20003c9e:	009907b3          	add	a5,s2,s1
+20003ca2:	02f76a63          	bltu	a4,a5,20003cd6 <FLASH_EEPROM_CMD+0xea>
+20003ca6:	47a9                	li	a5,10
+20003ca8:	06fa1c63          	bne	s4,a5,20003d20 <FLASH_EEPROM_CMD+0x134>
+20003cac:	e489                	bnez	s1,20003cb6 <FLASH_EEPROM_CMD+0xca>
+20003cae:	4481                	li	s1,0
+20003cb0:	3d49                	jal	20003b42 <FLASH_ROM_END>
+20003cb2:	8526                	mv	a0,s1
+20003cb4:	a00d                	j	20003cd6 <FLASH_EEPROM_CMD+0xea>
+20003cb6:	85ca                	mv	a1,s2
+20003cb8:	4509                	li	a0,2
+20003cba:	3d4d                	jal	20003b6c <FLASH_ROM_ADDR>
+20003cbc:	0985                	addi	s3,s3,1
+20003cbe:	fff9c503          	lbu	a0,-1(s3)
+20003cc2:	14fd                	addi	s1,s1,-1
+20003cc4:	0905                	addi	s2,s2,1
+20003cc6:	3d61                	jal	20003b5e <FLASH_ROM_OUT>
+20003cc8:	c481                	beqz	s1,20003cd0 <FLASH_EEPROM_CMD+0xe4>
+20003cca:	0ff97793          	andi	a5,s2,255
+20003cce:	f7fd                	bnez	a5,20003cbc <FLASH_EEPROM_CMD+0xd0>
+20003cd0:	35d5                	jal	20003bb4 <FLASH_ROM_WAIT>
+20003cd2:	fd69                	bnez	a0,20003cac <FLASH_EEPROM_CMD+0xc0>
+20003cd4:	557d                	li	a0,-1
+20003cd6:	400017b7          	lui	a5,0x40001
+20003cda:	05700713          	li	a4,87
+20003cde:	04e78023          	sb	a4,64(a5) # 40001040 <_eusrstack+0x1fff9040>
+20003ce2:	fa800713          	li	a4,-88
+20003ce6:	04e78023          	sb	a4,64(a5)
+20003cea:	0447c703          	lbu	a4,68(a5)
+20003cee:	8b41                	andi	a4,a4,16
+20003cf0:	04e78223          	sb	a4,68(a5)
+20003cf4:	e000e7b7          	lui	a5,0xe000e
+20003cf8:	0577a023          	sw	s7,64(a5) # e000e040 <_eusrstack+0xc0006040>
+20003cfc:	50f2                	lw	ra,60(sp)
+20003cfe:	1167a023          	sw	s6,256(a5)
+20003d02:	1157a223          	sw	s5,260(a5)
+20003d06:	54e2                	lw	s1,56(sp)
+20003d08:	4432                	lw	s0,12(sp)
+20003d0a:	5952                	lw	s2,52(sp)
+20003d0c:	59c2                	lw	s3,48(sp)
+20003d0e:	5a32                	lw	s4,44(sp)
+20003d10:	5aa2                	lw	s5,40(sp)
+20003d12:	5b12                	lw	s6,36(sp)
+20003d14:	5b82                	lw	s7,32(sp)
+20003d16:	4c72                	lw	s8,28(sp)
+20003d18:	4ce2                	lw	s9,24(sp)
+20003d1a:	4d52                	lw	s10,20(sp)
+20003d1c:	6121                	addi	sp,sp,64
+20003d1e:	8082                	ret
+20003d20:	47a5                	li	a5,9
+20003d22:	06fa1463          	bne	s4,a5,20003d8a <FLASH_EEPROM_CMD+0x19e>
+20003d26:	6985                	lui	s3,0x1
+20003d28:	0ff00793          	li	a5,255
+20003d2c:	009786b3          	add	a3,a5,s1
+20003d30:	00f974b3          	and	s1,s2,a5
+20003d34:	94b6                	add	s1,s1,a3
+20003d36:	fff7c793          	not	a5,a5
+20003d3a:	8cfd                	and	s1,s1,a5
+20003d3c:	0127f933          	and	s2,a5,s2
+20003d40:	6a41                	lui	s4,0x10
+20003d42:	6c05                	lui	s8,0x1
+20003d44:	fff98793          	addi	a5,s3,-1 # fff <_data_lma+0x5eb>
+20003d48:	0127f7b3          	and	a5,a5,s2
+20003d4c:	e399                	bnez	a5,20003d52 <FLASH_EEPROM_CMD+0x166>
+20003d4e:	0134fc63          	bgeu	s1,s3,20003d66 <FLASH_EEPROM_CMD+0x17a>
+20003d52:	0049d993          	srli	s3,s3,0x4
+20003d56:	47c1                	li	a5,16
+20003d58:	ff37e6e3          	bltu	a5,s3,20003d44 <FLASH_EEPROM_CMD+0x158>
+20003d5c:	bf89                	j	20003cae <FLASH_EEPROM_CMD+0xc2>
+20003d5e:	6785                	lui	a5,0x1
+20003d60:	69c1                	lui	s3,0x10
+20003d62:	17fd                	addi	a5,a5,-1
+20003d64:	b7e1                	j	20003d2c <FLASH_EEPROM_CMD+0x140>
+20003d66:	0d800513          	li	a0,216
+20003d6a:	01498863          	beq	s3,s4,20003d7a <FLASH_EEPROM_CMD+0x18e>
+20003d6e:	02000513          	li	a0,32
+20003d72:	01898463          	beq	s3,s8,20003d7a <FLASH_EEPROM_CMD+0x18e>
+20003d76:	08100513          	li	a0,129
+20003d7a:	85ca                	mv	a1,s2
+20003d7c:	3bc5                	jal	20003b6c <FLASH_ROM_ADDR>
+20003d7e:	3d1d                	jal	20003bb4 <FLASH_ROM_WAIT>
+20003d80:	d931                	beqz	a0,20003cd4 <FLASH_EEPROM_CMD+0xe8>
+20003d82:	994e                	add	s2,s2,s3
+20003d84:	413484b3          	sub	s1,s1,s3
+20003d88:	b7d9                	j	20003d4e <FLASH_EEPROM_CMD+0x162>
+20003d8a:	85ca                	mv	a1,s2
+20003d8c:	452d                	li	a0,11
+20003d8e:	3bf9                	jal	20003b6c <FLASH_ROM_ADDR>
+20003d90:	94ce                	add	s1,s1,s3
+20003d92:	f0998ee3          	beq	s3,s1,20003cae <FLASH_EEPROM_CMD+0xc2>
+20003d96:	0985                	addi	s3,s3,1
+20003d98:	3b65                	jal	20003b50 <FLASH_ROM_IN>
+20003d9a:	fea98fa3          	sb	a0,-1(s3) # ffff <_data_lma+0xf5eb>
+20003d9e:	bfd5                	j	20003d92 <FLASH_EEPROM_CMD+0x1a6>
+20003da0:	fffa0793          	addi	a5,s4,-1 # ffff <_data_lma+0xf5eb>
+20003da4:	0ff7f793          	andi	a5,a5,255
+20003da8:	08fcec63          	bltu	s9,a5,20003e40 <.loop406+0x54>
+20003dac:	045d4703          	lbu	a4,69(s10)
+20003db0:	000807b7          	lui	a5,0x80
+20003db4:	02077713          	andi	a4,a4,32
+20003db8:	e319                	bnez	a4,20003dbe <FLASH_EEPROM_CMD+0x1d2>
+20003dba:	000787b7          	lui	a5,0x78
+20003dbe:	5579                	li	a0,-2
+20003dc0:	f0f97be3          	bgeu	s2,a5,20003cd6 <FLASH_EEPROM_CMD+0xea>
+20003dc4:	00990733          	add	a4,s2,s1
+20003dc8:	f0e7e7e3          	bltu	a5,a4,20003cd6 <FLASH_EEPROM_CMD+0xea>
+20003dcc:	4789                	li	a5,2
+20003dce:	04fa1063          	bne	s4,a5,20003e0e <.loop406+0x22>
+20003dd2:	8089                	srli	s1,s1,0x2
+20003dd4:	4a55                	li	s4,21
+20003dd6:	ec048ce3          	beqz	s1,20003cae <FLASH_EEPROM_CMD+0xc2>
+20003dda:	85ca                	mv	a1,s2
+20003ddc:	4509                	li	a0,2
+20003dde:	3379                	jal	20003b6c <FLASH_ROM_ADDR>
+20003de0:	0991                	addi	s3,s3,4
+20003de2:	ffc9a703          	lw	a4,-4(s3)
+20003de6:	4791                	li	a5,4
+20003de8:	80e42023          	sw	a4,-2048(s0)
+
+20003dec <.loop406>:
+20003dec:	80640703          	lb	a4,-2042(s0)
+20003df0:	fe074ee3          	bltz	a4,20003dec <.loop406>
+20003df4:	81440323          	sb	s4,-2042(s0)
+20003df8:	17fd                	addi	a5,a5,-1
+20003dfa:	fbed                	bnez	a5,20003dec <.loop406>
+20003dfc:	14fd                	addi	s1,s1,-1
+20003dfe:	0911                	addi	s2,s2,4
+20003e00:	c481                	beqz	s1,20003e08 <.loop406+0x1c>
+20003e02:	0ff97793          	andi	a5,s2,255
+20003e06:	ffe9                	bnez	a5,20003de0 <FLASH_EEPROM_CMD+0x1f4>
+20003e08:	3375                	jal	20003bb4 <FLASH_ROM_WAIT>
+20003e0a:	f571                	bnez	a0,20003dd6 <FLASH_EEPROM_CMD+0x1ea>
+20003e0c:	b5e1                	j	20003cd4 <FLASH_EEPROM_CMD+0xe8>
+20003e0e:	4785                	li	a5,1
+20003e10:	f4fa07e3          	beq	s4,a5,20003d5e <FLASH_EEPROM_CMD+0x172>
+20003e14:	85ca                	mv	a1,s2
+20003e16:	452d                	li	a0,11
+20003e18:	3b91                	jal	20003b6c <FLASH_ROM_ADDR>
+20003e1a:	fff48913          	addi	s2,s1,-1 # 7ffff <_data_lma+0x7f5eb>
+20003e1e:	e80488e3          	beqz	s1,20003cae <FLASH_EEPROM_CMD+0xc2>
+20003e22:	333d                	jal	20003b50 <FLASH_ROM_IN>
+20003e24:	00397793          	andi	a5,s2,3
+20003e28:	eb91                	bnez	a5,20003e3c <.loop406+0x50>
+20003e2a:	80042683          	lw	a3,-2048(s0)
+20003e2e:	0009a703          	lw	a4,0(s3)
+20003e32:	00498793          	addi	a5,s3,4
+20003e36:	e6e69de3          	bne	a3,a4,20003cb0 <FLASH_EEPROM_CMD+0xc4>
+20003e3a:	89be                	mv	s3,a5
+20003e3c:	84ca                	mv	s1,s2
+20003e3e:	bff1                	j	20003e1a <.loop406+0x2e>
+20003e40:	47b5                	li	a5,13
+20003e42:	00fa1663          	bne	s4,a5,20003e4e <.loop406+0x62>
+20003e46:	0b900513          	li	a0,185
+20003e4a:	31e5                	jal	20003b32 <FLASH_ROM_BEG>
+20003e4c:	b58d                	j	20003cae <FLASH_EEPROM_CMD+0xc2>
+20003e4e:	47b1                	li	a5,12
+20003e50:	0ab00513          	li	a0,171
+20003e54:	fefa0be3          	beq	s4,a5,20003e4a <.loop406+0x5e>
+20003e58:	4799                	li	a5,6
+20003e5a:	02fa1e63          	bne	s4,a5,20003e96 <.loop406+0xaa>
+20003e5e:	85ca                	mv	a1,s2
+20003e60:	452d                	li	a0,11
+20003e62:	3329                	jal	20003b6c <FLASH_ROM_ADDR>
+20003e64:	4481                	li	s1,0
+20003e66:	4c0d                	li	s8,3
+20003e68:	4a21                	li	s4,8
+20003e6a:	31dd                	jal	20003b50 <FLASH_ROM_IN>
+20003e6c:	01849663          	bne	s1,s8,20003e78 <.loop406+0x8c>
+20003e70:	80042783          	lw	a5,-2048(s0)
+20003e74:	00f9a023          	sw	a5,0(s3)
+20003e78:	0485                	addi	s1,s1,1
+20003e7a:	ff4498e3          	bne	s1,s4,20003e6a <.loop406+0x7e>
+20003e7e:	80042783          	lw	a5,-2048(s0)
+20003e82:	01291713          	slli	a4,s2,0x12
+20003e86:	00075563          	bgez	a4,20003e90 <.loop406+0xa4>
+20003e8a:	00f99223          	sh	a5,4(s3)
+20003e8e:	b505                	j	20003cae <FLASH_EEPROM_CMD+0xc2>
+20003e90:	00f9a223          	sw	a5,4(s3)
+20003e94:	bd29                	j	20003cae <FLASH_EEPROM_CMD+0xc2>
+20003e96:	479d                	li	a5,7
+20003e98:	02fa1963          	bne	s4,a5,20003eca <.loop406+0xde>
+20003e9c:	4581                	li	a1,0
+20003e9e:	04b00513          	li	a0,75
+20003ea2:	31e9                	jal	20003b6c <FLASH_ROM_ADDR>
+20003ea4:	44bd                	li	s1,15
+20003ea6:	0009a023          	sw	zero,0(s3)
+20003eaa:	0009a223          	sw	zero,4(s3)
+20003eae:	597d                	li	s2,-1
+20003eb0:	3145                	jal	20003b50 <FLASH_ROM_IN>
+20003eb2:	0074f793          	andi	a5,s1,7
+20003eb6:	97ce                	add	a5,a5,s3
+20003eb8:	0007c703          	lbu	a4,0(a5) # 78000 <_data_lma+0x775ec>
+20003ebc:	14fd                	addi	s1,s1,-1
+20003ebe:	8d39                	xor	a0,a0,a4
+20003ec0:	00a78023          	sb	a0,0(a5)
+20003ec4:	ff2496e3          	bne	s1,s2,20003eb0 <.loop406+0xc4>
+20003ec8:	b3dd                	j	20003cae <FLASH_EEPROM_CMD+0xc2>
+20003eca:	47a1                	li	a5,8
+20003ecc:	04fa1263          	bne	s4,a5,20003f10 <.loop406+0x124>
+20003ed0:	31d5                	jal	20003bb4 <FLASH_ROM_WAIT>
+20003ed2:	4481                	li	s1,0
+20003ed4:	00090d63          	beqz	s2,20003eee <.loop406+0x102>
+20003ed8:	478d                	li	a5,3
+20003eda:	03c00493          	li	s1,60
+20003ede:	00f90863          	beq	s2,a5,20003eee <.loop406+0x102>
+20003ee2:	05000493          	li	s1,80
+20003ee6:	01990463          	beq	s2,s9,20003eee <.loop406+0x102>
+20003eea:	04400493          	li	s1,68
+20003eee:	07c57513          	andi	a0,a0,124
+20003ef2:	da950ee3          	beq	a0,s1,20003cae <FLASH_EEPROM_CMD+0xc2>
+20003ef6:	4519                	li	a0,6
+20003ef8:	392d                	jal	20003b32 <FLASH_ROM_BEG>
+20003efa:	31a1                	jal	20003b42 <FLASH_ROM_END>
+20003efc:	4505                	li	a0,1
+20003efe:	3915                	jal	20003b32 <FLASH_ROM_BEG>
+20003f00:	8526                	mv	a0,s1
+20003f02:	39b1                	jal	20003b5e <FLASH_ROM_OUT>
+20003f04:	4509                	li	a0,2
+20003f06:	39a1                	jal	20003b5e <FLASH_ROM_OUT>
+20003f08:	3175                	jal	20003bb4 <FLASH_ROM_WAIT>
+20003f0a:	da0512e3          	bnez	a0,20003cae <FLASH_EEPROM_CMD+0xc2>
+20003f0e:	b3d9                	j	20003cd4 <FLASH_EEPROM_CMD+0xe8>
+20003f10:	4791                	li	a5,4
+20003f12:	00fa1963          	bne	s4,a5,20003f24 <.loop406+0x138>
+20003f16:	06600513          	li	a0,102
+20003f1a:	3921                	jal	20003b32 <FLASH_ROM_BEG>
+20003f1c:	311d                	jal	20003b42 <FLASH_ROM_END>
+20003f1e:	09900513          	li	a0,153
+20003f22:	b725                	j	20003e4a <.loop406+0x5e>
+20003f24:	d80a05e3          	beqz	s4,20003cae <FLASH_EEPROM_CMD+0xc2>
+20003f28:	54f1                	li	s1,-4
+20003f2a:	b359                	j	20003cb0 <FLASH_EEPROM_CMD+0xc4>
+
+Disassembly of section .text:
+
+00000730 <handle_reset>:
+handle_reset():
+d:\EVT\LaserRangeFinder\obj/../Startup/startup_CH573.S:116
+ 730:	20004197          	auipc	gp,0x20004
+ 734:	0e818193          	addi	gp,gp,232 # 20004818 <__global_pointer$>
+d:\EVT\LaserRangeFinder\obj/../Startup/startup_CH573.S:119
+ 738:	20008117          	auipc	sp,0x20008
+ 73c:	8c810113          	addi	sp,sp,-1848 # 20008000 <_eusrstack>
+d:\EVT\LaserRangeFinder\obj/../Startup/startup_CH573.S:123
+ 740:	00400513          	li	a0,4
+d:\EVT\LaserRangeFinder\obj/../Startup/startup_CH573.S:124
+ 744:	20003597          	auipc	a1,0x20003
+ 748:	0bc58593          	addi	a1,a1,188 # 20003800 <_highcode_vma_start>
+d:\EVT\LaserRangeFinder\obj/../Startup/startup_CH573.S:125
+ 74c:	20003617          	auipc	a2,0x20003
+ 750:	7e060613          	addi	a2,a2,2016 # 20003f2c <_highcode_vma_end>
+d:\EVT\LaserRangeFinder\obj/../Startup/startup_CH573.S:126
+ 754:	00c5fa63          	bgeu	a1,a2,768 <handle_reset+0x38>
+d:\EVT\LaserRangeFinder\obj/../Startup/startup_CH573.S:128
+ 758:	00052283          	lw	t0,0(a0)
+d:\EVT\LaserRangeFinder\obj/../Startup/startup_CH573.S:129
+ 75c:	0055a023          	sw	t0,0(a1)
+d:\EVT\LaserRangeFinder\obj/../Startup/startup_CH573.S:130
+ 760:	0511                	addi	a0,a0,4
+d:\EVT\LaserRangeFinder\obj/../Startup/startup_CH573.S:131
+ 762:	0591                	addi	a1,a1,4
+d:\EVT\LaserRangeFinder\obj/../Startup/startup_CH573.S:132
+ 764:	fec5eae3          	bltu	a1,a2,758 <handle_reset+0x28>
+d:\EVT\LaserRangeFinder\obj/../Startup/startup_CH573.S:136
+ 768:	00000517          	auipc	a0,0x0
+ 76c:	2ac50513          	addi	a0,a0,684 # a14 <_data_lma>
+d:\EVT\LaserRangeFinder\obj/../Startup/startup_CH573.S:137
+ 770:	20004597          	auipc	a1,0x20004
+ 774:	89058593          	addi	a1,a1,-1904 # 20004000 <TxBuff>
+d:\EVT\LaserRangeFinder\obj/../Startup/startup_CH573.S:138
+ 778:	20004617          	auipc	a2,0x20004
+ 77c:	8a060613          	addi	a2,a2,-1888 # 20004018 <_edata>
+d:\EVT\LaserRangeFinder\obj/../Startup/startup_CH573.S:139
+ 780:	00c5fa63          	bgeu	a1,a2,794 <handle_reset+0x64>
+d:\EVT\LaserRangeFinder\obj/../Startup/startup_CH573.S:141
+ 784:	00052283          	lw	t0,0(a0)
+d:\EVT\LaserRangeFinder\obj/../Startup/startup_CH573.S:142
+ 788:	0055a023          	sw	t0,0(a1)
+d:\EVT\LaserRangeFinder\obj/../Startup/startup_CH573.S:143
+ 78c:	0511                	addi	a0,a0,4
+d:\EVT\LaserRangeFinder\obj/../Startup/startup_CH573.S:144
+ 78e:	0591                	addi	a1,a1,4
+d:\EVT\LaserRangeFinder\obj/../Startup/startup_CH573.S:145
+ 790:	fec5eae3          	bltu	a1,a2,784 <handle_reset+0x54>
+d:\EVT\LaserRangeFinder\obj/../Startup/startup_CH573.S:148
+ 794:	20004517          	auipc	a0,0x20004
+ 798:	88450513          	addi	a0,a0,-1916 # 20004018 <_edata>
+d:\EVT\LaserRangeFinder\obj/../Startup/startup_CH573.S:149
+ 79c:	86818593          	addi	a1,gp,-1944 # 20004080 <_ebss>
+d:\EVT\LaserRangeFinder\obj/../Startup/startup_CH573.S:150
+ 7a0:	00b57763          	bgeu	a0,a1,7ae <handle_reset+0x7e>
+d:\EVT\LaserRangeFinder\obj/../Startup/startup_CH573.S:152
+ 7a4:	00052023          	sw	zero,0(a0)
+d:\EVT\LaserRangeFinder\obj/../Startup/startup_CH573.S:153
+ 7a8:	0511                	addi	a0,a0,4
+d:\EVT\LaserRangeFinder\obj/../Startup/startup_CH573.S:154
+ 7aa:	feb56de3          	bltu	a0,a1,7a4 <handle_reset+0x74>
+d:\EVT\LaserRangeFinder\obj/../Startup/startup_CH573.S:156
+ 7ae:	08800293          	li	t0,136
+d:\EVT\LaserRangeFinder\obj/../Startup/startup_CH573.S:157
+ 7b2:	3002a073          	csrs	mstatus,t0
+d:\EVT\LaserRangeFinder\obj/../Startup/startup_CH573.S:158
+ 7b6:	20003297          	auipc	t0,0x20003
+ 7ba:	04a28293          	addi	t0,t0,74 # 20003800 <_highcode_vma_start>
+d:\EVT\LaserRangeFinder\obj/../Startup/startup_CH573.S:159
+ 7be:	0012e293          	ori	t0,t0,1
+d:\EVT\LaserRangeFinder\obj/../Startup/startup_CH573.S:160
+ 7c2:	30529073          	csrw	mtvec,t0
+d:\EVT\LaserRangeFinder\obj/../Startup/startup_CH573.S:162
+ 7c6:	40001737          	lui	a4,0x40001
+d:\EVT\LaserRangeFinder\obj/../Startup/startup_CH573.S:163
+ 7ca:	05700793          	li	a5,87
+d:\EVT\LaserRangeFinder\obj/../Startup/startup_CH573.S:164
+ 7ce:	04f70023          	sb	a5,64(a4) # 40001040 <_eusrstack+0x1fff9040>
+d:\EVT\LaserRangeFinder\obj/../Startup/startup_CH573.S:165
+ 7d2:	fa800793          	li	a5,-88
+d:\EVT\LaserRangeFinder\obj/../Startup/startup_CH573.S:166
+ 7d6:	04f70023          	sb	a5,64(a4)
+d:\EVT\LaserRangeFinder\obj/../Startup/startup_CH573.S:167
+ 7da:	0000100f          	fence.i
+d:\EVT\LaserRangeFinder\obj/../Startup/startup_CH573.S:168
+ 7de:	473c                	lw	a5,72(a4)
+d:\EVT\LaserRangeFinder\obj/../Startup/startup_CH573.S:169
+ 7e0:	fa0006b7          	lui	a3,0xfa000
+d:\EVT\LaserRangeFinder\obj/../Startup/startup_CH573.S:170
+ 7e4:	16e1                	addi	a3,a3,-8
+d:\EVT\LaserRangeFinder\obj/../Startup/startup_CH573.S:171
+ 7e6:	8ff5                	and	a5,a5,a3
+d:\EVT\LaserRangeFinder\obj/../Startup/startup_CH573.S:172
+ 7e8:	060006b7          	lui	a3,0x6000
+d:\EVT\LaserRangeFinder\obj/../Startup/startup_CH573.S:173
+ 7ec:	0695                	addi	a3,a3,5
+d:\EVT\LaserRangeFinder\obj/../Startup/startup_CH573.S:174
+ 7ee:	8fd5                	or	a5,a5,a3
+d:\EVT\LaserRangeFinder\obj/../Startup/startup_CH573.S:175
+ 7f0:	c73c                	sw	a5,72(a4)
+d:\EVT\LaserRangeFinder\obj/../Startup/startup_CH573.S:177
+ 7f2:	00000297          	auipc	t0,0x0
+ 7f6:	01028293          	addi	t0,t0,16 # 802 <main>
+d:\EVT\LaserRangeFinder\obj/../Startup/startup_CH573.S:178
+ 7fa:	34129073          	csrw	mepc,t0
+d:\EVT\LaserRangeFinder\obj/../Startup/startup_CH573.S:185
+ 7fe:	30200073          	mret
+
+00000802 <main>:
+main():
+d:\CH573FEVT\LaserRangeFinder\obj/../src/Main.c:27
+{
+ 802:	1141                	addi	sp,sp,-16
+d:\CH573FEVT\LaserRangeFinder\obj/../src/Main.c:30
+    SetSysClock(CLK_SOURCE_PLL_60MHz);
+ 804:	04800513          	li	a0,72
+d:\CH573FEVT\LaserRangeFinder\obj/../src/Main.c:27
+{
+ 808:	c606                	sw	ra,12(sp)
+ 80a:	c422                	sw	s0,8(sp)
+d:\CH573FEVT\LaserRangeFinder\obj/../src/Main.c:30
+    SetSysClock(CLK_SOURCE_PLL_60MHz);
+ 80c:	20003097          	auipc	ra,0x20003
+ 810:	156080e7          	jalr	342(ra) # 20003962 <SetSysClock>
+d:\CH573FEVT\LaserRangeFinder\obj/../src/Main.c:33
+    GPIOA_SetBits(GPIO_Pin_9);
+ 814:	40001737          	lui	a4,0x40001
+ 818:	0a872783          	lw	a5,168(a4) # 400010a8 <_eusrstack+0x1fff90a8>
+d:\CH573FEVT\LaserRangeFinder\obj/../src/Main.c:34
+    GPIOA_ModeCfg(GPIO_Pin_8, GPIO_ModeIN_PU);      // RXD-配置上拉输入
+ 81c:	4585                	li	a1,1
+ 81e:	10000513          	li	a0,256
+d:\CH573FEVT\LaserRangeFinder\obj/../src/Main.c:33
+    GPIOA_SetBits(GPIO_Pin_9);
+ 822:	2007e793          	ori	a5,a5,512
+ 826:	0af72423          	sw	a5,168(a4)
+d:\CH573FEVT\LaserRangeFinder\obj/../src/Main.c:34
+    GPIOA_ModeCfg(GPIO_Pin_8, GPIO_ModeIN_PU);      // RXD-配置上拉输入
+ 82a:	2825                	jal	862 <GPIOA_ModeCfg>
+d:\CH573FEVT\LaserRangeFinder\obj/../src/Main.c:35
+    GPIOA_ModeCfg(GPIO_Pin_9, GPIO_ModeOut_PP_5mA); // TXD-配置推挽输出，注意先让IO口输出高电平
+ 82c:	458d                	li	a1,3
+ 82e:	20000513          	li	a0,512
+ 832:	2805                	jal	862 <GPIOA_ModeCfg>
+d:\CH573FEVT\LaserRangeFinder\obj/../src/Main.c:36
+    UART1_DefInit();
+ 834:	2299                	jal	97a <UART1_DefInit>
+d:\CH573FEVT\LaserRangeFinder\obj/../src/Main.c:39
+    UART1_SendString(TxBuff, sizeof(TxBuff));
+ 836:	45d1                	li	a1,20
+ 838:	20003517          	auipc	a0,0x20003
+ 83c:	7c850513          	addi	a0,a0,1992 # 20004000 <TxBuff>
+ 840:	22b5                	jal	9ac <UART1_SendString>
+d:\CH573FEVT\LaserRangeFinder\obj/../src/Main.c:46
+        len = UART1_RecvString(RxBuff);
+ 842:	20003417          	auipc	s0,0x20003
+ 846:	7da40413          	addi	s0,s0,2010 # 2000401c <RxBuff>
+ 84a:	20003517          	auipc	a0,0x20003
+ 84e:	7d250513          	addi	a0,a0,2002 # 2000401c <RxBuff>
+ 852:	2249                	jal	9d4 <UART1_RecvString>
+d:\CH573FEVT\LaserRangeFinder\obj/../src/Main.c:47
+        if(len)
+ 854:	0ff57793          	andi	a5,a0,255
+ 858:	dbed                	beqz	a5,84a <main+0x48>
+d:\CH573FEVT\LaserRangeFinder\obj/../src/Main.c:49
+            UART1_SendString(RxBuff, len);
+ 85a:	85be                	mv	a1,a5
+ 85c:	8522                	mv	a0,s0
+ 85e:	22b9                	jal	9ac <UART1_SendString>
+ 860:	b7ed                	j	84a <main+0x48>
+
+00000862 <GPIOA_ModeCfg>:
+GPIOA_ModeCfg():
+d:\CH573FEVT\LaserRangeFinder\obj/../StdPeriphDriver/CH57x_gpio.c:27
+ *
+ * @return  none
+ */
+void GPIOA_ModeCfg(uint32_t pin, GPIOModeTypeDef mode)
+{
+    switch(mode)
+ 862:	4791                	li	a5,4
+ 864:	02b7ee63          	bltu	a5,a1,8a0 <GPIOA_ModeCfg+0x3e>
+ 868:	00000717          	auipc	a4,0x0
+ 86c:	19870713          	addi	a4,a4,408 # a00 <UART1_RecvString+0x2c>
+ 870:	058a                	slli	a1,a1,0x2
+ 872:	95ba                	add	a1,a1,a4
+ 874:	419c                	lw	a5,0(a1)
+ 876:	97ba                	add	a5,a5,a4
+ 878:	8782                	jr	a5
+d:\CH573FEVT\LaserRangeFinder\obj/../StdPeriphDriver/CH57x_gpio.c:30
+    {
+        case GPIO_ModeIN_Floating:
+            R32_PA_PD_DRV &= ~pin;
+ 87a:	400017b7          	lui	a5,0x40001
+ 87e:	0b47a703          	lw	a4,180(a5) # 400010b4 <_eusrstack+0x1fff90b4>
+ 882:	fff54513          	not	a0,a0
+ 886:	8f69                	and	a4,a4,a0
+ 888:	0ae7aa23          	sw	a4,180(a5)
+d:\CH573FEVT\LaserRangeFinder\obj/../StdPeriphDriver/CH57x_gpio.c:31
+            R32_PA_PU &= ~pin;
+ 88c:	0b07a703          	lw	a4,176(a5)
+d:\CH573FEVT\LaserRangeFinder\obj/../StdPeriphDriver/CH57x_gpio.c:43
+            R32_PA_DIR &= ~pin;
+            break;
+
+        case GPIO_ModeIN_PD:
+            R32_PA_PD_DRV |= pin;
+            R32_PA_PU &= ~pin;
+ 890:	8f69                	and	a4,a4,a0
+ 892:	0ae7a823          	sw	a4,176(a5)
+d:\CH573FEVT\LaserRangeFinder\obj/../StdPeriphDriver/CH57x_gpio.c:44
+            R32_PA_DIR &= ~pin;
+ 896:	0a07a703          	lw	a4,160(a5)
+ 89a:	8d79                	and	a0,a0,a4
+d:\CH573FEVT\LaserRangeFinder\obj/../StdPeriphDriver/CH57x_gpio.c:54
+            R32_PA_DIR |= pin;
+            break;
+
+        case GPIO_ModeOut_PP_20mA:
+            R32_PA_PD_DRV |= pin;
+            R32_PA_DIR |= pin;
+ 89c:	0aa7a023          	sw	a0,160(a5)
+d:\CH573FEVT\LaserRangeFinder\obj/../StdPeriphDriver/CH57x_gpio.c:60
+            break;
+
+        default:
+            break;
+    }
+}
+ 8a0:	8082                	ret
+d:\CH573FEVT\LaserRangeFinder\obj/../StdPeriphDriver/CH57x_gpio.c:36
+            R32_PA_PD_DRV &= ~pin;
+ 8a2:	400017b7          	lui	a5,0x40001
+ 8a6:	0b47a683          	lw	a3,180(a5) # 400010b4 <_eusrstack+0x1fff90b4>
+ 8aa:	fff54713          	not	a4,a0
+ 8ae:	8ef9                	and	a3,a3,a4
+ 8b0:	0ad7aa23          	sw	a3,180(a5)
+d:\CH573FEVT\LaserRangeFinder\obj/../StdPeriphDriver/CH57x_gpio.c:37
+            R32_PA_PU |= pin;
+ 8b4:	0b07a683          	lw	a3,176(a5)
+ 8b8:	8d55                	or	a0,a0,a3
+ 8ba:	0aa7a823          	sw	a0,176(a5)
+d:\CH573FEVT\LaserRangeFinder\obj/../StdPeriphDriver/CH57x_gpio.c:38
+            R32_PA_DIR &= ~pin;
+ 8be:	0a07a683          	lw	a3,160(a5)
+ 8c2:	8f75                	and	a4,a4,a3
+ 8c4:	0ae7a023          	sw	a4,160(a5)
+d:\CH573FEVT\LaserRangeFinder\obj/../StdPeriphDriver/CH57x_gpio.c:39
+            break;
+ 8c8:	8082                	ret
+d:\CH573FEVT\LaserRangeFinder\obj/../StdPeriphDriver/CH57x_gpio.c:42
+            R32_PA_PD_DRV |= pin;
+ 8ca:	400017b7          	lui	a5,0x40001
+ 8ce:	0b47a703          	lw	a4,180(a5) # 400010b4 <_eusrstack+0x1fff90b4>
+ 8d2:	8f49                	or	a4,a4,a0
+ 8d4:	0ae7aa23          	sw	a4,180(a5)
+d:\CH573FEVT\LaserRangeFinder\obj/../StdPeriphDriver/CH57x_gpio.c:43
+            R32_PA_PU &= ~pin;
+ 8d8:	0b07a703          	lw	a4,176(a5)
+ 8dc:	fff54513          	not	a0,a0
+ 8e0:	bf45                	j	890 <GPIOA_ModeCfg+0x2e>
+d:\CH573FEVT\LaserRangeFinder\obj/../StdPeriphDriver/CH57x_gpio.c:48
+            R32_PA_PD_DRV &= ~pin;
+ 8e2:	400017b7          	lui	a5,0x40001
+ 8e6:	0b47a683          	lw	a3,180(a5) # 400010b4 <_eusrstack+0x1fff90b4>
+ 8ea:	fff54713          	not	a4,a0
+ 8ee:	8f75                	and	a4,a4,a3
+d:\CH573FEVT\LaserRangeFinder\obj/../StdPeriphDriver/CH57x_gpio.c:53
+            R32_PA_PD_DRV |= pin;
+ 8f0:	0ae7aa23          	sw	a4,180(a5)
+d:\CH573FEVT\LaserRangeFinder\obj/../StdPeriphDriver/CH57x_gpio.c:54
+            R32_PA_DIR |= pin;
+ 8f4:	0a07a703          	lw	a4,160(a5)
+ 8f8:	8d59                	or	a0,a0,a4
+ 8fa:	b74d                	j	89c <GPIOA_ModeCfg+0x3a>
+d:\CH573FEVT\LaserRangeFinder\obj/../StdPeriphDriver/CH57x_gpio.c:53
+            R32_PA_PD_DRV |= pin;
+ 8fc:	400017b7          	lui	a5,0x40001
+ 900:	0b47a703          	lw	a4,180(a5) # 400010b4 <_eusrstack+0x1fff90b4>
+ 904:	8f49                	or	a4,a4,a0
+ 906:	b7ed                	j	8f0 <GPIOA_ModeCfg+0x8e>
+
+00000908 <GetSysClock>:
+GetSysClock():
+d:\CH573FEVT\LaserRangeFinder\obj/../StdPeriphDriver/CH57x_sys.c:94
+    rev = R16_CLK_SYS_CFG & 0xff;
+ 908:	400017b7          	lui	a5,0x40001
+ 90c:	0087d503          	lhu	a0,8(a5) # 40001008 <_eusrstack+0x1fff9008>
+ 910:	0542                	slli	a0,a0,0x10
+ 912:	8141                	srli	a0,a0,0x10
+d:\CH573FEVT\LaserRangeFinder\obj/../StdPeriphDriver/CH57x_sys.c:95
+    if((rev & 0x40) == (0 << 6))
+ 914:	04057793          	andi	a5,a0,64
+ 918:	eb91                	bnez	a5,92c <GetSysClock+0x24>
+d:\CH573FEVT\LaserRangeFinder\obj/../StdPeriphDriver/CH57x_sys.c:97
+        return (32000000 / (rev & 0x1f));
+ 91a:	01f57793          	andi	a5,a0,31
+ 91e:	01e85537          	lui	a0,0x1e85
+d:\CH573FEVT\LaserRangeFinder\obj/../StdPeriphDriver/CH57x_sys.c:101
+        return (480000000 / (rev & 0x1f));
+ 922:	80050513          	addi	a0,a0,-2048 # 1e84800 <_data_lma+0x1e83dec>
+ 926:	02f54533          	div	a0,a0,a5
+ 92a:	8082                	ret
+d:\CH573FEVT\LaserRangeFinder\obj/../StdPeriphDriver/CH57x_sys.c:99
+    else if((rev & RB_CLK_SYS_MOD) == (1 << 6))
+ 92c:	0c057793          	andi	a5,a0,192
+ 930:	04000713          	li	a4,64
+ 934:	00e79763          	bne	a5,a4,942 <GetSysClock+0x3a>
+d:\CH573FEVT\LaserRangeFinder\obj/../StdPeriphDriver/CH57x_sys.c:101
+        return (480000000 / (rev & 0x1f));
+ 938:	01f57793          	andi	a5,a0,31
+ 93c:	1c9c4537          	lui	a0,0x1c9c4
+ 940:	b7cd                	j	922 <GetSysClock+0x1a>
+d:\CH573FEVT\LaserRangeFinder\obj/../StdPeriphDriver/CH57x_sys.c:105
+        return (32000);
+ 942:	6521                	lui	a0,0x8
+ 944:	d0050513          	addi	a0,a0,-768 # 7d00 <_data_lma+0x72ec>
+d:\CH573FEVT\LaserRangeFinder\obj/../StdPeriphDriver/CH57x_sys.c:107
+}
+ 948:	8082                	ret
+
+0000094a <UART1_BaudRateCfg>:
+UART1_BaudRateCfg():
+d:\CH573FEVT\LaserRangeFinder\obj/../StdPeriphDriver/CH57x_uart1.c:43
+ * @param   baudrate    - 波特率
+ *
+ * @return  none
+ */
+void UART1_BaudRateCfg(uint32_t baudrate)
+{
+ 94a:	1141                	addi	sp,sp,-16
+ 94c:	c422                	sw	s0,8(sp)
+ 94e:	c606                	sw	ra,12(sp)
+ 950:	842a                	mv	s0,a0
+d:\CH573FEVT\LaserRangeFinder\obj/../StdPeriphDriver/CH57x_uart1.c:46
+    uint32_t x;
+
+    x = 10 * GetSysClock() / 8 / baudrate;
+ 952:	3f5d                	jal	908 <GetSysClock>
+ 954:	4729                	li	a4,10
+ 956:	02e507b3          	mul	a5,a0,a4
+d:\CH573FEVT\LaserRangeFinder\obj/../StdPeriphDriver/CH57x_uart1.c:49
+    x = (x + 5) / 10;
+    R16_UART1_DL = (uint16_t)x;
+}
+ 95a:	40b2                	lw	ra,12(sp)
+d:\CH573FEVT\LaserRangeFinder\obj/../StdPeriphDriver/CH57x_uart1.c:46
+    x = 10 * GetSysClock() / 8 / baudrate;
+ 95c:	838d                	srli	a5,a5,0x3
+ 95e:	0287d7b3          	divu	a5,a5,s0
+d:\CH573FEVT\LaserRangeFinder\obj/../StdPeriphDriver/CH57x_uart1.c:49
+}
+ 962:	4422                	lw	s0,8(sp)
+d:\CH573FEVT\LaserRangeFinder\obj/../StdPeriphDriver/CH57x_uart1.c:47
+    x = (x + 5) / 10;
+ 964:	0795                	addi	a5,a5,5
+ 966:	02e7d7b3          	divu	a5,a5,a4
+d:\CH573FEVT\LaserRangeFinder\obj/../StdPeriphDriver/CH57x_uart1.c:48
+    R16_UART1_DL = (uint16_t)x;
+ 96a:	40003737          	lui	a4,0x40003
+ 96e:	07c2                	slli	a5,a5,0x10
+ 970:	83c1                	srli	a5,a5,0x10
+ 972:	40f71623          	sh	a5,1036(a4) # 4000340c <_eusrstack+0x1fffb40c>
+d:\CH573FEVT\LaserRangeFinder\obj/../StdPeriphDriver/CH57x_uart1.c:49
+}
+ 976:	0141                	addi	sp,sp,16
+ 978:	8082                	ret
+
+0000097a <UART1_DefInit>:
+UART1_DefInit():
+d:\CH573FEVT\LaserRangeFinder\obj/../StdPeriphDriver/CH57x_uart1.c:26
+    UART1_BaudRateCfg(115200);
+ 97a:	6571                	lui	a0,0x1c
+d:\CH573FEVT\LaserRangeFinder\obj/../StdPeriphDriver/CH57x_uart1.c:25
+{
+ 97c:	1141                	addi	sp,sp,-16
+d:\CH573FEVT\LaserRangeFinder\obj/../StdPeriphDriver/CH57x_uart1.c:26
+    UART1_BaudRateCfg(115200);
+ 97e:	20050513          	addi	a0,a0,512 # 1c200 <_data_lma+0x1b7ec>
+d:\CH573FEVT\LaserRangeFinder\obj/../StdPeriphDriver/CH57x_uart1.c:25
+{
+ 982:	c606                	sw	ra,12(sp)
+d:\CH573FEVT\LaserRangeFinder\obj/../StdPeriphDriver/CH57x_uart1.c:26
+    UART1_BaudRateCfg(115200);
+ 984:	37d9                	jal	94a <UART1_BaudRateCfg>
+d:\CH573FEVT\LaserRangeFinder\obj/../StdPeriphDriver/CH57x_uart1.c:27
+    R8_UART1_FCR = (2 << 6) | RB_FCR_TX_FIFO_CLR | RB_FCR_RX_FIFO_CLR | RB_FCR_FIFO_EN; // FIFO打开，触发点4字节
+ 986:	400037b7          	lui	a5,0x40003
+ 98a:	f8700713          	li	a4,-121
+ 98e:	40e78123          	sb	a4,1026(a5) # 40003402 <_eusrstack+0x1fffb402>
+d:\CH573FEVT\LaserRangeFinder\obj/../StdPeriphDriver/CH57x_uart1.c:28
+    R8_UART1_LCR = RB_LCR_WORD_SZ;
+ 992:	470d                	li	a4,3
+ 994:	40e781a3          	sb	a4,1027(a5)
+d:\CH573FEVT\LaserRangeFinder\obj/../StdPeriphDriver/CH57x_uart1.c:29
+    R8_UART1_IER = RB_IER_TXD_EN;
+ 998:	04000713          	li	a4,64
+ 99c:	40e780a3          	sb	a4,1025(a5)
+d:\CH573FEVT\LaserRangeFinder\obj/../StdPeriphDriver/CH57x_uart1.c:30
+    R8_UART1_DIV = 1;
+ 9a0:	4705                	li	a4,1
+ 9a2:	40e78723          	sb	a4,1038(a5)
+d:\CH573FEVT\LaserRangeFinder\obj/../StdPeriphDriver/CH57x_uart1.c:31
+}
+ 9a6:	40b2                	lw	ra,12(sp)
+ 9a8:	0141                	addi	sp,sp,16
+ 9aa:	8082                	ret
+
+000009ac <UART1_SendString>:
+UART1_SendString():
+d:\CH573FEVT\LaserRangeFinder\obj/../StdPeriphDriver/CH57x_uart1.c:122
+{
+    uint16_t len = l;
+
+    while(len)
+    {
+        if(R8_UART1_TFC != UART_FIFO_SIZE)
+ 9ac:	400037b7          	lui	a5,0x40003
+ 9b0:	4721                	li	a4,8
+ 9b2:	400036b7          	lui	a3,0x40003
+d:\CH573FEVT\LaserRangeFinder\obj/../StdPeriphDriver/CH57x_uart1.c:120
+    while(len)
+ 9b6:	e191                	bnez	a1,9ba <UART1_SendString+0xe>
+d:\CH573FEVT\LaserRangeFinder\obj/../StdPeriphDriver/CH57x_uart1.c:128
+        {
+            R8_UART1_THR = *buf++;
+            len--;
+        }
+    }
+}
+ 9b8:	8082                	ret
+d:\CH573FEVT\LaserRangeFinder\obj/../StdPeriphDriver/CH57x_uart1.c:122
+        if(R8_UART1_TFC != UART_FIFO_SIZE)
+ 9ba:	40b7c603          	lbu	a2,1035(a5) # 4000340b <_eusrstack+0x1fffb40b>
+ 9be:	fec70ce3          	beq	a4,a2,9b6 <UART1_SendString+0xa>
+d:\CH573FEVT\LaserRangeFinder\obj/../StdPeriphDriver/CH57x_uart1.c:124
+            R8_UART1_THR = *buf++;
+ 9c2:	0505                	addi	a0,a0,1
+ 9c4:	fff54603          	lbu	a2,-1(a0)
+d:\CH573FEVT\LaserRangeFinder\obj/../StdPeriphDriver/CH57x_uart1.c:125
+            len--;
+ 9c8:	15fd                	addi	a1,a1,-1
+ 9ca:	05c2                	slli	a1,a1,0x10
+d:\CH573FEVT\LaserRangeFinder\obj/../StdPeriphDriver/CH57x_uart1.c:124
+            R8_UART1_THR = *buf++;
+ 9cc:	40c68423          	sb	a2,1032(a3) # 40003408 <_eusrstack+0x1fffb408>
+d:\CH573FEVT\LaserRangeFinder\obj/../StdPeriphDriver/CH57x_uart1.c:125
+            len--;
+ 9d0:	81c1                	srli	a1,a1,0x10
+ 9d2:	b7d5                	j	9b6 <UART1_SendString+0xa>
+
+000009d4 <UART1_RecvString>:
+UART1_RecvString():
+d:\CH573FEVT\LaserRangeFinder\obj/../StdPeriphDriver/CH57x_uart1.c:143
+ */
+uint16_t UART1_RecvString(uint8_t *buf)
+{
+    uint16_t len = 0;
+
+    while(R8_UART1_RFC)
+ 9d4:	4781                	li	a5,0
+ 9d6:	400036b7          	lui	a3,0x40003
+ 9da:	40a6c703          	lbu	a4,1034(a3) # 4000340a <_eusrstack+0x1fffb40a>
+ 9de:	01079613          	slli	a2,a5,0x10
+ 9e2:	8241                	srli	a2,a2,0x10
+ 9e4:	0ff77713          	andi	a4,a4,255
+ 9e8:	e319                	bnez	a4,9ee <UART1_RecvString+0x1a>
+d:\CH573FEVT\LaserRangeFinder\obj/../StdPeriphDriver/CH57x_uart1.c:150
+        *buf++ = R8_UART1_RBR;
+        len++;
+    }
+
+    return (len);
+}
+ 9ea:	8532                	mv	a0,a2
+ 9ec:	8082                	ret
+d:\CH573FEVT\LaserRangeFinder\obj/../StdPeriphDriver/CH57x_uart1.c:145
+        *buf++ = R8_UART1_RBR;
+ 9ee:	4086c603          	lbu	a2,1032(a3)
+ 9f2:	00f50733          	add	a4,a0,a5
+ 9f6:	0785                	addi	a5,a5,1
+ 9f8:	00c70023          	sb	a2,0(a4)
+d:\CH573FEVT\LaserRangeFinder\obj/../StdPeriphDriver/CH57x_uart1.c:146
+        len++;
+ 9fc:	bff9                	j	9da <UART1_RecvString+0x6>
+ 9fe:	0000                	unimp
+ a00:	fe7a                	fsw	ft10,60(sp)
+ a02:	ffff                	0xffff
+ a04:	fea2                	fsw	fs0,124(sp)
+ a06:	ffff                	0xffff
+ a08:	feca                	fsw	fs2,124(sp)
+ a0a:	ffff                	0xffff
+ a0c:	fee2                	fsw	fs8,124(sp)
+ a0e:	ffff                	0xffff
+ a10:	fefc                	fsw	fa5,124(a3)
+ a12:	ffff                	0xffff
