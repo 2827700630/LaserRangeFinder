@@ -6,7 +6,6 @@
 #include "TFT.h"
 #include "CH57x_common.h"
 
-static TFT_HandleTypeDef *g_tft_handles[MAX_TFT_DEVICES] = {NULL}; // TFT设备句柄数组
 
 // --- 内部辅助函数声明 ---
 static void TFT_Wait_DMA_Transfer_Complete(TFT_HandleTypeDef *htft); // 等待 DMA 传输完成
@@ -82,23 +81,6 @@ void TFT_Config_Display(TFT_HandleTypeDef *htft,
 	htft->y_offset = y_offset;
 }
 
-/**
- * @brief  注册TFT设备到全局设备列表
- * @param  htft TFT句柄指针
- * @retval 无
- * @note   内部函数，用于DMA回调
- */
-static void TFT_Register_Device(TFT_HandleTypeDef *htft)
-{
-	for (int i = 0; i < MAX_TFT_DEVICES; i++)
-	{
-		if (g_tft_handles[i] == NULL || g_tft_handles[i]->spi_handle == htft->spi_handle)
-		{
-			g_tft_handles[i] = htft;
-			break;
-		}
-	}
-}
 
 //----------------- TFT 控制引脚函数实现 (依赖于具体硬件平台 HAL) -----------------
 // 这些函数通过调用 HAL 库函数来控制 TFT 的 GPIO 引脚。
@@ -590,20 +572,20 @@ void TFT_Init_ST7735S(TFT_HandleTypeDef *htft)
 
 	// 硬复位TFT
 	TFT_Pin_RES_Set(htft, 0);
-	HAL_Delay(100);
+	DelayMs(100);
 	TFT_Pin_RES_Set(htft, 1);
-	HAL_Delay(100);
+	DelayMs(100);
 
 	TFT_Pin_BLK_Set(htft, 1); // 打开背光 (高)
-	HAL_Delay(100);
+	DelayMs(100);
 
 	// 1. 软件复位 (Software Reset)
 	TFT_Write_Command(htft, 0x01);
-	HAL_Delay(150);
+	DelayMs(150);
 
 	// 2. 退出睡眠模式 (Sleep out)
 	TFT_Write_Command(htft, 0x11); // 退出睡眠模式
-	HAL_Delay(255);
+	DelayMs(255);
 
 	// 3. 设置帧率控制 (Frame Rate Control)
 	TFT_Write_Command(htft, 0xB1); // FRMCTR1 (In normal mode/ Full colors)
@@ -706,11 +688,11 @@ void TFT_Init_ST7735S(TFT_HandleTypeDef *htft)
 
 	// 16. 开启正常显示模式 (Normal Display Mode ON)
 	TFT_Write_Command(htft, 0x13); // NORON
-	HAL_Delay(10);
+	DelayMs(10);
 
 	// 17. 打开显示
 	TFT_Write_Command(htft, 0x29); // Display ON
-	HAL_Delay(20);
+	DelayMs(20);
 }
 
 /**
@@ -770,20 +752,20 @@ void TFT_Init_ST7789v3(TFT_HandleTypeDef *htft)
 
 	// 2. 硬件复位流程
 	TFT_Pin_RES_Set(htft, 0); // 拉低复位引脚
-	HAL_Delay(100);			  // 保持100ms低电平
+	DelayMs(100);			  // 保持100ms低电平
 	TFT_Pin_RES_Set(htft, 1); // 释放复位引脚
-	HAL_Delay(100);			  // 等待复位完成
+	DelayMs(100);			  // 等待复位完成
 
 	TFT_Pin_BLK_Set(htft, 1); // 开启背光
-	HAL_Delay(100);			  // 背光稳定时间
+	DelayMs(100);			  // 背光稳定时间
 
 	// 3. 发送软件复位命令
 	TFT_Write_Command(htft, 0x01); // 软件复位
-	HAL_Delay(120);				   // 等待复位完成
+	DelayMs(120);				   // 等待复位完成
 
 	// 4. 退出睡眠模式
 	TFT_Write_Command(htft, 0x11); // 退出睡眠模式(Sleep OUT)
-	HAL_Delay(120);				   // 等待唤醒完成
+	DelayMs(120);				   // 等待唤醒完成
 
 	// 5. 设置屏幕显示方向
 	TFT_Set_Direction(htft, htft->display_direction);
@@ -881,5 +863,5 @@ void TFT_Init_ST7789v3(TFT_HandleTypeDef *htft)
 
 	// 20. 开启显示
 	TFT_Write_Command(htft, 0x29); // 显示ON
-	HAL_Delay(20);				   // 等待显示稳定
+	DelayMs(20);				   // 等待显示稳定
 }
