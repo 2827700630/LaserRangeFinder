@@ -3,7 +3,7 @@
  * Author             : WCH
  * Version            : V1.0
  * Date               : 2020/08/06
- * Description        : 串口1收发演示
+ * Description        : SPI0演示 Master/Slave 模式数据收发
  *********************************************************************************
  * Copyright (c) 2021 Nanjing Qinheng Microelectronics Co., Ltd.
  * Attention: This software (modified or not) and binary are used for 
@@ -12,9 +12,23 @@
 
 #include "CH57x_common.h"
 
-uint8_t TxBuff[] = "This is a tx exam\r\n";
-uint8_t RxBuff[100];
-uint8_t trigB;
+__attribute__((aligned(4))) uint8_t spiBuff[] = {1, 2, 3, 4, 5, 6, 7, 8, 9, 0, 1, 2, 3, 4, 5, 6};
+__attribute__((aligned(4))) uint8_t spiBuffrev[16];
+
+/*********************************************************************
+ * @fn      DebugInit
+ *
+ * @brief   调试初始化
+ *
+ * @return  none
+ */
+void DebugInit(void)
+{
+    GPIOA_SetBits(GPIO_Pin_9);
+    GPIOA_ModeCfg(GPIO_Pin_8, GPIO_ModeIN_PU);
+    GPIOA_ModeCfg(GPIO_Pin_9, GPIO_ModeOut_PP_5mA);
+    UART1_DefInit();
+}
 
 /*********************************************************************
  * @fn      main
@@ -25,84 +39,71 @@ uint8_t trigB;
  */
 int main()
 {
-    uint8_t len;
+    uint8_t i;
 
     SetSysClock(CLK_SOURCE_PLL_60MHz);
 
-    /* 配置串口1：先配置IO口模式，再配置串口 */
-    GPIOA_SetBits(GPIO_Pin_9);
-    GPIOA_ModeCfg(GPIO_Pin_8, GPIO_ModeIN_PU);      // RXD-配置上拉输入
-    GPIOA_ModeCfg(GPIO_Pin_9, GPIO_ModeOut_PP_5mA); // TXD-配置推挽输出，注意先让IO口输出高电平
-    UART1_DefInit();
+    /* 配置串口调试 */
+    DebugInit();
+    PRINT("Start @ChipID=%02X\n", R8_CHIP_ID);
 
-#if 1 // 测试串口发送字符串
-    UART1_SendString(TxBuff, sizeof(TxBuff));
+#if 1
+    /* 主机模式 */
+     PRINT("1.spi0 mul master mode send data ...\n");
+    DelayMs(100);
 
+    GPIOA_SetBits(GPIO_Pin_12);
+    GPIOA_ModeCfg(GPIO_Pin_12 | GPIO_Pin_13 | GPIO_Pin_14, GPIO_ModeOut_PP_5mA);
+    SPI0_MasterDefInit();
+
+    // 单字节发送
+    GPIOA_ResetBits(GPIO_Pin_12);
+    SPI0_MasterSendByte(0x55);
+    GPIOA_SetBits(GPIO_Pin_12);
+    DelayMs(1);
+    GPIOA_ResetBits(GPIO_Pin_12);
+    i = SPI0_MasterRecvByte();
+    GPIOA_SetBits(GPIO_Pin_12);
+    DelayMs(2);
+
+    // FIFO 连续发送
+    GPIOA_ResetBits(GPIO_Pin_12);
+    SPI0_MasterTrans(spiBuff, 9);
+    GPIOA_SetBits(GPIO_Pin_12);
+    DelayMs(1);
+    GPIOA_ResetBits(GPIO_Pin_12);
+    SPI0_MasterRecv(spiBuffrev, 12);
+    GPIOA_SetBits(GPIO_Pin_12);
+    DelayMs(1);
+
+    // DMA 连续发送
+    GPIOA_ResetBits(GPIO_Pin_12);
+    SPI0_MasterDMATrans(spiBuff, 12);
+    GPIOA_SetBits(GPIO_Pin_12);
+    DelayMs(1);
+    GPIOA_ResetBits(GPIO_Pin_12);
+    SPI0_MasterDMARecv(spiBuffrev, 12);
+    GPIOA_SetBits(GPIO_Pin_12); 
+
+    PRINT("END ...\n");
+    while(1);
 #endif
 
-#if 1 // 查询方式：接收数据后发送出去
-    while(1)
-    {
-        len = UART1_RecvString(RxBuff);
-        if(len)
-        {
-            UART1_SendString(RxBuff, len);
-        }
-    }
+#if 0
+    /* 设备模式 */
+    PRINT("1.spi0 mul slave mode \n");
+    GPIOA_ModeCfg(GPIO_Pin_12 | GPIO_Pin_13 | GPIO_Pin_14 | GPIO_Pin_15, GPIO_ModeIN_PU);
+    SPI0_SlaveInit();
+    i = SPI0_SlaveRecvByte();
+    SPI0_SlaveSendByte(~i);
 
-#endif
+    SPI0_SlaveRecv(spiBuffrev, 9);
+    SPI0_SlaveTrans(spiBuffrev, 12);
+    SPI0_SlaveDMARecv(spiBuffrev, 12);
+    SPI0_SlaveDMATrans(spiBuffrev, 12);
 
-#if 0 // 中断方式：接收数据后发送出去
-    UART1_ByteTrigCfg(UART_7BYTE_TRIG);
-    trigB = 7;
-    UART1_INTCfg(ENABLE, RB_IER_RECV_RDY | RB_IER_LINE_STAT);
-    PFIC_EnableIRQ(UART1_IRQn);
+    while(1);
 #endif
 
     while(1);
-}
-
-/*********************************************************************
- * @fn      UART1_IRQHandler
- *
- * @brief   UART1中断函数
- *
- * @return  none
- */
-__attribute__((interrupt("WCH-Interrupt-fast")))
-__attribute__((section(".highcode")))
-void UART1_IRQHandler(void)
-{
-    volatile uint8_t i;
-
-    switch(UART1_GetITFlag())
-    {
-        case UART_II_LINE_STAT: // 线路状态错误
-        {
-            UART1_GetLinSTA();
-            break;
-        }
-
-        case UART_II_RECV_RDY: // 数据达到设置触发点
-            for(i = 0; i != trigB; i++)
-            {
-                RxBuff[i] = UART1_RecvByte();
-                UART1_SendByte(RxBuff[i]);
-            }
-            break;
-
-        case UART_II_RECV_TOUT: // 接收超时，暂时一帧数据接收完成
-            i = UART1_RecvString(RxBuff);
-            UART1_SendString(RxBuff, i);
-            break;
-
-        case UART_II_THR_EMPTY: // 发送缓存区空，可继续发送
-            break;
-
-        case UART_II_MODEM_CHG: // 只支持串口0
-            break;
-
-        default:
-            break;
-    }
 }

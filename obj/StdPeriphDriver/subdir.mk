@@ -10,6 +10,7 @@ C_SRCS += \
 ../StdPeriphDriver/CH57x_flash.c \
 ../StdPeriphDriver/CH57x_gpio.c \
 ../StdPeriphDriver/CH57x_pwr.c \
+../StdPeriphDriver/CH57x_spi0.c \
 ../StdPeriphDriver/CH57x_sys.c \
 ../StdPeriphDriver/CH57x_uart0.c \
 ../StdPeriphDriver/CH57x_uart1.c 
@@ -20,6 +21,7 @@ C_DEPS += \
 ./StdPeriphDriver/CH57x_flash.d \
 ./StdPeriphDriver/CH57x_gpio.d \
 ./StdPeriphDriver/CH57x_pwr.d \
+./StdPeriphDriver/CH57x_spi0.d \
 ./StdPeriphDriver/CH57x_sys.d \
 ./StdPeriphDriver/CH57x_uart0.d \
 ./StdPeriphDriver/CH57x_uart1.d 
@@ -30,6 +32,7 @@ OBJS += \
 ./StdPeriphDriver/CH57x_flash.o \
 ./StdPeriphDriver/CH57x_gpio.o \
 ./StdPeriphDriver/CH57x_pwr.o \
+./StdPeriphDriver/CH57x_spi0.o \
 ./StdPeriphDriver/CH57x_sys.o \
 ./StdPeriphDriver/CH57x_uart0.o \
 ./StdPeriphDriver/CH57x_uart1.o 
@@ -41,6 +44,7 @@ EXPANDS += \
 ./StdPeriphDriver/CH57x_flash.c.234r.expand \
 ./StdPeriphDriver/CH57x_gpio.c.234r.expand \
 ./StdPeriphDriver/CH57x_pwr.c.234r.expand \
+./StdPeriphDriver/CH57x_spi0.c.234r.expand \
 ./StdPeriphDriver/CH57x_sys.c.234r.expand \
 ./StdPeriphDriver/CH57x_uart0.c.234r.expand \
 ./StdPeriphDriver/CH57x_uart1.c.234r.expand 

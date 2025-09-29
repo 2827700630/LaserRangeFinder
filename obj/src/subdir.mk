@@ -5,17 +5,21 @@
 
 # Add inputs and outputs from these tool invocations to the build variables 
 C_SRCS += \
-../src/Main.c 
+../src/Main.c \
+../src/TFT.c 
 
 C_DEPS += \
-./src/Main.d 
+./src/Main.d \
+./src/TFT.d 
 
 OBJS += \
-./src/Main.o 
+./src/Main.o \
+./src/TFT.o 
 
 
 EXPANDS += \
-./src/Main.c.234r.expand 
+./src/Main.c.234r.expand \
+./src/TFT.c.234r.expand 
 
 
 
