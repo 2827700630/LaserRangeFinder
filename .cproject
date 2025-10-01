@@ -266,7 +266,7 @@
             </toolChain>
           </folderInfo>
           <sourceEntries>
-            <entry excluding="StdPeriphDriver/CH57x_timer3.c|StdPeriphDriver/CH57x_timer2.c|StdPeriphDriver/CH57x_timer1.c|StdPeriphDriver/CH57x_timer0.c|StdPeriphDriver/CH57x_usbhostClass.c|StdPeriphDriver/CH57x_usbhostBase.c|StdPeriphDriver/CH57x_usbdev.c|StdPeriphDriver/CH57x_uart3.c|StdPeriphDriver/CH57x_uart2.c|StdPeriphDriver/CH57x_pwm.c" flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name=""/>
+            <entry excluding="StdPeriphDriver/CH57x_timer3.c|StdPeriphDriver/CH57x_timer2.c|StdPeriphDriver/CH57x_timer1.c|StdPeriphDriver/CH57x_timer0.c|StdPeriphDriver/CH57x_usbhostClass.c|StdPeriphDriver/CH57x_usbhostBase.c|StdPeriphDriver/CH57x_usbdev.c|StdPeriphDriver/CH57x_uart3.c|StdPeriphDriver/CH57x_uart2.c|StdPeriphDriver/CH57x_pwm.c|src/TFT1.c|src/TFT1.h" flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name=""/>
           </sourceEntries>
         </configuration>
       </storageModule>

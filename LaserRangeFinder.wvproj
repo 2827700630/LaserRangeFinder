@@ -11,7 +11,8 @@
 			"description": "Website: http://www.wch.cn/products/CH573.html?\\nROM(byte): 448K, SRAMX(byte): 24K,SRAMS(byte): 32K, CHIP PINS: 28, GPIO PORTS: 20.\\nCH573F is simplified based on CH573F, which eliminates USB host, touch button detection module, 8-bit PWM module and two serial ports. The total capacity of flashrom is only 256Kb, and only supports power supply voltage above 2.3V. In addition to the above differences, others are basically the same as CH573. You can refer to CH573 manual and materials directly.",
 			"link": "WCH-Link",
 			"peripheral_version": "2.6",
-			"calibrateSupport": false
+			"calibrateSupport": false,
+			"calibrateCommand": ""
 		},
 		"linkedFolders": [],
 		"removedResources": [
@@ -50,7 +51,9 @@
 					"${project}/StdPeriphDriver/CH57x_usbdev.c",
 					"${project}/StdPeriphDriver/CH57x_uart3.c",
 					"${project}/StdPeriphDriver/CH57x_uart2.c",
-					"${project}/StdPeriphDriver/CH57x_pwm.c"
+					"${project}/StdPeriphDriver/CH57x_pwm.c",
+					"${project}/src/TFT1.c",
+					"${project}/src/TFT1.h"
 				],
 				"optimization": {
 					"level": "size",
@@ -411,7 +414,7 @@
 			"showDebugOutputTimestamps": true
 		},
 		"reserve": {
-			"PROGRAM_NAME": "obj\\LaserRangeFinder.elf",
+			"PROGRAM_NAME": "obj/LaserRangeFinder.elf",
 			"PROJECT_ATTR": "LaserRangeFinder",
 			"PROJECT_BUILD_CONFIG_AUTO_ATTR": true,
 			"PROJECT_BUILD_CONFIG_ID_ATTR": "",
