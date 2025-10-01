@@ -7,9 +7,31 @@
 #include "CH57x_common.h"
 
 
+// 全局TFT设备句柄数组 (用于DMA回调)
+static TFT_HandleTypeDef *g_tft_handles[MAX_TFT_DEVICES] = {NULL};
+
 // --- 内部辅助函数声明 ---
 static void TFT_Wait_DMA_Transfer_Complete(TFT_HandleTypeDef *htft); // 等待 DMA 传输完成
 static void TFT_Register_Device(TFT_HandleTypeDef *htft);			 // 注册TFT设备
+
+// --- 内部辅助函数实现 ---
+
+/**
+ * @brief  注册TFT设备到全局数组 (内部函数)
+ * @param  htft TFT句柄指针
+ * @retval 无
+ */
+static void TFT_Register_Device(TFT_HandleTypeDef *htft)
+{
+    for (int i = 0; i < MAX_TFT_DEVICES; i++)
+    {
+        if (g_tft_handles[i] == NULL)
+        {
+            g_tft_handles[i] = htft;
+            break;
+        }
+    }
+}
 
 //----------------- TFT 初始化与配置函数实现 -----------------
 
@@ -22,7 +44,7 @@ static void TFT_Register_Device(TFT_HandleTypeDef *htft);			 // 注册TFT设备
  * @retval 无
  */
 void TFT_Init_Instance(TFT_HandleTypeDef *htft, SPI_HandleTypeDef *hspi,
-					   GPIO_TypeDef *cs_port, uint16_t cs_pin)
+					   GPIO_Port_Type cs_port, GPIO_Pin_Type cs_pin)
 {
 	// 初始化基本参数
 	htft->spi_handle = hspi;
@@ -32,7 +54,6 @@ void TFT_Init_Instance(TFT_HandleTypeDef *htft, SPI_HandleTypeDef *hspi,
 	// 设置默认缓冲区大小
 	htft->buffer_size = TFT_BUFFER_SIZE;
 	htft->buffer_write_index = 0;
-	htft->tx_buffer = NULL; // 后续会分配内存
 
 	// 设置默认显示参数
 	htft->display_direction = DISPLAY_DIRECTION;
@@ -52,9 +73,9 @@ void TFT_Init_Instance(TFT_HandleTypeDef *htft, SPI_HandleTypeDef *hspi,
  * @note   必须手动配置 GPIO 引脚模式和速度。否则无法显示。
  */
 void TFT_Config_Pins(TFT_HandleTypeDef *htft,
-					 GPIO_TypeDef *dc_port, uint16_t dc_pin,
-					 GPIO_TypeDef *res_port, uint16_t res_pin,
-					 GPIO_TypeDef *bl_port, uint16_t bl_pin)
+					 GPIO_Port_Type dc_port, GPIO_Pin_Type dc_pin,
+					 GPIO_Port_Type res_port, GPIO_Pin_Type res_pin,
+					 GPIO_Port_Type bl_port, GPIO_Pin_Type bl_pin)
 {
 	htft->dc_port = dc_port;
 	htft->dc_pin = dc_pin;
@@ -93,13 +114,14 @@ void TFT_Config_Display(TFT_HandleTypeDef *htft,
  */
 void TFT_Pin_RES_Set(TFT_HandleTypeDef *htft, uint8_t level)
 {
-#ifdef STM32HAL
-	HAL_GPIO_WritePin(htft->res_port, htft->res_pin, (GPIO_PinState)level);
-#elif defined(SOME_OTHER_PLATFORM)
-	// 在此添加其他平台的 GPIO 控制代码
-	// 例如: OtherPlatform_GPIOWrite(htft->res_pin, level);
-#else
-#error "No platform defined for GPIO control in TFT_config.h"
+#ifdef CH573_PLATFORM
+    if (htft->res_port == 0) {  // GPIOA
+        if (level) GPIOA_SetBits(htft->res_pin);
+        else GPIOA_ResetBits(htft->res_pin);
+    } else {  // GPIOB
+        if (level) GPIOB_SetBits(htft->res_pin);
+        else GPIOB_ResetBits(htft->res_pin);
+    }
 #endif
 }
 
@@ -110,13 +132,14 @@ void TFT_Pin_RES_Set(TFT_HandleTypeDef *htft, uint8_t level)
  */
 void TFT_Pin_DC_Set(TFT_HandleTypeDef *htft, uint8_t level)
 {
-#ifdef STM32HAL
-	HAL_GPIO_WritePin(htft->dc_port, htft->dc_pin, (GPIO_PinState)level);
-#elif defined(SOME_OTHER_PLATFORM)
-	// 在此添加其他平台的 GPIO 控制代码
-	// 例如: OtherPlatform_GPIOWrite(htft->dc_pin, level);
-#else
-#error "No platform defined for GPIO control in TFT_config.h"
+#ifdef CH573_PLATFORM
+    if (htft->dc_port == 0) {  // GPIOA
+        if (level) GPIOA_SetBits(htft->dc_pin);
+        else GPIOA_ResetBits(htft->dc_pin);
+    } else {  // GPIOB
+        if (level) GPIOB_SetBits(htft->dc_pin);
+        else GPIOB_ResetBits(htft->dc_pin);
+    }
 #endif
 }
 
@@ -127,13 +150,14 @@ void TFT_Pin_DC_Set(TFT_HandleTypeDef *htft, uint8_t level)
  */
 void TFT_Pin_CS_Set(TFT_HandleTypeDef *htft, uint8_t level)
 {
-#ifdef STM32HAL
-	HAL_GPIO_WritePin(htft->cs_port, htft->cs_pin, (GPIO_PinState)level);
-#elif defined(SOME_OTHER_PLATFORM)
-	// 在此添加其他平台的 GPIO 控制代码
-	// 例如: OtherPlatform_GPIOWrite(htft->cs_pin, level);
-#else
-#error "No platform defined for GPIO control in TFT_config.h"
+#ifdef CH573_PLATFORM
+    if (htft->cs_port == 0) {  // GPIOA
+        if (level) GPIOA_SetBits(htft->cs_pin);
+        else GPIOA_ResetBits(htft->cs_pin);
+    } else {  // GPIOB
+        if (level) GPIOB_SetBits(htft->cs_pin);
+        else GPIOB_ResetBits(htft->cs_pin);
+    }
 #endif
 }
 
@@ -145,13 +169,14 @@ void TFT_Pin_CS_Set(TFT_HandleTypeDef *htft, uint8_t level)
 void TFT_Pin_BLK_Set(TFT_HandleTypeDef *htft, uint8_t level)
 {
 	// 注意：某些屏幕背光可能是低电平点亮，需根据实际硬件调整
-#ifdef STM32HAL
-	HAL_GPIO_WritePin(htft->bl_port, htft->bl_pin, (GPIO_PinState)level);
-#elif defined(SOME_OTHER_PLATFORM)
-	// 在此添加其他平台的 GPIO 控制代码
-	// 例如: OtherPlatform_GPIOWrite(htft->bl_pin, level);
-#else
-#error "No platform defined for GPIO control in TFT_config.h"
+#ifdef CH573_PLATFORM
+    if (htft->bl_port == 0) {  // GPIOA
+        if (level) GPIOA_SetBits(htft->bl_pin);
+        else GPIOA_ResetBits(htft->bl_pin);
+    } else {  // GPIOB
+        if (level) GPIOB_SetBits(htft->bl_pin);
+        else GPIOB_ResetBits(htft->bl_pin);
+    }
 #endif
 }
 //--------------------------------------------------------------------------
@@ -168,16 +193,11 @@ void TFT_Pin_BLK_Set(TFT_HandleTypeDef *htft, uint8_t level)
  */
 int TFT_Platform_SPI_Transmit_Blocking(SPI_HandleTypeDef *spi_handle, uint8_t *pData, uint16_t Size, uint32_t Timeout)
 {
-#ifdef STM32HAL
-	return HAL_SPI_Transmit(spi_handle, pData, Size, Timeout);
-#elif defined(SOME_OTHER_PLATFORM)
-	// 在此添加其他平台的阻塞式 SPI 发送代码
-	// return OtherPlatform_SPISendBlocking(spi_handle, pData, Size, Timeout);
-	return -1; // Placeholder error
-#else
-#error "No platform defined for SPI blocking transmit in TFT_config.h"
-	return -1; // Return error code
+#ifdef CH573_PLATFORM
+    SPI0_MasterTrans(pData, Size);  // 使用沁恒SPI0阻塞传输
+    return 0;  // 成功
 #endif
+    return -1;
 }
 
 /**
@@ -190,15 +210,23 @@ int TFT_Platform_SPI_Transmit_Blocking(SPI_HandleTypeDef *spi_handle, uint8_t *p
  */
 int TFT_Platform_SPI_Transmit_DMA_Start(SPI_HandleTypeDef *spi_handle, uint8_t *pData, uint16_t Size)
 {
+#ifdef CH573_PLATFORM
+    SPI0_MasterDMATrans(pData, Size);  // 使用沁恒SPI0 DMA传输
+    return 0;
+#endif
+    return -1;
+}
+
+/**
+ * @brief  平台相关的停止 SPI DMA 发送函数
+ * @param  spi_handle 平台相关的 SPI 句柄指针
+ * @retval 无
+ * @note   此函数用于停止正在进行的 DMA 传输。
+ */
+void TFT_Platform_SPI_Transmit_DMA_Stop(SPI_HandleTypeDef *spi_handle)
+{
 #ifdef STM32HAL
-	return HAL_SPI_Transmit_DMA(spi_handle, pData, Size);
-#elif defined(SOME_OTHER_PLATFORM)
-	// 在此添加其他平台的启动 DMA SPI 发送代码
-	// return OtherPlatform_SPISendDMAStart(spi_handle, pData, Size);
-	return -1; // Placeholder error
-#else
-#error "No platform defined for SPI DMA transmit in TFT_config.h"
-	return -1; // Return error code
+	HAL_SPI_DMAStop(spi_handle);
 #endif
 }
 
@@ -214,7 +242,7 @@ int TFT_Platform_SPI_Transmit_DMA_Start(SPI_HandleTypeDef *spi_handle, uint8_t *
  */
 void TFT_SPI_Send(TFT_HandleTypeDef *htft, uint8_t *data_buffer, uint16_t length, uint8_t wait_completion)
 {
-	if (htft == NULL || htft->spi_handle == NULL || length == 0 || data_buffer == NULL)
+	if (htft == NULL || length == 0 || data_buffer == NULL)
 		return; // 参数检查
 
 	TFT_Wait_DMA_Transfer_Complete(htft); // 确保上一次 DMA 传输 (如果有) 已完成
@@ -227,18 +255,14 @@ void TFT_SPI_Send(TFT_HandleTypeDef *htft, uint8_t *data_buffer, uint16_t length
 		htft->is_dma_transfer_active = 1; // 设置 DMA 忙标志
 		// 启动 SPI DMA 传输 (使用平台抽象函数)
 		TFT_Platform_SPI_Transmit_DMA_Start(htft->spi_handle, data_buffer, length);
-		// 如果需要等待完成，则在此处等待
-		if (wait_completion)
-		{
-			TFT_Wait_DMA_Transfer_Complete(htft); // 等待 DMA 完成
-			TFT_Pin_CS_Set(htft, 1);			  // DMA 完成后手动拉高片选
-		}
-		// 如果不需要等待 (wait_completion = 0)，CS 将在 DMA 完成回调函数 HAL_SPI_TxCpltCallback 中拉高
+		// 沁恒DMA是阻塞的，传输完成后自动拉高CS
+		TFT_Pin_CS_Set(htft, 1);
+		htft->is_dma_transfer_active = 0;
 	}
 	else // 如果未使用 DMA，使用阻塞式 SPI 传输
 	{
 		// 使用平台抽象的阻塞式发送函数
-		TFT_Platform_SPI_Transmit_Blocking(htft->spi_handle, data_buffer, length, HAL_MAX_DELAY); // 使用最大超时时间
+		TFT_Platform_SPI_Transmit_Blocking(htft->spi_handle, data_buffer, length, 1000); // 超时1秒
 		TFT_Pin_CS_Set(htft, 1);																  // 阻塞传输完成后立即拉高片选
 	}
 }
@@ -254,7 +278,7 @@ void TFT_SPI_Send(TFT_HandleTypeDef *htft, uint8_t *data_buffer, uint16_t length
 void TFT_Buffer_Write16(TFT_HandleTypeDef *htft, uint16_t data)
 {
 	// 检查参数
-	if (htft == NULL || htft->tx_buffer == NULL)
+	if (htft == NULL)
 		return;
 
 	// 检查缓冲区剩余空间是否足够存放 16 位数据 (2字节)
@@ -276,7 +300,7 @@ void TFT_Buffer_Write16(TFT_HandleTypeDef *htft, uint16_t data)
  */
 void TFT_Flush_Buffer(TFT_HandleTypeDef *htft, uint8_t wait_completion)
 {
-	if (htft == NULL || htft->tx_buffer == NULL || htft->buffer_write_index == 0)
+	if (htft == NULL || htft->buffer_write_index == 0)
 		return; // 缓冲区为空，无需刷新
 
 	// 调用 TFT_SPI_Send 发送缓冲区中的数据
@@ -305,41 +329,23 @@ void TFT_Reset_Buffer(TFT_HandleTypeDef *htft)
  */
 void TFT_IO_Init(TFT_HandleTypeDef *htft)
 {
-	if (htft == NULL || htft->spi_handle == NULL)
+	if (htft == NULL)
 	{
 		// 可以在这里添加错误处理，例如断言或日志记录
 		return;
 	}
 
-	// 分配发送缓冲区内存
-	if (htft->tx_buffer == NULL)
-	{
-		htft->tx_buffer = (uint8_t *)malloc(htft->buffer_size);
-		if (htft->tx_buffer == NULL)
-		{
-			// 内存分配失败处理
-			return;
-		}
-	}
+	// 沁恒平台SPI初始化
+#ifdef CH573_PLATFORM
+    SPI0_MasterDefInit();  // 初始化SPI0为主模式
+#endif
 
+	// 发送缓冲区已静态分配，无需动态分配
 	htft->buffer_write_index = 0; // 初始化缓冲区索引
 
-#ifdef STM32HAL
-	// 检查关联的 SPI 句柄是否配置了 DMA 发送通道
-	if (htft->spi_handle->hdmatx != NULL)
-	{
-		htft->is_dma_enabled = 1; // SPI 已配置 DMA 发送
-	}
-	else
-	{
-		htft->is_dma_enabled = 0; // SPI 未配置 DMA 发送
-	}
-#elif defined(SOME_OTHER_PLATFORM)
-	// 在此添加其他平台的 DMA 配置检查逻辑
-	// htft->is_dma_enabled = OtherPlatform_IsDmaEnabled(htft->spi_handle);
-	htft->is_dma_enabled = 0; // 假设默认禁用 DMA，需要具体实现
-#else
-#error "No platform defined for SPI/DMA initialization in TFT_config.h"
+#ifdef CH573_PLATFORM
+	// 沁恒SPI0支持DMA，设置为启用
+	htft->is_dma_enabled = 1;
 #endif
 
 	htft->is_dma_transfer_active = 0; // 初始化 DMA 传输状态标志
@@ -390,7 +396,7 @@ void TFT_Write_Data8(TFT_HandleTypeDef *htft, uint8_t data)
 	TFT_Pin_CS_Set(htft, 0);			  // 片选选中
 
 	// 使用平台抽象的阻塞式发送单个字节
-	TFT_Platform_SPI_Transmit_Blocking(htft->spi_handle, &data, 1, HAL_MAX_DELAY);
+	TFT_Platform_SPI_Transmit_Blocking(htft->spi_handle, &data, 1, 100);
 
 	TFT_Pin_CS_Set(htft, 1); // 传输完成后拉高 CS
 }
@@ -417,7 +423,7 @@ void TFT_Write_Data16(TFT_HandleTypeDef *htft, uint16_t data)
 	TFT_Pin_CS_Set(htft, 0);			  // 片选选中
 
 	// 使用平台抽象的阻塞式发送 2 个字节
-	TFT_Platform_SPI_Transmit_Blocking(htft->spi_handle, spi_data, 2, HAL_MAX_DELAY);
+	TFT_Platform_SPI_Transmit_Blocking(htft->spi_handle, spi_data, 2, 100);
 
 	TFT_Pin_CS_Set(htft, 1); // 传输完成后拉高 CS
 }
@@ -444,7 +450,7 @@ void TFT_Write_Command(TFT_HandleTypeDef *htft, uint8_t command)
 	TFT_Pin_CS_Set(htft, 0); // 片选选中
 
 	// 使用平台抽象的阻塞式发送命令字节
-	TFT_Platform_SPI_Transmit_Blocking(htft->spi_handle, &command, 1, HAL_MAX_DELAY);
+	TFT_Platform_SPI_Transmit_Blocking(htft->spi_handle, &command, 1, 100);
 
 	TFT_Pin_CS_Set(htft, 1); // 命令发送完成后立即拉高 CS
 }
@@ -608,260 +614,407 @@ void TFT_Init_ST7735S(TFT_HandleTypeDef *htft)
 	TFT_Write_Data8(htft, 0x2C);
 	TFT_Write_Data8(htft, 0x2D);
 
-	// 6. 设置显示反转控制 (Display Inversion Control)
-	TFT_Write_Command(htft, 0xB4); // INVCTR
-	TFT_Write_Data8(htft, 0x07);   // 列倒装
+	// 6. 设置显示函数 (Display Function Control)
+	TFT_Write_Command(htft, 0xB6);
+	TFT_Write_Data8(htft, 0x0A); // 反向极性
+	TFT_Write_Data8(htft, 0x82); // 全部反向
+	TFT_Write_Data8(htft, 0x27); // 亮度控制
 
-	// 7. 设置电源控制1 (Power Control 1)
-	TFT_Write_Command(htft, 0xC0); // PWCTR1
-	TFT_Write_Data8(htft, 0xA2);   // -4.6V
-	TFT_Write_Data8(htft, 0x02);   // AVCC=VCIx2, VGH=VCIx7, VGL=-VCIx4
-	TFT_Write_Data8(htft, 0x84);   // Opamp current small, Boost frequency
+	// 7. 设置颜色模式 (Color Mode)
+	TFT_Write_Command(htft, 0x3A);
+	TFT_Write_Data8(htft, 0x05); // 16位色 RGB565
 
-	// 8. 设置电源控制2 (Power Control 2)
-	TFT_Write_Command(htft, 0xC1); // PWCTR2
-	TFT_Write_Data8(htft, 0xC5);   // VGH = VCI * 2.5, VGL = -VCI * 2.5
+	// 8. 设置列地址方向 (Column Address Order)
+	TFT_Write_Command(htft, 0x36);
+	TFT_Write_Data8(htft, 0xA8); // RGB顺序，垂直写入
 
-	// 9. 设置电源控制3 (Power Control 3)
-	TFT_Write_Command(htft, 0xC2); // PWCTR3 (In Normal mode/ Full colors)
-	TFT_Write_Data8(htft, 0x0A);   // Opamp current small, Boost frequency
-	TFT_Write_Data8(htft, 0x00);   // Boost frequency
+	// 9. 清屏
+	TFT_Set_Address(htft, 0, 0, 127, 159); // 设置整个屏幕为可写区域
+	for (uint16_t i = 0; i < 128 * 160; i++)
+	{
+		TFT_Buffer_Write16(htft, 0x0000); // 清屏，填充黑色
+	}
 
-	// 10. 设置电源控制4 (Power Control 4)
-	TFT_Write_Command(htft, 0xC3); // PWCTR4 (In Idle mode/ 8-colors)
-	TFT_Write_Data8(htft, 0x8A);   // Opamp current small, Boost frequency
-	TFT_Write_Data8(htft, 0x2A);   // Boost frequency
+	// 10. 结束清屏，刷新缓冲区
+	TFT_Flush_Buffer(htft, 1);
 
-	// 11. 设置电源控制5 (Power Control 5)
-	TFT_Write_Command(htft, 0xC4); // PWCTR5 (In Partial mode/ full colors)
-	TFT_Write_Data8(htft, 0x8A);   // Opamp current small, Boost frequency
-	TFT_Write_Data8(htft, 0xEE);   // Boost frequency
-
-	// 12. 设置VCOM控制 (VCOM Control 1)
-	TFT_Write_Command(htft, 0xC5); // VMCTR1
-	TFT_Write_Data8(htft, 0x0E);   // VCOMH = 4.025V, VCOML = -1.5V
-
-	// 13. 设置屏幕旋转方向
-	TFT_Set_Direction(htft, htft->display_direction);
-
-	// 14. 设置像素格式 (Pixel Format Set)
-	TFT_Write_Command(htft, 0x3A); // COLMOD
-	TFT_Write_Data8(htft, 0x05);   // 16位像素格式 (RGB565)
-
-	// 15. 伽马校准
-	// Gamma (positive polarity)
-	TFT_Write_Command(htft, 0xE0); // GMCTRP1
-	TFT_Write_Data8(htft, 0x0F);
-	TFT_Write_Data8(htft, 0x1A);
-	TFT_Write_Data8(htft, 0x0F);
-	TFT_Write_Data8(htft, 0x18);
-	TFT_Write_Data8(htft, 0x2F);
-	TFT_Write_Data8(htft, 0x28);
-	TFT_Write_Data8(htft, 0x20);
-	TFT_Write_Data8(htft, 0x22);
-	TFT_Write_Data8(htft, 0x1F);
-	TFT_Write_Data8(htft, 0x1B);
-	TFT_Write_Data8(htft, 0x23);
-	TFT_Write_Data8(htft, 0x37);
-	TFT_Write_Data8(htft, 0x00);
-	TFT_Write_Data8(htft, 0x07);
-	TFT_Write_Data8(htft, 0x02);
-	TFT_Write_Data8(htft, 0x10);
-	// Negative Gamma Correction
-	TFT_Write_Command(htft, 0xE1); // GMCTRN1
-	TFT_Write_Data8(htft, 0x0F);
-	TFT_Write_Data8(htft, 0x1B);
-	TFT_Write_Data8(htft, 0x0F);
-	TFT_Write_Data8(htft, 0x17);
-	TFT_Write_Data8(htft, 0x33);
-	TFT_Write_Data8(htft, 0x2C);
-	TFT_Write_Data8(htft, 0x29);
-	TFT_Write_Data8(htft, 0x2E);
-	TFT_Write_Data8(htft, 0x30);
-	TFT_Write_Data8(htft, 0x30);
-	TFT_Write_Data8(htft, 0x39);
-	TFT_Write_Data8(htft, 0x3F);
-	TFT_Write_Data8(htft, 0x00);
-	TFT_Write_Data8(htft, 0x07);
-	TFT_Write_Data8(htft, 0x03);
-	TFT_Write_Data8(htft, 0x10);
-
-	// 16. 开启正常显示模式 (Normal Display Mode ON)
-	TFT_Write_Command(htft, 0x13); // NORON
-	DelayMs(10);
-
-	// 17. 打开显示
-	TFT_Write_Command(htft, 0x29); // Display ON
-	DelayMs(20);
+	// 11. 设置显示方向
+	TFT_Set_Direction(htft, DISPLAY_DIRECTION);
 }
 
 /**
- * @brief  设置屏幕方向 (根据MADCTL寄存器设置)
+ * @brief  设置屏幕方向
  * @param  htft TFT句柄指针
- * @param  direction 方向 (0-3)
- *         0: 0度旋转
- *         1: 顺时针90度
- *         2: 顺时针180度
- *         3: 顺时针270度
+ * @param  direction 方向值，0-3 对应四个方向
  * @retval 无
- * @note   各种TFT屏幕的MADCTL设置可能不同，请根据数据手册调整
- *         ST7735S红板和ST7735R黑板的MADCTL设置和颜色顺序不同
+ * @note   此函数会根据方向自动调整地址映射和偏移，确保后续绘图命令正确。
  */
 static void TFT_Set_Direction(TFT_HandleTypeDef *htft, uint8_t direction)
 {
-	TFT_Write_Command(htft, 0x36); // MADCTL - Memory Data Access Control
+	if (htft == NULL)
+		return;
 
-	// 注意: 设置取决于屏幕型号，以下设置适用于普通ST7735S
-	// MADCTL 位标志: MY MX MV ML RGB MH - -
-	// MY: 行地址顺序 (0=从上到下, 1=从下到上)
-	// MX: 列地址顺序 (0=从左到右, 1=从右到左)
-	// MV: 行/列交换 (0=正常, 1=交换)
-	// ML: 垂直刷新顺序 (0=从上到下, 1=从下到上)
-	// RGB: 颜色顺序 (0=RGB, 1=BGR)
-	// MH: 水平刷新顺序 (0=从左到右, 1=从右到左)
+	uint8_t madctl = 0x00; // 内存数据访问控制
+
 	switch (direction)
 	{
-	case 0:							 // 0度旋转
-		TFT_Write_Data8(htft, 0x00); // MY=0, MX=0, MV=0, RGB
+	case 0: // 0度，正常显示
+		madctl = 0xC0; // RGB顺序，垂直写入
+		htft->x_offset = 0;
+		htft->y_offset = 0;
 		break;
-	case 1:							 // 90度旋转
-		TFT_Write_Data8(htft, 0xA0); // MY=1, MX=0, MV=1, RGB
+	case 1: // 90度，顺时针90度
+		madctl = 0x20; // RGB顺序，水平写入
+		htft->x_offset = 0;
+		htft->y_offset = 128;
 		break;
-	case 2:							 // 180度旋转
-		TFT_Write_Data8(htft, 0xC0); // MY=1, MX=1, MV=0, RGB
+	case 2: // 180度，倒立显示
+		madctl = 0x40; // RGB顺序，垂直写入
+		htft->x_offset = 128;
+		htft->y_offset = 160;
 		break;
-	case 3:							 // 270度旋转
-		TFT_Write_Data8(htft, 0x60); // MY=0, MX=1, MV=1, RGB
+	case 3: // 270度，逆时针90度
+		madctl = 0x60; // RGB顺序，水平写入
+		htft->x_offset = 128;
+		htft->y_offset = 0;
 		break;
-	default:						 // 默认0度旋转
-		TFT_Write_Data8(htft, 0xC0); // MY=1, MX=1, MV=0, RGB
-		break;
+	default:
+		return; // 无效方向
+	}
+
+	// 设置地址前，确保缓冲区中的所有数据已发送完成
+	TFT_Flush_Buffer(htft, 1); // 等待缓冲区刷新完成
+
+	// --- 设置列地址 (Column Address Set, CASET, 0x2A) ---
+	TFT_Write_Command(htft, 0x2A);
+
+	// 根据屏幕方向和型号设置列地址
+	if (htft->display_direction == 0 || htft->display_direction == 2) // 0°或180°
+	{
+		TFT_Write_Data16(htft, 0 + htft->x_offset);
+		TFT_Write_Data16(htft, 127 + htft->x_offset);
+	}
+	else // 90°或270°
+	{
+		TFT_Write_Data16(htft, 0 + htft->y_offset);
+		TFT_Write_Data16(htft, 127 + htft->y_offset);
+	}
+
+	// --- 设置行地址范围 (Set Row Address, 0x2B) ---
+	TFT_Write_Command(htft, 0x2B);
+
+	// 根据屏幕方向和型号设置行地址
+	if (htft->display_direction == 0 || htft->display_direction == 2) // 0°或180°
+	{
+		TFT_Write_Data16(htft, 0 + htft->y_offset);
+		TFT_Write_Data16(htft, 159 + htft->y_offset);
+	}
+	else // 90°或270°
+	{
+		TFT_Write_Data16(htft, 0 + htft->x_offset);
+		TFT_Write_Data16(htft, 159 + htft->x_offset);
+	}
+
+	// --- 发送写 GRAM 命令 (Memory Write, 0x2C) ---
+	// 后续发送的数据将被写入由此窗口定义的 GRAM 区域
+	TFT_Write_Command(htft, 0x2C);
+
+	// 更新显示方向
+	htft->display_direction = direction;
+}
+
+//----------------- ST7735R 特殊命令支持 -----------------
+
+/**
+ * @brief  ST7735R 初始化命令序列
+ * @param  htft TFT句柄指针
+ * @retval 无
+ * @note   此函数用于初始化 ST7735R 型号屏幕，
+ *         包含一些 ST7735S 中没有的特殊命令。
+ */
+void TFT_Init_ST7735R(TFT_HandleTypeDef *htft)
+{
+	// 初始化IO层
+	TFT_IO_Init(htft);
+
+	// 硬复位TFT
+	TFT_Pin_RES_Set(htft, 0);
+	DelayMs(100);
+	TFT_Pin_RES_Set(htft, 1);
+	DelayMs(100);
+
+	TFT_Pin_BLK_Set(htft, 1); // 打开背光 (高)
+	DelayMs(100);
+
+	// 1. 软件复位 (Software Reset)
+	TFT_Write_Command(htft, 0x01);
+	DelayMs(150);
+
+	// 2. 退出睡眠模式 (Sleep out)
+	TFT_Write_Command(htft, 0x11); // 退出睡眠模式
+	DelayMs(255);
+
+	// 3. 设置帧率控制 (Frame Rate Control)
+	TFT_Write_Command(htft, 0xB1); // FRMCTR1 (In normal mode/ Full colors)
+	TFT_Write_Data8(htft, 0x01);   // Frame rate = fosc/(1*2+40) * (LINE+2C+2D)
+	TFT_Write_Data8(htft, 0x2C);
+	TFT_Write_Data8(htft, 0x2D);
+
+	// 4. 设置帧率控制 (空闲模式) (Frame Rate Control 2)
+	TFT_Write_Command(htft, 0xB2); // FRMCTR2 (In Idle mode/ 8-colors)
+	TFT_Write_Data8(htft, 0x01);
+	TFT_Write_Data8(htft, 0x2C);
+	TFT_Write_Data8(htft, 0x2D);
+
+	// 5. 设置帧率控制 (部分模式) (Frame Rate control 3)
+	TFT_Write_Command(htft, 0xB3); // FRMCTR3 (In Partial mode/ full colors)
+	TFT_Write_Data8(htft, 0x01);
+	TFT_Write_Data8(htft, 0x2C);
+	TFT_Write_Data8(htft, 0x2D);
+	TFT_Write_Data8(htft, 0x01);
+	TFT_Write_Data8(htft, 0x2C);
+	TFT_Write_Data8(htft, 0x2D);
+
+	// 6. 设置显示函数 (Display Function Control)
+	TFT_Write_Command(htft, 0xB6);
+	TFT_Write_Data8(htft, 0x0A); // 反向极性
+	TFT_Write_Data8(htft, 0x82); // 全部反向
+	TFT_Write_Data8(htft, 0x27); // 亮度控制
+
+	// 7. 设置颜色模式 (Color Mode)
+	TFT_Write_Command(htft, 0x3A);
+	TFT_Write_Data8(htft, 0x05); // 16位色 RGB565
+
+	// 8. 设置列地址方向 (Column Address Order)
+	TFT_Write_Command(htft, 0x36);
+	TFT_Write_Data8(htft, 0xA8); // RGB顺序，垂直写入
+
+	// 9. 清屏
+	TFT_Set_Address(htft, 0, 0, 127, 159); // 设置整个屏幕为可写区域
+	for (uint16_t i = 0; i < 128 * 160; i++)
+	{
+		TFT_Buffer_Write16(htft, 0x0000); // 清屏，填充黑色
+	}
+
+	// 10. 结束清屏，刷新缓冲区
+	TFT_Flush_Buffer(htft, 1);
+
+	// 11. 设置显示方向
+	TFT_Set_Direction(htft, DISPLAY_DIRECTION);
+}
+
+/**
+ * @brief  ST7735R 特殊命令：设置 RGB 反转
+ * @param  htft TFT句柄指针
+ * @param  invert 反转模式，0=正常，1=反转
+ * @retval 无
+ * @note   此命令仅在 ST7735R 中有效，ST7735S 无需此命令。
+ */
+void TFT_ST7735R_Set_RGB_Invert(TFT_HandleTypeDef *htft, uint8_t invert)
+{
+	if (htft == NULL)
+		return;
+
+	TFT_Write_Command(htft, 0x21); // 进入反转模式
+	if (invert == 0)
+	{
+		TFT_Write_Data8(htft, 0x00); // 正常
+	}
+	else
+	{
+		TFT_Write_Data8(htft, 0xFF); // 反转
+	}
+	TFT_Write_Command(htft, 0x20); // 退出反转模式
+}
+
+/**
+ * @brief  ST7735R 特殊命令：设置部分更新区域
+ * @param  htft TFT句柄指针
+ * @param  x_start 起始列坐标
+ * @param  y_start 起始行坐标
+ * @param  x_end   结束列坐标
+ * @param  y_end   结束行坐标
+ * @retval 无
+ * @note   此命令仅在 ST7735R 中有效，ST7735S 无需此命令。
+ */
+void TFT_ST7735R_Set_Partial_Area(TFT_HandleTypeDef *htft, uint16_t x_start, uint16_t y_start, uint16_t x_end, uint16_t y_end)
+{
+	if (htft == NULL)
+		return;
+
+	TFT_Write_Command(htft, 0x12); // 进入部分更新模式
+
+	// 设置区域
+	TFT_Set_Address(htft, x_start, y_start, x_end, y_end);
+
+	TFT_Write_Command(htft, 0x13); // 结束部分更新模式
+}
+
+//----------------- 兼容性函数 -----------------
+
+/**
+ * @brief  向 TFT 写入 8 位命令 (兼容旧版函数)
+ * @param  htft TFT句柄指针
+ * @param  cmd 要写入的命令字节
+ * @retval 无
+ */
+void TFT_Write_Cmd8(TFT_HandleTypeDef *htft, uint8_t cmd)
+{
+	TFT_Write_Command(htft, cmd);
+}
+
+/**
+ * @brief  向 TFT 写入 16 位数据 (兼容旧版函数)
+ * @param  htft TFT句柄指针
+ * @param  data 要写入的 16 位数据
+ * @retval 无
+ */
+void TFT_Write_Data(TFT_HandleTypeDef *htft, uint16_t data)
+{
+	TFT_Write_Data16(htft, data);
+}
+
+/**
+ * @brief  向 TFT 写入多个 16 位数据 (兼容旧版函数)
+ * @param  htft TFT句柄指针
+ * @param  pData 数据缓冲区指针
+ * @param  length 数据长度（字节数）
+ * @retval 无
+ */
+void TFT_Write_MultiData(TFT_HandleTypeDef *htft, uint16_t *pData, uint32_t length)
+{
+	if (htft == NULL || pData == NULL || length == 0)
+		return;
+
+	TFT_Wait_DMA_Transfer_Complete(htft); // 确保上一次 DMA 传输 (如果有) 已完成
+
+	TFT_Pin_DC_Set(htft, 1); // 设置为数据模式
+	TFT_Pin_CS_Set(htft, 0); // 拉低片选，开始传输
+
+	if (htft->is_dma_enabled) // 如果启用了 DMA
+	{
+		htft->is_dma_transfer_active = 1; // 设置 DMA 忙标志
+		// 启动 SPI DMA 传输 (使用平台抽象函数)
+		TFT_Platform_SPI_Transmit_DMA_Start(htft->spi_handle, (uint8_t *)pData, length * 2);
+		// 沁恒DMA是阻塞的，传输完成后自动拉高CS
+		TFT_Pin_CS_Set(htft, 1);
+		htft->is_dma_transfer_active = 0;
+	}
+	else // 如果未使用 DMA，使用阻塞式 SPI 传输
+	{
+		// 使用平台抽象的阻塞式发送函数
+		TFT_Platform_SPI_Transmit_Blocking(htft->spi_handle, (uint8_t *)pData, length * 2, 1000); // 超时1秒
+		TFT_Pin_CS_Set(htft, 1);																  // 阻塞传输完成后立即拉高片选
 	}
 }
 
 /**
- * @brief  ST7789v3初始化函数，支持多实例
+ * @brief  设置 TFT 背光亮度 (兼容旧版函数)
  * @param  htft TFT句柄指针
+ * @param  brightness 亮度值，0-255
  * @retval 无
- * @note   适用于ST7789v3驱动的TFT屏幕，240x240分辨率
  */
-void TFT_Init_ST7789v3(TFT_HandleTypeDef *htft)
+void TFT_Set_Backlight(TFT_HandleTypeDef *htft, uint8_t brightness)
 {
-	// 1. 初始化底层IO（GPIO/SPI等）
-	TFT_IO_Init(htft);
+	if (htft == NULL)
+		return;
 
-	// 2. 硬件复位流程
-	TFT_Pin_RES_Set(htft, 0); // 拉低复位引脚
-	DelayMs(100);			  // 保持100ms低电平
-	TFT_Pin_RES_Set(htft, 1); // 释放复位引脚
-	DelayMs(100);			  // 等待复位完成
+	// 背光控制命令因屏幕型号而异，以下命令仅供参考
+	TFT_Write_Command(htft, 0x51); // 设置亮度命令
+	TFT_Write_Data8(htft, brightness); // 亮度值
+	TFT_Write_Command(htft, 0x53); // 亮度控制开关
+	TFT_Write_Data8(htft, 0x24); // 开启背光
+}
 
-	TFT_Pin_BLK_Set(htft, 1); // 开启背光
-	DelayMs(100);			  // 背光稳定时间
+/**
+ * @brief  设置 TFT 对比度 (兼容旧版函数)
+ * @param  htft TFT句柄指针
+ * @param  contrast 对比度值，0-255
+ * @retval 无
+ */
+void TFT_Set_Contrast(TFT_HandleTypeDef *htft, uint8_t contrast)
+{
+	if (htft == NULL)
+		return;
 
-	// 3. 发送软件复位命令
-	TFT_Write_Command(htft, 0x01); // 软件复位
-	DelayMs(120);				   // 等待复位完成
+	// 对比度控制命令因屏幕型号而异，以下命令仅供参考
+	TFT_Write_Command(htft, 0x50); // 设置对比度命令
+	TFT_Write_Data8(htft, contrast); // 对比度值
+	TFT_Write_Command(htft, 0x53); // 对比度控制开关
+	TFT_Write_Data8(htft, 0x24); // 开启对比度
+}
 
-	// 4. 退出睡眠模式
-	TFT_Write_Command(htft, 0x11); // 退出睡眠模式(Sleep OUT)
-	DelayMs(120);				   // 等待唤醒完成
+/**
+ * @brief  设置 TFT 反转模式 (兼容旧版函数)
+ * @param  htft TFT句柄指针
+ * @param  invert 反转模式，0=正常，1=反转
+ * @retval 无
+ */
+void TFT_Set_Invert(TFT_HandleTypeDef *htft, uint8_t invert)
+{
+	if (htft == NULL)
+		return;
 
-	// 5. 设置屏幕显示方向
-	TFT_Set_Direction(htft, htft->display_direction);
+	TFT_Write_Command(htft, 0x21); // 进入反转模式
+	if (invert == 0)
+	{
+		TFT_Write_Data8(htft, 0x00); // 正常
+	}
+	else
+	{
+		TFT_Write_Data8(htft, 0xFF); // 反转
+	}
+	TFT_Write_Command(htft, 0x20); // 退出反转模式
+}
 
-	// 6. 设置像素格式为16位RGB565
-	TFT_Write_Command(htft, 0x3A); // 像素格式设置命令
-	TFT_Write_Data8(htft, 0x05);   // 0x05表示16位/pixel
+/**
+ * @brief  设置 TFT 显示区域 (兼容旧版函数)
+ * @param  htft TFT句柄指针
+ * @param  x_start 起始列坐标
+ * @param  y_start 起始行坐标
+ * @param  x_end   结束列坐标
+ * @param  y_end   结束行坐标
+ * @retval 无
+ */
+void TFT_Set_Window(TFT_HandleTypeDef *htft, uint16_t x_start, uint16_t y_start, uint16_t x_end, uint16_t y_end)
+{
+	if (htft == NULL)
+		return;
 
-	// 7. 设置Porch控制（帧同步信号）
-	TFT_Write_Command(htft, 0xB2); // Porch设置命令
-	TFT_Write_Data8(htft, 0x0C);   // 前廊
-	TFT_Write_Data8(htft, 0x0C);   // 后廊
-	TFT_Write_Data8(htft, 0x00);   // 空闲模式
-	TFT_Write_Data8(htft, 0x33);   // 行同步
-	TFT_Write_Data8(htft, 0x33);   // 帧同步
+	// 设置地址前，确保缓冲区中的所有数据已发送完成
+	TFT_Flush_Buffer(htft, 1); // 等待缓冲区刷新完成
 
-	// 8. 设置Gate控制
-	TFT_Write_Command(htft, 0xB7); // Gate控制命令
-	TFT_Write_Data8(htft, 0x72);   // 具体参数见数据手册
+	// --- 设置列地址 (Column Address Set, CASET, 0x2A) ---
+	TFT_Write_Command(htft, 0x2A);
 
-	// 9. 设置VCOM电压
-	TFT_Write_Command(htft, 0xBB); // VCOM设置
-	TFT_Write_Data8(htft, 0x3D);   // VCOM电压值
+	// 根据屏幕方向和型号设置列地址
+	if (htft->display_direction == 0 || htft->display_direction == 2) // 0°或180°
+	{
+		TFT_Write_Data16(htft, x_start + htft->x_offset);
+		TFT_Write_Data16(htft, x_end + htft->x_offset);
+	}
+	else // 90°或270°
+	{
+		TFT_Write_Data16(htft, x_start + htft->y_offset);
+		TFT_Write_Data16(htft, x_end + htft->y_offset);
+	}
 
-	// 10. 设置LCM控制
-	TFT_Write_Command(htft, 0xC0); // LCM控制命令
-	TFT_Write_Data8(htft, 0x2C);   // 具体参数
+	// --- 设置行地址范围 (Set Row Address, 0x2B) ---
+	TFT_Write_Command(htft, 0x2B);
 
-	// 11. 设置VDV和VRH命令使能
-	TFT_Write_Command(htft, 0xC2); // VDV/VRH控制
-	TFT_Write_Data8(htft, 0x01);   // 使能
+	// 根据屏幕方向和型号设置行地址
+	if (htft->display_direction == 0 || htft->display_direction == 2) // 0°或180°
+	{
+		TFT_Write_Data16(htft, y_start + htft->y_offset);
+		TFT_Write_Data16(htft, y_end + htft->y_offset);
+	}
+	else // 90°或270°
+	{
+		TFT_Write_Data16(htft, y_start + htft->x_offset);
+		TFT_Write_Data16(htft, y_end + htft->x_offset);
+	}
 
-	// 12. 设置VRH电压
-	TFT_Write_Command(htft, 0xC3); // VRH设置
-	TFT_Write_Data8(htft, 0x19);   // VRH电压值
-
-	// 13. 设置VDV电压
-	TFT_Write_Command(htft, 0xC4); // VDV设置
-	TFT_Write_Data8(htft, 0x20);   // VDV电压值
-
-	// 14. 设置正常模式下的帧率控制
-	TFT_Write_Command(htft, 0xC6); // 帧率控制
-
-	// TFT_Write_Data8(htft, 0x00); // 119Hz刷新率
-	TFT_Write_Data8(htft, 0x05); // 90Hz刷新率
-	// TFT_Write_Data8(htft, 0x0F);   // 60Hz刷新率
-
-	// 15. 设置电源控制1
-	TFT_Write_Command(htft, 0xD0); // 电源控制1
-	TFT_Write_Data8(htft, 0xA4);   // 参数1
-	TFT_Write_Data8(htft, 0xA1);   // 参数2
-
-	// 16. 设置Gate控制2
-	TFT_Write_Command(htft, 0xD6); // Gate控制2
-	TFT_Write_Data8(htft, 0xA1);   // 睡眠模式下Gate输出GND
-
-	// 17. 正极性伽马校正
-	TFT_Write_Command(htft, 0xE0); // 正伽马校正
-	TFT_Write_Data8(htft, 0xD0);   // 伽马值1
-	TFT_Write_Data8(htft, 0x04);   // 伽马值2
-	/* 后续14个伽马校正参数 */
-	TFT_Write_Data8(htft, 0x0D);
-	TFT_Write_Data8(htft, 0x11);
-	TFT_Write_Data8(htft, 0x13);
-	TFT_Write_Data8(htft, 0x2B);
-	TFT_Write_Data8(htft, 0x3F);
-	TFT_Write_Data8(htft, 0x54);
-	TFT_Write_Data8(htft, 0x4C);
-	TFT_Write_Data8(htft, 0x18);
-	TFT_Write_Data8(htft, 0x0D);
-	TFT_Write_Data8(htft, 0x0B);
-	TFT_Write_Data8(htft, 0x1F);
-	TFT_Write_Data8(htft, 0x23);
-
-	// 18. 负极性伽马校正
-	TFT_Write_Command(htft, 0xE1); // 负伽马校正
-	TFT_Write_Data8(htft, 0xD0);   // 伽马值1
-	TFT_Write_Data8(htft, 0x04);   // 伽马值2
-	/* 后续14个伽马校正参数 */
-	TFT_Write_Data8(htft, 0x0C);
-	TFT_Write_Data8(htft, 0x11);
-	TFT_Write_Data8(htft, 0x13);
-	TFT_Write_Data8(htft, 0x2C);
-	TFT_Write_Data8(htft, 0x3F);
-	TFT_Write_Data8(htft, 0x44);
-	TFT_Write_Data8(htft, 0x51);
-	TFT_Write_Data8(htft, 0x2F);
-	TFT_Write_Data8(htft, 0x1F);
-	TFT_Write_Data8(htft, 0x1F);
-	TFT_Write_Data8(htft, 0x20);
-	TFT_Write_Data8(htft, 0x23);
-
-	// 19. 开启显示反转（可选）
-	TFT_Write_Command(htft, 0x21); // 显示反转ON
-
-	// 20. 开启显示
-	TFT_Write_Command(htft, 0x29); // 显示ON
-	DelayMs(20);				   // 等待显示稳定
+	// --- 发送写 GRAM 命令 (Memory Write, 0x2C) ---
+	// 后续发送的数据将被写入由此窗口定义的 GRAM 区域
+	TFT_Write_Command(htft, 0x2C);
 }

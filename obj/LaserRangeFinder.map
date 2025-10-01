@@ -99,6 +99,84 @@ Discarded input sections
  .text          0x0000000000000000        0x0 ./src/Main.o
  .data          0x0000000000000000        0x0 ./src/Main.o
  .bss           0x0000000000000000        0x0 ./src/Main.o
+ .text          0x0000000000000000        0x0 ./src/TFT.o
+ .data          0x0000000000000000        0x0 ./src/TFT.o
+ .bss           0x0000000000000000        0x0 ./src/TFT.o
+ .text.TFT_Wait_DMA_Transfer_Complete
+                0x0000000000000000       0x14 ./src/TFT.o
+ .text.TFT_Init_Instance
+                0x0000000000000000       0x1a ./src/TFT.o
+ .text.TFT_Config_Pins
+                0x0000000000000000       0x16 ./src/TFT.o
+ .text.TFT_Config_Display
+                0x0000000000000000        0xe ./src/TFT.o
+ .text.TFT_Pin_RES_Set
+                0x0000000000000000       0x40 ./src/TFT.o
+ .text.TFT_Pin_DC_Set
+                0x0000000000000000       0x40 ./src/TFT.o
+ .text.TFT_Pin_CS_Set
+                0x0000000000000000       0x40 ./src/TFT.o
+ .text.TFT_Pin_BLK_Set
+                0x0000000000000000       0x40 ./src/TFT.o
+ .text.TFT_Platform_SPI_Transmit_Blocking
+                0x0000000000000000       0x18 ./src/TFT.o
+ .text.TFT_Platform_SPI_Transmit_DMA_Start
+                0x0000000000000000       0x18 ./src/TFT.o
+ .text.TFT_Platform_SPI_Transmit_DMA_Stop
+                0x0000000000000000        0x2 ./src/TFT.o
+ .text.TFT_SPI_Send
+                0x0000000000000000       0x8e ./src/TFT.o
+ .text.TFT_Flush_Buffer
+                0x0000000000000000       0x2c ./src/TFT.o
+ .text.TFT_Buffer_Write16
+                0x0000000000000000       0x56 ./src/TFT.o
+ .text.TFT_Reset_Buffer
+                0x0000000000000000        0x8 ./src/TFT.o
+ .text.TFT_IO_Init
+                0x0000000000000000       0x3e ./src/TFT.o
+ .text.TFT_Write_Data8
+                0x0000000000000000       0x54 ./src/TFT.o
+ .text.TFT_Write_Data16
+                0x0000000000000000       0x5c ./src/TFT.o
+ .text.TFT_Write_Command
+                0x0000000000000000       0x56 ./src/TFT.o
+ .text.TFT_Set_Address
+                0x0000000000000000       0xf6 ./src/TFT.o
+ .text.TFT_RGB  0x0000000000000000       0x14 ./src/TFT.o
+ .text.TFT_Init_ST7735S
+                0x0000000000000000      0x2c2 ./src/TFT.o
+ .text.TFT_Init_ST7735R
+                0x0000000000000000        0x8 ./src/TFT.o
+ .text.TFT_ST7735R_Set_RGB_Invert
+                0x0000000000000000       0x44 ./src/TFT.o
+ .text.TFT_ST7735R_Set_Partial_Area
+                0x0000000000000000       0x46 ./src/TFT.o
+ .text.TFT_Write_Cmd8
+                0x0000000000000000        0x8 ./src/TFT.o
+ .text.TFT_Write_Data
+                0x0000000000000000        0x8 ./src/TFT.o
+ .text.TFT_Write_MultiData
+                0x0000000000000000       0x94 ./src/TFT.o
+ .text.TFT_Set_Backlight
+                0x0000000000000000       0x4c ./src/TFT.o
+ .text.TFT_Set_Contrast
+                0x0000000000000000       0x4c ./src/TFT.o
+ .text.TFT_Set_Invert
+                0x0000000000000000        0x8 ./src/TFT.o
+ .text.TFT_Set_Window
+                0x0000000000000000       0xf6 ./src/TFT.o
+ .sbss.g_tft_handles
+                0x0000000000000000        0x4 ./src/TFT.o
+ .debug_info    0x0000000000000000     0x24d0 ./src/TFT.o
+ .debug_abbrev  0x0000000000000000      0x476 ./src/TFT.o
+ .debug_loc     0x0000000000000000      0xfb3 ./src/TFT.o
+ .debug_aranges
+                0x0000000000000000      0x108 ./src/TFT.o
+ .debug_ranges  0x0000000000000000      0x200 ./src/TFT.o
+ .debug_line    0x0000000000000000     0x144a ./src/TFT.o
+ .debug_str     0x0000000000000000      0xbd5 ./src/TFT.o
+ .comment       0x0000000000000000       0x34 ./src/TFT.o
+ .debug_frame   0x0000000000000000      0x3a4 ./src/TFT.o
  .text          0x0000000000000000        0x0 ./StdPeriphDriver/CH57x_adc.o
  .data          0x0000000000000000        0x0 ./StdPeriphDriver/CH57x_adc.o
  .bss           0x0000000000000000        0x0 ./StdPeriphDriver/CH57x_adc.o
@@ -596,6 +674,7 @@ RAM              0x0000000020003800 0x0000000000004800 xrw
 Linker script and memory map
 
 LOAD ./src/Main.o
+LOAD ./src/TFT.o
 LOAD ./StdPeriphDriver/CH57x_adc.o
 LOAD ./StdPeriphDriver/CH57x_clk.o
 LOAD ./StdPeriphDriver/CH57x_flash.o

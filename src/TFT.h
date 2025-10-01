@@ -8,6 +8,22 @@
 
 #include "CH57x_common.h"
 
+
+// 沁恒CH573平台定义
+#define CH573_PLATFORM
+
+// 沁恒平台类型定义
+typedef uint8_t GPIO_Port_Type;  // 0=GPIOA, 1=GPIOB
+typedef uint32_t GPIO_Pin_Type;  // 引脚掩码，如 GPIO_Pin_0
+typedef void* SPI_HandleTypeDef;  // SPI句柄占位符（沁恒无句柄）
+
+// TFT默认配置宏
+#define TFT_BUFFER_SIZE     1024   // 发送缓冲区大小
+#define DISPLAY_DIRECTION   0      // 默认显示方向 (0=正置)
+#define TFT_X_OFFSET        0      // X偏移量
+#define TFT_Y_OFFSET        0      // Y偏移量
+#define MAX_TFT_DEVICES     1      // 最大TFT设备数
+
 #ifdef __cplusplus
 extern "C"
 {
@@ -19,17 +35,17 @@ extern "C"
      */
     typedef struct
     {
-        SPI_HandleTypeDef *spi_handle; // SPI句柄
-        GPIO_TypeDef *cs_port;         // CS引脚端口
-        uint16_t cs_pin;               // CS引脚号
-        GPIO_TypeDef *dc_port;         // DC引脚端口
-        uint16_t dc_pin;               // DC引脚号
-        GPIO_TypeDef *res_port;        // RES引脚端口
-        uint16_t res_pin;              // RES引脚号
-        GPIO_TypeDef *bl_port;         // BL引脚端口
-        uint16_t bl_pin;               // BL引脚号
+        SPI_HandleTypeDef *spi_handle; // SPI句柄 (沁恒平台占位符)
+        GPIO_Port_Type cs_port;        // CS引脚端口 (0=GPIOA, 1=GPIOB)
+        GPIO_Pin_Type cs_pin;          // CS引脚号
+        GPIO_Port_Type dc_port;        // DC引脚端口
+        GPIO_Pin_Type dc_pin;          // DC引脚号
+        GPIO_Port_Type res_port;       // RES引脚端口
+        GPIO_Pin_Type res_pin;         // RES引脚号
+        GPIO_Port_Type bl_port;        // BL引脚端口
+        GPIO_Pin_Type bl_pin;          // BL引脚号
 
-        uint8_t *tx_buffer;          // 发送缓冲区
+        uint8_t tx_buffer[TFT_BUFFER_SIZE]; // 发送缓冲区 (静态分配)
         uint16_t buffer_size;        // 缓冲区大小
         uint16_t buffer_write_index; // 当前缓冲区写入位置索引
 
@@ -86,7 +102,7 @@ extern "C"
      * @retval 无
      */
     void TFT_Init_Instance(TFT_HandleTypeDef *htft, SPI_HandleTypeDef *hspi,
-                           GPIO_TypeDef *cs_port, uint16_t cs_pin);
+                           GPIO_Port_Type cs_port, GPIO_Pin_Type cs_pin);
 
     /**
      * @brief  配置TFT控制引脚
@@ -100,9 +116,9 @@ extern "C"
      * @note   必须手动配置 GPIO 引脚模式和速度。否则无法显示。
      */
     void TFT_Config_Pins(TFT_HandleTypeDef *htft,
-                         GPIO_TypeDef *dc_port, uint16_t dc_pin,
-                         GPIO_TypeDef *res_port, uint16_t res_pin,
-                         GPIO_TypeDef *bl_port, uint16_t bl_pin);
+                         GPIO_Port_Type dc_port, GPIO_Pin_Type dc_pin,
+                         GPIO_Port_Type res_port, GPIO_Pin_Type res_pin,
+                         GPIO_Port_Type bl_port, GPIO_Pin_Type bl_pin);
 
     /**
      * @brief  配置TFT显示参数
@@ -214,7 +230,7 @@ extern "C"
      * @param  spi_handle 平台相关的 SPI 句柄指针
      * @param  pData      要发送的数据缓冲区指针
      * @param  Size       要发送的数据大小 (字节)
-     * @retval 平台相关的状态码 (例如 HAL_StatusTypeDef)
+     * @retval 平台相关的状态码
      * @note   此函数应启动传输但不等待完成。完成由回调处理。
      */
     int TFT_Platform_SPI_Transmit_DMA_Start(SPI_HandleTypeDef *spi_handle, uint8_t *pData, uint16_t Size);
