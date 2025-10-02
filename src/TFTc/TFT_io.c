@@ -428,6 +428,7 @@ void TFT_IO_Init(TFT_HandleTypeDef *htft)
 		htft->is_dma_enabled = 0; // SPI 未配置 DMA 发送
 	}
 #elif defined(MounRiver)
+    GPIOA_ModeCfg(GPIO_Pin_12 | GPIO_Pin_13 | GPIO_Pin_14, GPIO_ModeOut_PP_5mA);
 	SPI0_MasterDefInit(); // 初始化SPI0为主模式
 
 	htft->is_dma_enabled = 0; // 沁恒SPI0支持DMA，设置为启用

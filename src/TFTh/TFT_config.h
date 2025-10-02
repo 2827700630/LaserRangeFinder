@@ -58,7 +58,7 @@ typedef void* SPI_HandleTypeDef;  // SPI句柄占位符（沁恒无句柄）
  * 例如htft1.buffer_size = 4096;   // 第一屏使用较大缓冲
  */
 
-#define TFT_BUFFER_SIZE 1024 // 2048 字节 (1024 像素, RGB565 格式)
+#define TFT_BUFFER_SIZE 2048 // 2048 字节 (1024 像素, RGB565 格式)
 
 /**
  * @brief 定义最大支持的 TFT 设备数量

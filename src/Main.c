@@ -29,7 +29,7 @@ SPI_HandleTypeDef SPI0;   // 第一个TFT屏幕句柄
 #define TFT_BLK_Pin GPIO_Pin_22
 
 /**
- * @fn      main
+ * @fn      mai                                                                                                                                                                                                        n
  *
  * @brief   主函数
  *
@@ -58,6 +58,7 @@ int main() {
     PRINT ("3\n");
     while (1) {
         TFT_Fill_Area (&htft1, 0, 0, 240, 320, BLACK);
+             mDelaymS (100);
         TFT_Fill_Area (&htft1, 0, 0, 240, 320, GREEN);
         // PRINT ("Start @ChipID=%02X\n", R8_CHIP_ID);
         PRINT ("while\n");
