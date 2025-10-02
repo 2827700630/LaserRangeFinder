@@ -260,7 +260,8 @@ int TFT_Platform_SPI_Transmit_Blocking(SPI_HandleTypeDef *spi_handle, uint8_t *p
 #ifdef STM32HAL
 	return HAL_SPI_Transmit(spi_handle, pData, Size, Timeout);
 #elif defined(MounRiver)
-	SPI0_MasterTrans(pData, Size); // 使用沁恒SPI0阻塞传输
+	// SPI0_MasterTrans(pData, Size); // 使用沁恒SPI0阻塞传输
+	SPI0_MasterDMATrans(pData, Size); // 使用沁恒SPI0 DMA传输。实际测试时发现沁恒的DMA是阻塞式，不用考虑时序问题
 #elif defined(SOME_OTHER_PLATFORM)
 	// 在此添加其他平台的阻塞式 SPI 发送代码
 	// return OtherPlatform_SPISendBlocking(spi_handle, pData, Size, Timeout);
@@ -284,7 +285,7 @@ int TFT_Platform_SPI_Transmit_DMA_Start(SPI_HandleTypeDef *spi_handle, uint8_t *
 #ifdef STM32HAL
 	return HAL_SPI_Transmit_DMA(spi_handle, pData, Size);
 #elif defined(MounRiver)
-	SPI0_MasterDMATrans(pData, Size); // 使用沁恒SPI0 DMA传输
+	SPI0_MasterDMATrans(pData, Size); // 使用沁恒SPI0 DMA传输。当时写这个函数是因为STM32的DMA是非阻塞式，要考虑时序。沁恒的不用
 #elif defined(SOME_OTHER_PLATFORM)
 	// 在此添加其他平台的启动 DMA SPI 发送代码
 	// return OtherPlatform_SPISendDMAStart(spi_handle, pData, Size);
@@ -428,10 +429,10 @@ void TFT_IO_Init(TFT_HandleTypeDef *htft)
 		htft->is_dma_enabled = 0; // SPI 未配置 DMA 发送
 	}
 #elif defined(MounRiver)
-    GPIOA_ModeCfg(GPIO_Pin_12 | GPIO_Pin_13 | GPIO_Pin_14, GPIO_ModeOut_PP_5mA);
-	SPI0_MasterDefInit(); // 初始化SPI0为主模式
+	GPIOA_ModeCfg(GPIO_Pin_12 | GPIO_Pin_13 | GPIO_Pin_14, GPIO_ModeOut_PP_5mA); // 初始化SPI0对应的GPIO
+	SPI0_MasterDefInit();														 // 初始化SPI0为主模式
 
-	htft->is_dma_enabled = 0; // 沁恒SPI0支持DMA，设置为启用
+	htft->is_dma_enabled = 0; // 请不要修改为1。沁恒的DMA是阻塞式，已经在TFT_Platform_SPI_Transmit_Blocking替换为DMA传输
 #elif defined(SOME_OTHER_PLATFORM)
 	// 在此添加其他平台的 DMA 配置检查逻辑
 	// htft->is_dma_enabled = OtherPlatform_IsDmaEnabled(htft->spi_handle);

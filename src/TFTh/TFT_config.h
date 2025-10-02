@@ -58,12 +58,12 @@ typedef void* SPI_HandleTypeDef;  // SPI句柄占位符（沁恒无句柄）
  * 例如htft1.buffer_size = 4096;   // 第一屏使用较大缓冲
  */
 
-#define TFT_BUFFER_SIZE 2048 // 2048 字节 (1024 像素, RGB565 格式)
+#define TFT_BUFFER_SIZE 2048 // 2048 字节 (1024 像素, RGB565 格式)，CH573F实测不能大于等于4096
 
 /**
  * @brief 定义最大支持的 TFT 设备数量
  */
-#define MAX_TFT_DEVICES 2 // 最大支持的TFT设备数量
+#define MAX_TFT_DEVICES 1 // 最大支持的TFT设备数量。大多数沁恒单片机只有1个SPI。但是这个程序好像不能使用1个SPI驱动2个屏幕
 
 /*
  * 常用颜色定义 (RGB565格式)
@@ -82,9 +82,8 @@ typedef void* SPI_HandleTypeDef;  // SPI句柄占位符（沁恒无句柄）
 #define BROWN 0XBC40   // 棕色
 #define BRRED 0XFC07   // 棕红色
 #define GRAY 0X8430    // 灰色
-// 可以根据需要添加更多颜色定义
-// #define ORANGE      0xFD20
-// #define PINK        0xFE19
+// 可以根据需要添加更多颜色定义,你也可以使用TFT_RGB函数手动输入RGB值
+
 
 #define HAL_Delay DelayMs
 

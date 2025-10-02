@@ -1,5 +1,7 @@
 {
     "files.associations": {
-        "ch57x_common.h": "c"
+        "ch57x_common.h": "c",
+        "tft_cad.h": "c",
+        "tft_init.h": "c"
     }
 }
