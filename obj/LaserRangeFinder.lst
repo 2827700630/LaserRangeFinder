@@ -11,10 +11,10 @@ Program Header:
     LOAD off    0x00001800 vaddr 0x20003800 paddr 0x00000004 align 2**12
          filesz 0x00000718 memsz 0x00000718 flags r-x
     LOAD off    0x0000271c vaddr 0x0000071c paddr 0x0000071c align 2**12
-         filesz 0x00002ef4 memsz 0x00002ef4 flags r-x
-    LOAD off    0x00005f18 vaddr 0x20003f18 paddr 0x00003610 align 2**12
+         filesz 0x00002f08 memsz 0x00002f08 flags r-x
+    LOAD off    0x00005f18 vaddr 0x20003f18 paddr 0x00003624 align 2**12
          filesz 0x00000000 memsz 0x000000e8 flags rw-
-    LOAD off    0x00006000 vaddr 0x20004000 paddr 0x00003610 align 2**12
+    LOAD off    0x00006000 vaddr 0x20004000 paddr 0x00003624 align 2**12
          filesz 0x00000068 memsz 0x000000b0 flags rw-
     LOAD off    0x00006e00 vaddr 0x20007e00 paddr 0x20007e00 align 2**12
          filesz 0x00000000 memsz 0x00000200 flags rw-
@@ -24,12 +24,12 @@ Idx Name            Size      VMA       LMA       File off  Algn  Flags
   0 .init           00000004  00000000  00000000  00001000  2**1  CONTENTS, ALLOC, LOAD, READONLY, CODE
   1 .highcodelalign 00000000  00000004  00000004  00006068  2**0  CONTENTS
   2 .highcode       00000718  20003800  00000004  00001800  2**1  CONTENTS, ALLOC, LOAD, READONLY, CODE
-  3 .text           00002ef4  0000071c  0000071c  0000271c  2**2  CONTENTS, ALLOC, LOAD, READONLY, CODE
-  4 .fini           00000000  00003610  00003610  00006068  2**0  CONTENTS, ALLOC, LOAD, CODE
-  5 .dalign         000000e8  20003f18  00003610  00005f18  2**0  ALLOC
-  6 .dlalign        00000000  00003610  00003610  00006068  2**0  CONTENTS
-  7 .data           00000068  20004000  00003610  00006000  2**2  CONTENTS, ALLOC, LOAD, DATA
-  8 .bss            00000048  20004068  00003678  00006068  2**2  ALLOC
+  3 .text           00002f08  0000071c  0000071c  0000271c  2**2  CONTENTS, ALLOC, LOAD, READONLY, CODE
+  4 .fini           00000000  00003624  00003624  00006068  2**0  CONTENTS, ALLOC, LOAD, CODE
+  5 .dalign         000000e8  20003f18  00003624  00005f18  2**0  ALLOC
+  6 .dlalign        00000000  00003624  00003624  00006068  2**0  CONTENTS
+  7 .data           00000068  20004000  00003624  00006000  2**2  CONTENTS, ALLOC, LOAD, DATA
+  8 .bss            00000048  20004068  0000368c  00006068  2**2  ALLOC
   9 .stack          00000200  20007e00  20007e00  00006e00  2**0  ALLOC
  10 .debug_info     0000d9b8  00000000  00000000  00006068  2**0  CONTENTS, READONLY, DEBUGGING
  11 .debug_abbrev   00001e61  00000000  00000000  00013a20  2**0  CONTENTS, READONLY, DEBUGGING
@@ -47,9 +47,9 @@ SYMBOL TABLE:
 00000004 l    d  .highcodelalign	00000000 .highcodelalign
 20003800 l    d  .highcode	00000000 .highcode
 0000071c l    d  .text	00000000 .text
-00003610 l    d  .fini	00000000 .fini
+00003624 l    d  .fini	00000000 .fini
 20003f18 l    d  .dalign	00000000 .dalign
-00003610 l    d  .dlalign	00000000 .dlalign
+00003624 l    d  .dlalign	00000000 .dlalign
 20004000 l    d  .data	00000000 .data
 20004068 l    d  .bss	00000000 .bss
 20007e00 l    d  .stack	00000000 .stack
@@ -159,14 +159,14 @@ SYMBOL TABLE:
 20003898  w      .highcode	00000000 TMR0_IRQHandler
 000027ec g     F .text	0000002c _read_r
 00000b78 g     F .text	00000024 TFT_Init_Instance
-000035f4 g     O .text	00000008 afont12x6
+00003608 g     O .text	00000008 afont12x6
 20003b1c g     F .highcode	00000010 FLASH_ROM_BEG
 00001404 g     F .text	0000008a GPIOB_ITModeCfg
 20003af4 g     F .highcode	00000028 mDelaymS
 20007e00 g       .stack	00000000 _heap_end
 0000148e g     F .text	00000032 SPI0_MasterDefInit
 00002830 g     F .text	0000000c _isatty
-0000360c g     O .text	00000004 _global_impure_ptr
+00003620 g     O .text	00000004 _global_impure_ptr
 20003b56 g     F .highcode	00000048 FLASH_ROM_ADDR
 0000157a g     F .text	00000030 _sbrk
 2000406c g     O .bss	00000004 SPI0
@@ -176,14 +176,14 @@ SYMBOL TABLE:
 200040b0 g       .bss	00000000 _ebss
 000015da g     F .text	00000032 UART1_DefInit
 20003b9e g     F .highcode	00000038 FLASH_ROM_WAIT
-00003558 g     O .text	00000020 __sf_fake_stderr
+0000356c g     O .text	00000020 __sf_fake_stderr
 200038b6  w      .highcode	00000000 UART2_IRQHandler
-000035fc g     O .text	00000008 afont16x8
+00003610 g     O .text	00000008 afont16x8
 200038b2  w      .highcode	00000000 PWMX_IRQHandler
 00001fb6 g     F .text	00000042 __sfputs_r
 000027d2 g     F .text	0000001a memchr
 0000161a g     F .text	000000a8 _free_r
-00003604 g     O .text	00000008 afont8x6
+00003618 g     O .text	00000008 afont8x6
 00000000 g       .init	00000000 _start
 0000283c g     F .text	0000000c _lseek
 00000f7a g     F .text	0000013c TFT_Show_Char
@@ -204,7 +204,7 @@ SYMBOL TABLE:
 00000e14 g     F .text	00000036 TFT_Write_Data8
 00001f88 g     F .text	00000002 __malloc_lock
 00001bf8 g     F .text	00000064 _fflush_r
-00003578 g     O .text	00000020 __sf_fake_stdin
+0000358c g     O .text	00000020 __sf_fake_stdin
 000007e6 g     F .text	000000a8 memset
 0000114e g     F .text	0000016a main
 000026f8 g     F .text	00000006 __sclose
@@ -235,13 +235,13 @@ SYMBOL TABLE:
 2000389e  w      .highcode	00000000 SPI0_IRQHandler
 200040b0 g       .bss	00000000 _end
 20003f18 g       .highcode	00000000 _highcode_vma_end
-00003610 g       .dlalign	00000000 _data_lma
+00003624 g       .dlalign	00000000 _data_lma
 00002cc8 g     O .text	000005f0 ascii_16x8
 00002674 g     F .text	0000004e __swrite
 00001ff8 g     F .text	00000298 _vfiprintf_r
 00001e22 g     F .text	0000006c _fwalk_reent
 00000ec0 g     F .text	000000ba TFT_Set_Address
-00003598 g     O .text	00000020 __sf_fake_stdout
+000035ac g     O .text	00000020 __sf_fake_stdout
 00002848 g     F .text	0000000c _read
 0000071c  w      .text	00000000 handle_reset
 00001ee8 g     F .text	000000a0 __smakebuf_r
@@ -516,9 +516,9 @@ GPIOB_IRQHandler(void)
 200038c8:	cb89                	beqz	a5,200038da <GPIOB_IRQHandler+0x1e>
 d:\CH573FEVT\LaserRangeFinder\obj/../src/Main.c:130
     {
-        PRINT("key1 \n");
+        PRINT("key1 ∞¥œ¬\n");
 200038ca:	e0000517          	auipc	a0,0xe0000
-200038ce:	c4650513          	addi	a0,a0,-954 # 3510 <ascii_8x6+0x258>
+200038ce:	c4a50513          	addi	a0,a0,-950 # 3514 <ascii_8x6+0x25c>
 200038d2:	dfffe097          	auipc	ra,0xdfffe
 200038d6:	fe2080e7          	jalr	-30(ra) # 18b4 <puts>
 d:\CH573FEVT\LaserRangeFinder\obj/../src/Main.c:132
@@ -530,9 +530,9 @@ d:\CH573FEVT\LaserRangeFinder\obj/../src/Main.c:132
 200038e6:	00075a63          	bgez	a4,200038fa <GPIOB_IRQHandler+0x3e>
 d:\CH573FEVT\LaserRangeFinder\obj/../src/Main.c:134
     {
-        PRINT("key2 \n");
+        PRINT("key2 ∞¥œ¬\n");
 200038ea:	e0000517          	auipc	a0,0xe0000
-200038ee:	c2e50513          	addi	a0,a0,-978 # 3518 <ascii_8x6+0x260>
+200038ee:	c3650513          	addi	a0,a0,-970 # 3520 <ascii_8x6+0x268>
 200038f2:	dfffe097          	auipc	ra,0xdfffe
 200038f6:	fc2080e7          	jalr	-62(ra) # 18b4 <puts>
 d:\CH573FEVT\LaserRangeFinder\obj/../src/Main.c:136
@@ -544,9 +544,9 @@ d:\CH573FEVT\LaserRangeFinder\obj/../src/Main.c:136
 20003906:	00075a63          	bgez	a4,2000391a <GPIOB_IRQHandler+0x5e>
 d:\CH573FEVT\LaserRangeFinder\obj/../src/Main.c:138
     {
-        PRINT("key3 \n");
+        PRINT("key3 ∞¥œ¬\n");
 2000390a:	e0000517          	auipc	a0,0xe0000
-2000390e:	c1650513          	addi	a0,a0,-1002 # 3520 <ascii_8x6+0x268>
+2000390e:	c2250513          	addi	a0,a0,-990 # 352c <ascii_8x6+0x274>
 20003912:	dfffe097          	auipc	ra,0xdfffe
 20003916:	fa2080e7          	jalr	-94(ra) # 18b4 <puts>
 d:\CH573FEVT\LaserRangeFinder\obj/../src/Main.c:140
@@ -558,9 +558,9 @@ d:\CH573FEVT\LaserRangeFinder\obj/../src/Main.c:140
 20003926:	00075a63          	bgez	a4,2000393a <GPIOB_IRQHandler+0x7e>
 d:\CH573FEVT\LaserRangeFinder\obj/../src/Main.c:142
     {
-        PRINT("key4 \n");
+        PRINT("key4 ∞¥œ¬\n");
 2000392a:	e0000517          	auipc	a0,0xe0000
-2000392e:	bfe50513          	addi	a0,a0,-1026 # 3528 <ascii_8x6+0x270>
+2000392e:	c0e50513          	addi	a0,a0,-1010 # 3538 <ascii_8x6+0x280>
 20003932:	dfffe097          	auipc	ra,0xdfffe
 20003936:	f82080e7          	jalr	-126(ra) # 18b4 <puts>
 d:\CH573FEVT\LaserRangeFinder\obj/../src/Main.c:144
@@ -568,7 +568,7 @@ d:\CH573FEVT\LaserRangeFinder\obj/../src/Main.c:144
     GPIOB_ClearITFlagBit(KEY1_PIN | KEY2_PIN | KEY3_PIN | KEY4_PIN); // «Â≥˝À˘”–∞¥º¸µƒ÷–∂œ±Í÷æŒª
 2000393a:	6791                	lui	a5,0x4
 2000393c:	40001737          	lui	a4,0x40001
-20003940:	c0078793          	addi	a5,a5,-1024 # 3c00 <_data_lma+0x5f0>
+20003940:	c0078793          	addi	a5,a5,-1024 # 3c00 <_data_lma+0x5dc>
 20003944:	08f71f23          	sh	a5,158(a4) # 4000109e <_eusrstack+0x1fff909e>
 d:\CH573FEVT\LaserRangeFinder\obj/../src/Main.c:145
 20003948:	30200073          	mret
@@ -1249,9 +1249,9 @@ FLASH_EEPROM_CMD():
 20003d7c:	f0998ee3          	beq	s3,s1,20003c98 <FLASH_EEPROM_CMD+0xc2>
 20003d80:	0985                	addi	s3,s3,1
 20003d82:	3b65                	jal	20003b3a <FLASH_ROM_IN>
-20003d84:	fea98fa3          	sb	a0,-1(s3) # ffff <_data_lma+0xc9ef>
+20003d84:	fea98fa3          	sb	a0,-1(s3) # ffff <_data_lma+0xc9db>
 20003d88:	bfd5                	j	20003d7c <FLASH_EEPROM_CMD+0x1a6>
-20003d8a:	fffa0793          	addi	a5,s4,-1 # ffff <_data_lma+0xc9ef>
+20003d8a:	fffa0793          	addi	a5,s4,-1 # ffff <_data_lma+0xc9db>
 20003d8e:	0ff7f793          	andi	a5,a5,255
 20003d92:	08fcec63          	bltu	s9,a5,20003e2a <.loop406+0x54>
 20003d96:	045d4703          	lbu	a4,69(s10)
@@ -1295,7 +1295,7 @@ FLASH_EEPROM_CMD():
 20003dfe:	85ca                	mv	a1,s2
 20003e00:	452d                	li	a0,11
 20003e02:	3b91                	jal	20003b56 <FLASH_ROM_ADDR>
-20003e04:	fff48913          	addi	s2,s1,-1 # 7ffff <_data_lma+0x7c9ef>
+20003e04:	fff48913          	addi	s2,s1,-1 # 7ffff <_data_lma+0x7c9db>
 20003e08:	e80488e3          	beqz	s1,20003c98 <FLASH_EEPROM_CMD+0xc2>
 20003e0c:	333d                	jal	20003b3a <FLASH_ROM_IN>
 20003e0e:	00397793          	andi	a5,s2,3
@@ -1348,7 +1348,7 @@ FLASH_EEPROM_CMD():
 20003e9a:	3145                	jal	20003b3a <FLASH_ROM_IN>
 20003e9c:	0074f793          	andi	a5,s1,7
 20003ea0:	97ce                	add	a5,a5,s3
-20003ea2:	0007c703          	lbu	a4,0(a5) # 78000 <_data_lma+0x749f0>
+20003ea2:	0007c703          	lbu	a4,0(a5) # 78000 <_data_lma+0x749dc>
 20003ea6:	14fd                	addi	s1,s1,-1
 20003ea8:	8d39                	xor	a0,a0,a4
 20003eaa:	00a78023          	sb	a0,0(a5)
@@ -1449,7 +1449,7 @@ d:\CH573FEVT\LaserRangeFinder\obj/../Startup/startup_CH573.S:136
 2:
 	la a0, _data_lma
      754:	00003517          	auipc	a0,0x3
-     758:	ebc50513          	addi	a0,a0,-324 # 3610 <_data_lma>
+     758:	ed050513          	addi	a0,a0,-304 # 3624 <_data_lma>
 d:\CH573FEVT\LaserRangeFinder\obj/../Startup/startup_CH573.S:137
 	la a1, _data_vma
      75c:	20004597          	auipc	a1,0x20004
@@ -1597,7 +1597,7 @@ memset():
      814:	068a                	slli	a3,a3,0x2
      816:	00000297          	auipc	t0,0x0
      81a:	9696                	add	a3,a3,t0
-     81c:	00a68067          	jr	10(a3) # 600000a <_data_lma+0x5ffc9fa>
+     81c:	00a68067          	jr	10(a3) # 600000a <_data_lma+0x5ffc9e6>
      820:	00b70723          	sb	a1,14(a4)
      824:	00b706a3          	sb	a1,13(a4)
      828:	00b70623          	sb	a1,12(a4)
@@ -2784,7 +2784,7 @@ d:\CH573FEVT\LaserRangeFinder\obj/../src/TFTc/TFT_io.c:109
 TFT_IO_Init():
 d:\CH573FEVT\LaserRangeFinder\obj/../src/TFTc/TFT_io.c:411
 		htft->tx_buffer = (uint8_t *)malloc(htft->buffer_size);
-     df4:	02855503          	lhu	a0,40(a0) # 7028 <_data_lma+0x3a18>
+     df4:	02855503          	lhu	a0,40(a0) # 7028 <_data_lma+0x3a04>
      df8:	015000ef          	jal	ra,160c <malloc>
      dfc:	d048                	sw	a0,36(s0)
 d:\CH573FEVT\LaserRangeFinder\obj/../src/TFTc/TFT_io.c:412
@@ -3215,7 +3215,7 @@ d:\CH573FEVT\LaserRangeFinder\obj/../src/TFTc/TFT_text.c:134
 d:\CH573FEVT\LaserRangeFinder\obj/../src/TFTc/TFT_text.c:132
         ascii_font = &afont8x6;
      fae:	00002797          	auipc	a5,0x2
-     fb2:	65678793          	addi	a5,a5,1622 # 3604 <afont8x6>
+     fb2:	66a78793          	addi	a5,a5,1642 # 3618 <afont8x6>
 d:\CH573FEVT\LaserRangeFinder\obj/../src/TFTc/TFT_text.c:141
 
     char_width = ascii_font->w;
@@ -3350,7 +3350,7 @@ d:\CH573FEVT\LaserRangeFinder\obj/../src/TFTc/TFT_text.c:123
 d:\CH573FEVT\LaserRangeFinder\obj/../src/TFTc/TFT_text.c:122
         ascii_font = &afont16x8;
     1044:	00002797          	auipc	a5,0x2
-    1048:	5b878793          	addi	a5,a5,1464 # 35fc <afont16x8>
+    1048:	5cc78793          	addi	a5,a5,1484 # 3610 <afont16x8>
     104c:	b7ad                	j	fb6 <TFT_Show_Char+0x3c>
 d:\CH573FEVT\LaserRangeFinder\obj/../src/TFTc/TFT_text.c:128
         bytes_per_char = 12; // 6Âàó√ó12Ë°åÔºåÊØèÂàó2Â≠óËäÇÔºåÂÖ±12Â≠óËäÇ
@@ -3358,7 +3358,7 @@ d:\CH573FEVT\LaserRangeFinder\obj/../src/TFTc/TFT_text.c:128
 d:\CH573FEVT\LaserRangeFinder\obj/../src/TFTc/TFT_text.c:127
         ascii_font = &afont12x6;
     1050:	00002797          	auipc	a5,0x2
-    1054:	5a478793          	addi	a5,a5,1444 # 35f4 <afont12x6>
+    1054:	5b878793          	addi	a5,a5,1464 # 3608 <afont12x6>
     1058:	bfb9                	j	fb6 <TFT_Show_Char+0x3c>
 _TFT_Draw_Glyph():
 d:\CH573FEVT\LaserRangeFinder\obj/../src/TFTc/TFT_text.c:35
@@ -3461,15 +3461,15 @@ d:\CH573FEVT\LaserRangeFinder\obj/../src/TFTc/TFT_text.c:90
 d:\CH573FEVT\LaserRangeFinder\obj/../src/TFTc/TFT_text.c:93
             char_width = afont8x6.w;
     10e6:	00002d17          	auipc	s10,0x2
-    10ea:	51fd4d03          	lbu	s10,1311(s10) # 3605 <afont8x6+0x1>
+    10ea:	533d4d03          	lbu	s10,1331(s10) # 3619 <afont8x6+0x1>
 d:\CH573FEVT\LaserRangeFinder\obj/../src/TFTc/TFT_text.c:91
             char_width = afont12x6.w;
     10ee:	00002d97          	auipc	s11,0x2
-    10f2:	507dcd83          	lbu	s11,1287(s11) # 35f5 <afont12x6+0x1>
+    10f2:	51bdcd83          	lbu	s11,1307(s11) # 3609 <afont12x6+0x1>
 d:\CH573FEVT\LaserRangeFinder\obj/../src/TFTc/TFT_text.c:89
             char_width = afont16x8.w;
     10f6:	00002317          	auipc	t1,0x2
-    10fa:	50734303          	lbu	t1,1287(t1) # 35fd <afont16x8+0x1>
+    10fa:	51b34303          	lbu	t1,1307(t1) # 3611 <afont16x8+0x1>
 d:\CH573FEVT\LaserRangeFinder\obj/../src/TFTc/TFT_text.c:82
     while (*str) // ÈÅçÂéÜÂ≠óÁ¨¶‰∏≤Áõ¥Âà∞ÈÅáÂà∞ null ÁªàÊ≠¢Á¨¶
     10fe:	0004c683          	lbu	a3,0(s1)
@@ -3634,7 +3634,7 @@ d:\CH573FEVT\LaserRangeFinder\obj/../src/Main.c:68
 d:\CH573FEVT\LaserRangeFinder\obj/../src/Main.c:69
     TFT_Show_String(&htft1, 20, 20, "now ST7789v3", WHITE, BLACK, 16, 0);
     11f2:	6441                	lui	s0,0x10
-    11f4:	fff40713          	addi	a4,s0,-1 # ffff <_data_lma+0xc9ef>
+    11f4:	fff40713          	addi	a4,s0,-1 # ffff <_data_lma+0xc9db>
     11f8:	4881                	li	a7,0
     11fa:	4841                	li	a6,16
     11fc:	4781                	li	a5,0
@@ -3697,7 +3697,7 @@ RV_STATIC_INLINE void PFIC_EnableIRQ(IRQn_Type IRQn)
     1250:	10e7a023          	sw	a4,256(a5) # e000e100 <_eusrstack+0xc0006100>
 main():
 d:\CH573FEVT\LaserRangeFinder\obj/../src/Main.c:88
-    PRINT("Press Key \n");
+    PRINT("ø…“‘∞¥œ¬∞¥º¸¡À\n");
     1254:	00002517          	auipc	a0,0x2
     1258:	2b050513          	addi	a0,a0,688 # 3504 <ascii_8x6+0x24c>
     125c:	2da1                	jal	18b4 <puts>
@@ -3750,7 +3750,7 @@ void GPIOA_ModeCfg(uint32_t pin, GPIOModeTypeDef mode)
     12b8:	4791                	li	a5,4
     12ba:	02b7ee63          	bltu	a5,a1,12f6 <GPIOA_ModeCfg+0x3e>
     12be:	00002717          	auipc	a4,0x2
-    12c2:	27270713          	addi	a4,a4,626 # 3530 <ascii_8x6+0x278>
+    12c2:	28670713          	addi	a4,a4,646 # 3544 <ascii_8x6+0x28c>
     12c6:	058a                	slli	a1,a1,0x2
     12c8:	95ba                	add	a1,a1,a4
     12ca:	419c                	lw	a5,0(a1)
@@ -3861,7 +3861,7 @@ void GPIOB_ModeCfg(uint32_t pin, GPIOModeTypeDef mode)
     135e:	4791                	li	a5,4
     1360:	02b7ee63          	bltu	a5,a1,139c <GPIOB_ModeCfg+0x3e>
     1364:	00002717          	auipc	a4,0x2
-    1368:	1e070713          	addi	a4,a4,480 # 3544 <ascii_8x6+0x28c>
+    1368:	1f470713          	addi	a4,a4,500 # 3558 <ascii_8x6+0x2a0>
     136c:	058a                	slli	a1,a1,0x2
     136e:	95ba                	add	a1,a1,a4
     1370:	419c                	lw	a5,0(a1)
@@ -4155,7 +4155,7 @@ d:\CH573FEVT\LaserRangeFinder\obj/../StdPeriphDriver/CH57x_sys.c:97
     1526:	01e85537          	lui	a0,0x1e85
 d:\CH573FEVT\LaserRangeFinder\obj/../StdPeriphDriver/CH57x_sys.c:101
         return (480000000 / (rev & 0x1f));
-    152a:	80050513          	addi	a0,a0,-2048 # 1e84800 <_data_lma+0x1e811f0>
+    152a:	80050513          	addi	a0,a0,-2048 # 1e84800 <_data_lma+0x1e811dc>
     152e:	02f54533          	div	a0,a0,a5
     1532:	8082                	ret
 d:\CH573FEVT\LaserRangeFinder\obj/../StdPeriphDriver/CH57x_sys.c:99
@@ -4171,7 +4171,7 @@ d:\CH573FEVT\LaserRangeFinder\obj/../StdPeriphDriver/CH57x_sys.c:101
 d:\CH573FEVT\LaserRangeFinder\obj/../StdPeriphDriver/CH57x_sys.c:105
         return (32000);
     154a:	6521                	lui	a0,0x8
-    154c:	d0050513          	addi	a0,a0,-768 # 7d00 <_data_lma+0x46f0>
+    154c:	d0050513          	addi	a0,a0,-768 # 7d00 <_data_lma+0x46dc>
 d:\CH573FEVT\LaserRangeFinder\obj/../StdPeriphDriver/CH57x_sys.c:107
 }
     1550:	8082                	ret
@@ -4315,7 +4315,7 @@ d:\CH573FEVT\LaserRangeFinder\obj/../StdPeriphDriver/CH57x_uart1.c:25
     15dc:	1141                	addi	sp,sp,-16
 d:\CH573FEVT\LaserRangeFinder\obj/../StdPeriphDriver/CH57x_uart1.c:26
     UART1_BaudRateCfg(115200);
-    15de:	20050513          	addi	a0,a0,512 # 1c200 <_data_lma+0x18bf0>
+    15de:	20050513          	addi	a0,a0,512 # 1c200 <_data_lma+0x18bdc>
 d:\CH573FEVT\LaserRangeFinder\obj/../StdPeriphDriver/CH57x_uart1.c:25
 {
     15e2:	c606                	sw	ra,12(sp)
@@ -4562,7 +4562,7 @@ _puts_r():
     17fa:	8526                	mv	a0,s1
     17fc:	2b31                	jal	1d18 <__sinit>
     17fe:	00002797          	auipc	a5,0x2
-    1802:	d7a78793          	addi	a5,a5,-646 # 3578 <__sf_fake_stdin>
+    1802:	d8e78793          	addi	a5,a5,-626 # 358c <__sf_fake_stdin>
     1806:	02f41c63          	bne	s0,a5,183e <_puts_r+0x64>
     180a:	40c0                	lw	s0,4(s1)
     180c:	00c45783          	lhu	a5,12(s0)
@@ -4587,12 +4587,12 @@ _puts_r():
     183a:	4529                	li	a0,10
     183c:	a035                	j	1868 <_puts_r+0x8e>
     183e:	00002797          	auipc	a5,0x2
-    1842:	d5a78793          	addi	a5,a5,-678 # 3598 <__sf_fake_stdout>
+    1842:	d6e78793          	addi	a5,a5,-658 # 35ac <__sf_fake_stdout>
     1846:	00f41463          	bne	s0,a5,184e <_puts_r+0x74>
     184a:	4480                	lw	s0,8(s1)
     184c:	b7c1                	j	180c <_puts_r+0x32>
     184e:	00002797          	auipc	a5,0x2
-    1852:	d0a78793          	addi	a5,a5,-758 # 3558 <__sf_fake_stderr>
+    1852:	d1e78793          	addi	a5,a5,-738 # 356c <__sf_fake_stderr>
     1856:	faf41be3          	bne	s0,a5,180c <_puts_r+0x32>
     185a:	44c0                	lw	s0,12(s1)
     185c:	bf45                	j	180c <_puts_r+0x32>
@@ -4676,7 +4676,7 @@ __swbuf_r():
     1900:	e391                	bnez	a5,1904 <__swbuf_r+0x1a>
     1902:	2919                	jal	1d18 <__sinit>
     1904:	00002797          	auipc	a5,0x2
-    1908:	c7478793          	addi	a5,a5,-908 # 3578 <__sf_fake_stdin>
+    1908:	c8878793          	addi	a5,a5,-888 # 358c <__sf_fake_stdin>
     190c:	06f41963          	bne	s0,a5,197e <__swbuf_r+0x94>
     1910:	40c0                	lw	s0,4(s1)
     1912:	4c1c                	lw	a5,24(s0)
@@ -4725,12 +4725,12 @@ __swbuf_r():
     197a:	6105                	addi	sp,sp,32
     197c:	8082                	ret
     197e:	00002797          	auipc	a5,0x2
-    1982:	c1a78793          	addi	a5,a5,-998 # 3598 <__sf_fake_stdout>
+    1982:	c2e78793          	addi	a5,a5,-978 # 35ac <__sf_fake_stdout>
     1986:	00f41463          	bne	s0,a5,198e <__swbuf_r+0xa4>
     198a:	4480                	lw	s0,8(s1)
     198c:	b759                	j	1912 <__swbuf_r+0x28>
     198e:	00002797          	auipc	a5,0x2
-    1992:	bca78793          	addi	a5,a5,-1078 # 3558 <__sf_fake_stderr>
+    1992:	bde78793          	addi	a5,a5,-1058 # 356c <__sf_fake_stderr>
     1996:	f6f41ee3          	bne	s0,a5,1912 <__swbuf_r+0x28>
     199a:	44c0                	lw	s0,12(s1)
     199c:	bf9d                	j	1912 <__swbuf_r+0x28>
@@ -4759,7 +4759,7 @@ __swsetup_r():
     19c8:	8526                	mv	a0,s1
     19ca:	26b9                	jal	1d18 <__sinit>
     19cc:	00002797          	auipc	a5,0x2
-    19d0:	bac78793          	addi	a5,a5,-1108 # 3578 <__sf_fake_stdin>
+    19d0:	bc078793          	addi	a5,a5,-1088 # 358c <__sf_fake_stdin>
     19d4:	02f41c63          	bne	s0,a5,1a0c <__swsetup_r+0x62>
     19d8:	40c0                	lw	s0,4(s1)
     19da:	00c41703          	lh	a4,12(s0)
@@ -4781,12 +4781,12 @@ __swsetup_r():
     1a08:	0141                	addi	sp,sp,16
     1a0a:	8082                	ret
     1a0c:	00002797          	auipc	a5,0x2
-    1a10:	b8c78793          	addi	a5,a5,-1140 # 3598 <__sf_fake_stdout>
+    1a10:	ba078793          	addi	a5,a5,-1120 # 35ac <__sf_fake_stdout>
     1a14:	00f41463          	bne	s0,a5,1a1c <__swsetup_r+0x72>
     1a18:	4480                	lw	s0,8(s1)
     1a1a:	b7c1                	j	19da <__swsetup_r+0x30>
     1a1c:	00002797          	auipc	a5,0x2
-    1a20:	b3c78793          	addi	a5,a5,-1220 # 3558 <__sf_fake_stderr>
+    1a20:	b5078793          	addi	a5,a5,-1200 # 356c <__sf_fake_stderr>
     1a24:	faf41be3          	bne	s0,a5,19da <__swsetup_r+0x30>
     1a28:	44c0                	lw	s0,12(s1)
     1a2a:	bf45                	j	19da <__swsetup_r+0x30>
@@ -4977,7 +4977,7 @@ _fflush_r():
     1c0c:	2231                	jal	1d18 <__sinit>
     1c0e:	45b2                	lw	a1,12(sp)
     1c10:	00002797          	auipc	a5,0x2
-    1c14:	96878793          	addi	a5,a5,-1688 # 3578 <__sf_fake_stdin>
+    1c14:	97c78793          	addi	a5,a5,-1668 # 358c <__sf_fake_stdin>
     1c18:	00f59b63          	bne	a1,a5,1c2e <_fflush_r+0x36>
     1c1c:	404c                	lw	a1,4(s0)
     1c1e:	00c59783          	lh	a5,12(a1)
@@ -4988,12 +4988,12 @@ _fflush_r():
     1c2a:	6105                	addi	sp,sp,32
     1c2c:	b579                	j	1aba <__sflush_r>
     1c2e:	00002797          	auipc	a5,0x2
-    1c32:	96a78793          	addi	a5,a5,-1686 # 3598 <__sf_fake_stdout>
+    1c32:	97e78793          	addi	a5,a5,-1666 # 35ac <__sf_fake_stdout>
     1c36:	00f59463          	bne	a1,a5,1c3e <_fflush_r+0x46>
     1c3a:	440c                	lw	a1,8(s0)
     1c3c:	b7cd                	j	1c1e <_fflush_r+0x26>
     1c3e:	00002797          	auipc	a5,0x2
-    1c42:	91a78793          	addi	a5,a5,-1766 # 3558 <__sf_fake_stderr>
+    1c42:	92e78793          	addi	a5,a5,-1746 # 356c <__sf_fake_stderr>
     1c46:	fcf59ce3          	bne	a1,a5,1c1e <_fflush_r+0x26>
     1c4a:	444c                	lw	a1,12(s0)
     1c4c:	bfc9                	j	1c1e <_fflush_r+0x26>
@@ -5089,7 +5089,7 @@ __sinit():
     1d26:	fa478793          	addi	a5,a5,-92 # 1cc6 <_cleanup_r>
     1d2a:	d51c                	sw	a5,40(a0)
     1d2c:	00002797          	auipc	a5,0x2
-    1d30:	8e078793          	addi	a5,a5,-1824 # 360c <_global_impure_ptr>
+    1d30:	8f478793          	addi	a5,a5,-1804 # 3620 <_global_impure_ptr>
     1d34:	439c                	lw	a5,0(a5)
     1d36:	04052423          	sw	zero,72(a0)
     1d3a:	04052623          	sw	zero,76(a0)
@@ -5130,7 +5130,7 @@ __sinit():
 __sfp():
     1d82:	1141                	addi	sp,sp,-16
     1d84:	00002797          	auipc	a5,0x2
-    1d88:	88878793          	addi	a5,a5,-1912 # 360c <_global_impure_ptr>
+    1d88:	89c78793          	addi	a5,a5,-1892 # 3620 <_global_impure_ptr>
     1d8c:	c226                	sw	s1,4(sp)
     1d8e:	4384                	lw	s1,0(a5)
     1d90:	c04a                	sw	s2,0(sp)
@@ -5419,7 +5419,7 @@ _vfiprintf_r():
     201c:	e391                	bnez	a5,2020 <_vfiprintf_r+0x28>
     201e:	39ed                	jal	1d18 <__sinit>
     2020:	00001797          	auipc	a5,0x1
-    2024:	55878793          	addi	a5,a5,1368 # 3578 <__sf_fake_stdin>
+    2024:	56c78793          	addi	a5,a5,1388 # 358c <__sf_fake_stdin>
     2028:	0cf49b63          	bne	s1,a5,20fe <_vfiprintf_r+0x106>
     202c:	0049a483          	lw	s1,4(s3)
     2030:	00c4d783          	lhu	a5,12(s1)
@@ -5435,7 +5435,7 @@ _vfiprintf_r():
     204e:	c622                	sw	s0,12(sp)
     2050:	02500b93          	li	s7,37
     2054:	00001a97          	auipc	s5,0x1
-    2058:	564a8a93          	addi	s5,s5,1380 # 35b8 <__sf_fake_stdout+0x20>
+    2058:	578a8a93          	addi	s5,s5,1400 # 35cc <__sf_fake_stdout+0x20>
     205c:	4c05                	li	s8,1
     205e:	4b29                	li	s6,10
     2060:	844a                	mv	s0,s2
@@ -5494,12 +5494,12 @@ _vfiprintf_r():
     20fa:	ce3e                	sw	a5,28(sp)
     20fc:	a885                	j	216c <_vfiprintf_r+0x174>
     20fe:	00001797          	auipc	a5,0x1
-    2102:	49a78793          	addi	a5,a5,1178 # 3598 <__sf_fake_stdout>
+    2102:	4ae78793          	addi	a5,a5,1198 # 35ac <__sf_fake_stdout>
     2106:	00f49563          	bne	s1,a5,2110 <_vfiprintf_r+0x118>
     210a:	0089a483          	lw	s1,8(s3)
     210e:	b70d                	j	2030 <_vfiprintf_r+0x38>
     2110:	00001797          	auipc	a5,0x1
-    2114:	44878793          	addi	a5,a5,1096 # 3558 <__sf_fake_stderr>
+    2114:	45c78793          	addi	a5,a5,1116 # 356c <__sf_fake_stderr>
     2118:	f0f49ce3          	bne	s1,a5,2030 <_vfiprintf_r+0x38>
     211c:	00c9a483          	lw	s1,12(s3)
     2120:	bf01                	j	2030 <_vfiprintf_r+0x38>
@@ -5574,11 +5574,11 @@ _vfiprintf_r():
     21d2:	00044583          	lbu	a1,0(s0)
     21d6:	460d                	li	a2,3
     21d8:	00001517          	auipc	a0,0x1
-    21dc:	3e850513          	addi	a0,a0,1000 # 35c0 <__sf_fake_stdout+0x28>
+    21dc:	3fc50513          	addi	a0,a0,1020 # 35d4 <__sf_fake_stdout+0x28>
     21e0:	2bcd                	jal	27d2 <memchr>
     21e2:	cd11                	beqz	a0,21fe <_vfiprintf_r+0x206>
     21e4:	00001797          	auipc	a5,0x1
-    21e8:	3dc78793          	addi	a5,a5,988 # 35c0 <__sf_fake_stdout+0x28>
+    21e8:	3f078793          	addi	a5,a5,1008 # 35d4 <__sf_fake_stdout+0x28>
     21ec:	8d1d                	sub	a0,a0,a5
     21ee:	04000793          	li	a5,64
     21f2:	00a797b3          	sll	a5,a5,a0
@@ -5589,7 +5589,7 @@ _vfiprintf_r():
     21fe:	00044583          	lbu	a1,0(s0)
     2202:	4619                	li	a2,6
     2204:	00001517          	auipc	a0,0x1
-    2208:	3c050513          	addi	a0,a0,960 # 35c4 <__sf_fake_stdout+0x2c>
+    2208:	3d450513          	addi	a0,a0,980 # 35d8 <__sf_fake_stdout+0x2c>
     220c:	00140913          	addi	s2,s0,1
     2210:	02b10423          	sb	a1,40(sp)
     2214:	2b7d                	jal	27d2 <memchr>
@@ -5797,7 +5797,7 @@ _printf_i():
     2416:	40f007b3          	neg	a5,a5
     241a:	04e401a3          	sb	a4,67(s0)
     241e:	00001697          	auipc	a3,0x1
-    2422:	1ae68693          	addi	a3,a3,430 # 35cc <__sf_fake_stdout+0x34>
+    2422:	1c268693          	addi	a3,a3,450 # 35e0 <__sf_fake_stdout+0x34>
     2426:	4729                	li	a4,10
     2428:	a86d                	j	24e2 <_printf_i+0x146>
     242a:	07000793          	li	a5,112
@@ -5858,7 +5858,7 @@ _printf_i():
     24cc:	06f00713          	li	a4,111
     24d0:	0ee68763          	beq	a3,a4,25be <_printf_i+0x222>
     24d4:	00001697          	auipc	a3,0x1
-    24d8:	0f868693          	addi	a3,a3,248 # 35cc <__sf_fake_stdout+0x34>
+    24d8:	10c68693          	addi	a3,a3,268 # 35e0 <__sf_fake_stdout+0x34>
     24dc:	4729                	li	a4,10
     24de:	040401a3          	sb	zero,67(s0)
     24e2:	404c                	lw	a1,4(s0)
@@ -5912,7 +5912,7 @@ _printf_i():
     255a:	8082                	ret
     255c:	04d582a3          	sb	a3,69(a1)
     2560:	00001697          	auipc	a3,0x1
-    2564:	06c68693          	addi	a3,a3,108 # 35cc <__sf_fake_stdout+0x34>
+    2564:	08068693          	addi	a3,a3,128 # 35e0 <__sf_fake_stdout+0x34>
     2568:	400c                	lw	a1,0(s0)
     256a:	4308                	lw	a0,0(a4)
     256c:	0805f813          	andi	a6,a1,128
@@ -5936,7 +5936,7 @@ _printf_i():
     259c:	07800793          	li	a5,120
     25a0:	04f402a3          	sb	a5,69(s0)
     25a4:	00001697          	auipc	a3,0x1
-    25a8:	03c68693          	addi	a3,a3,60 # 35e0 <__sf_fake_stdout+0x48>
+    25a8:	05068693          	addi	a3,a3,80 # 35f4 <__sf_fake_stdout+0x48>
     25ac:	bf75                	j	2568 <_printf_i+0x1cc>
     25ae:	0405f813          	andi	a6,a1,64
     25b2:	c308                	sw	a0,0(a4)
@@ -5945,7 +5945,7 @@ _printf_i():
     25ba:	83c1                	srli	a5,a5,0x10
     25bc:	bf7d                	j	257a <_printf_i+0x1de>
     25be:	00001697          	auipc	a3,0x1
-    25c2:	00e68693          	addi	a3,a3,14 # 35cc <__sf_fake_stdout+0x34>
+    25c2:	02268693          	addi	a3,a3,34 # 35e0 <__sf_fake_stdout+0x34>
     25c6:	4721                	li	a4,8
     25c8:	bf19                	j	24de <_printf_i+0x142>
     25ca:	87ae                	mv	a5,a1
@@ -6472,34 +6472,35 @@ _read():
     34d0:	a0a0 7ca0 4400 5464 444c 1414 1414 1414     ...|.DdTLD......
     34e0:	7453 7261 2074 4340 6968 4970 3d44 3025     Start @ChipID=%0
     34f0:	5832 000a 6f6e 2077 5453 3737 3938 3376     2X..now ST7789v3
-    3500:	0000 0000 7250 7365 2073 654b 2079 0000     ....Press Key ..
-    3510:	656b 3179 0020 0000 656b 3279 0020 0000     key1 ...key2 ...
-    3520:	656b 3379 0020 0000 656b 3479 0020 0000     key3 ...key4 ...
-    3530:	dda0 ffff ddc8 ffff ddf0 ffff de08 ffff     ................
-    3540:	de22 ffff de32 ffff de5a ffff de82 ffff     "...2...Z.......
-    3550:	de9a ffff deb4 ffff                         ........
+    3500:	0000 0000 c9bf d4d2 b4b0 c2cf b4b0 fcbc     ................
+    3510:	cbc1 0000 656b 3179 b020 cfb4 00c2 0000     ....key1 .......
+    3520:	656b 3279 b020 cfb4 00c2 0000 656b 3379     key2 .......key3
+    3530:	b020 cfb4 00c2 0000 656b 3479 b020 cfb4      .......key4 ...
+    3540:	00c2 0000 dd8c ffff ddb4 ffff dddc ffff     ................
+    3550:	ddf4 ffff de0e ffff de1e ffff de46 ffff     ............F...
+    3560:	de6e ffff de86 ffff dea0 ffff               n...........
 
-00003558 <__sf_fake_stderr>:
+0000356c <__sf_fake_stderr>:
 	...
 
-00003578 <__sf_fake_stdin>:
+0000358c <__sf_fake_stdin>:
 	...
 
-00003598 <__sf_fake_stdout>:
+000035ac <__sf_fake_stdout>:
 	...
-    35b8:	2d23 2b30 0020 0000 6c68 004c 6665 4567     #-0+ ...hlL.efgE
-    35c8:	4746 0000 3130 3332 3534 3736 3938 4241     FG..0123456789AB
-    35d8:	4443 4645 0000 0000 3130 3332 3534 3736     CDEF....01234567
-    35e8:	3938 6261 6463 6665 0000 0000               89abcdef....
+    35cc:	2d23 2b30 0020 0000 6c68 004c 6665 4567     #-0+ ...hlL.efgE
+    35dc:	4746 0000 3130 3332 3534 3736 3938 4241     FG..0123456789AB
+    35ec:	4443 4645 0000 0000 3130 3332 3534 3736     CDEF....01234567
+    35fc:	3938 6261 6463 6665 0000 0000               89abcdef....
 
-000035f4 <afont12x6>:
-    35f4:	060c 0000 2854 0000                         ....T(..
+00003608 <afont12x6>:
+    3608:	060c 0000 2854 0000                         ....T(..
 
-000035fc <afont16x8>:
-    35fc:	0810 0000 2cc8 0000                         .....,..
+00003610 <afont16x8>:
+    3610:	0810 0000 2cc8 0000                         .....,..
 
-00003604 <afont8x6>:
-    3604:	0608 0000 32b8 0000                         .....2..
+00003618 <afont8x6>:
+    3618:	0608 0000 32b8 0000                         .....2..
 
-0000360c <_global_impure_ptr>:
-    360c:	4000 2000                                   .@. 
+00003620 <_global_impure_ptr>:
+    3620:	4000 2000                                   .@. 

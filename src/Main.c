@@ -85,7 +85,7 @@ int main()
     GPIOB_ITModeCfg(KEY4_PIN, GPIO_ITMode_FallEdge); // 按键4下降沿触发
     PFIC_EnableIRQ(GPIO_B_IRQn);                     // 开启GPIOB中断
 
-    PRINT("Press Key \n");
+    PRINT("可以按下按键了\n");
 
     while (1) // 循环
     {
@@ -127,19 +127,19 @@ GPIOB_IRQHandler(void)
 {
     if (GPIOB_ReadITFlagBit(KEY1_PIN))
     {
-        PRINT("key1 \n");
+        PRINT("key1 按下\n");
     }
     if (GPIOB_ReadITFlagBit(KEY2_PIN))
     {
-        PRINT("key2 \n");
+        PRINT("key2 按下\n");
     }
     if (GPIOB_ReadITFlagBit(KEY3_PIN))
     {
-        PRINT("key3 \n");
+        PRINT("key3 按下\n");
     }
     if (GPIOB_ReadITFlagBit(KEY4_PIN))
     {
-        PRINT("key4 \n");
+        PRINT("key4 按下\n");
     }
     GPIOB_ClearITFlagBit(KEY1_PIN | KEY2_PIN | KEY3_PIN | KEY4_PIN); // 清除所有按键的中断标志位
 }

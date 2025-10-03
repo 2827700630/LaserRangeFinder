@@ -848,7 +848,7 @@ END GROUP
  *fill*         0x0000000020003f16        0x2 
                 0x0000000020003f18                PROVIDE (_highcode_vma_end = .)
 
-.text           0x000000000000071c     0x2ef4
+.text           0x000000000000071c     0x2f08
                 0x000000000000071c                . = ALIGN (0x4)
  *(SORT_NONE(.handle_reset))
  .handle_reset  0x000000000000071c       0xca ./Startup/startup_CH573.o
@@ -1073,102 +1073,102 @@ END GROUP
                 0x00000000000032b8      0x228 ./src/TFTc/font.o
                 0x00000000000032b8                ascii_8x6
  .rodata.main.str1.4
-                0x00000000000034e0       0x2f ./src/Main.o
- *fill*         0x000000000000350f        0x1 
+                0x00000000000034e0       0x33 ./src/Main.o
+ *fill*         0x0000000000003513        0x1 
  .rodata.str1.4
-                0x0000000000003510       0x1e ./src/Main.o
- *fill*         0x000000000000352e        0x2 
+                0x0000000000003514       0x2e ./src/Main.o
+ *fill*         0x0000000000003542        0x2 
  .rodata.GPIOA_ModeCfg
-                0x0000000000003530       0x14 ./StdPeriphDriver/CH57x_gpio.o
- .rodata.GPIOB_ModeCfg
                 0x0000000000003544       0x14 ./StdPeriphDriver/CH57x_gpio.o
+ .rodata.GPIOB_ModeCfg
+                0x0000000000003558       0x14 ./StdPeriphDriver/CH57x_gpio.o
  .rodata.__sf_fake_stderr
-                0x0000000000003558       0x20 d:/wch/mounriver_studio2/resources/app/resources/win32/components/wch/toolchain/risc-v embedded gcc/bin/../lib/gcc/riscv-none-embed/8.2.0/../../../../riscv-none-embed/lib/rv32imac/ilp32\libg_nano.a(lib_a-findfp.o)
-                0x0000000000003558                __sf_fake_stderr
+                0x000000000000356c       0x20 d:/wch/mounriver_studio2/resources/app/resources/win32/components/wch/toolchain/risc-v embedded gcc/bin/../lib/gcc/riscv-none-embed/8.2.0/../../../../riscv-none-embed/lib/rv32imac/ilp32\libg_nano.a(lib_a-findfp.o)
+                0x000000000000356c                __sf_fake_stderr
  .rodata.__sf_fake_stdin
-                0x0000000000003578       0x20 d:/wch/mounriver_studio2/resources/app/resources/win32/components/wch/toolchain/risc-v embedded gcc/bin/../lib/gcc/riscv-none-embed/8.2.0/../../../../riscv-none-embed/lib/rv32imac/ilp32\libg_nano.a(lib_a-findfp.o)
-                0x0000000000003578                __sf_fake_stdin
+                0x000000000000358c       0x20 d:/wch/mounriver_studio2/resources/app/resources/win32/components/wch/toolchain/risc-v embedded gcc/bin/../lib/gcc/riscv-none-embed/8.2.0/../../../../riscv-none-embed/lib/rv32imac/ilp32\libg_nano.a(lib_a-findfp.o)
+                0x000000000000358c                __sf_fake_stdin
  .rodata.__sf_fake_stdout
-                0x0000000000003598       0x20 d:/wch/mounriver_studio2/resources/app/resources/win32/components/wch/toolchain/risc-v embedded gcc/bin/../lib/gcc/riscv-none-embed/8.2.0/../../../../riscv-none-embed/lib/rv32imac/ilp32\libg_nano.a(lib_a-findfp.o)
-                0x0000000000003598                __sf_fake_stdout
+                0x00000000000035ac       0x20 d:/wch/mounriver_studio2/resources/app/resources/win32/components/wch/toolchain/risc-v embedded gcc/bin/../lib/gcc/riscv-none-embed/8.2.0/../../../../riscv-none-embed/lib/rv32imac/ilp32\libg_nano.a(lib_a-findfp.o)
+                0x00000000000035ac                __sf_fake_stdout
  .rodata._vfprintf_r.str1.4
-                0x00000000000035b8       0x13 d:/wch/mounriver_studio2/resources/app/resources/win32/components/wch/toolchain/risc-v embedded gcc/bin/../lib/gcc/riscv-none-embed/8.2.0/../../../../riscv-none-embed/lib/rv32imac/ilp32\libg_nano.a(lib_a-nano-vfprintf.o)
- *fill*         0x00000000000035cb        0x1 
+                0x00000000000035cc       0x13 d:/wch/mounriver_studio2/resources/app/resources/win32/components/wch/toolchain/risc-v embedded gcc/bin/../lib/gcc/riscv-none-embed/8.2.0/../../../../riscv-none-embed/lib/rv32imac/ilp32\libg_nano.a(lib_a-nano-vfprintf.o)
+ *fill*         0x00000000000035df        0x1 
  .rodata._printf_i.str1.4
-                0x00000000000035cc       0x28 d:/wch/mounriver_studio2/resources/app/resources/win32/components/wch/toolchain/risc-v embedded gcc/bin/../lib/gcc/riscv-none-embed/8.2.0/../../../../riscv-none-embed/lib/rv32imac/ilp32\libg_nano.a(lib_a-nano-vfprintf_i.o)
+                0x00000000000035e0       0x28 d:/wch/mounriver_studio2/resources/app/resources/win32/components/wch/toolchain/risc-v embedded gcc/bin/../lib/gcc/riscv-none-embed/8.2.0/../../../../riscv-none-embed/lib/rv32imac/ilp32\libg_nano.a(lib_a-nano-vfprintf_i.o)
                                          0x25 (size before relaxing)
  *(.sdata2.*)
  .sdata2.afont12x6
-                0x00000000000035f4        0x8 ./src/TFTc/font.o
-                0x00000000000035f4                afont12x6
+                0x0000000000003608        0x8 ./src/TFTc/font.o
+                0x0000000000003608                afont12x6
  .sdata2.afont16x8
-                0x00000000000035fc        0x8 ./src/TFTc/font.o
-                0x00000000000035fc                afont16x8
+                0x0000000000003610        0x8 ./src/TFTc/font.o
+                0x0000000000003610                afont16x8
  .sdata2.afont8x6
-                0x0000000000003604        0x8 ./src/TFTc/font.o
-                0x0000000000003604                afont8x6
+                0x0000000000003618        0x8 ./src/TFTc/font.o
+                0x0000000000003618                afont8x6
  .sdata2._global_impure_ptr
-                0x000000000000360c        0x4 d:/wch/mounriver_studio2/resources/app/resources/win32/components/wch/toolchain/risc-v embedded gcc/bin/../lib/gcc/riscv-none-embed/8.2.0/../../../../riscv-none-embed/lib/rv32imac/ilp32\libg_nano.a(lib_a-impure.o)
-                0x000000000000360c                _global_impure_ptr
+                0x0000000000003620        0x4 d:/wch/mounriver_studio2/resources/app/resources/win32/components/wch/toolchain/risc-v embedded gcc/bin/../lib/gcc/riscv-none-embed/8.2.0/../../../../riscv-none-embed/lib/rv32imac/ilp32\libg_nano.a(lib_a-impure.o)
+                0x0000000000003620                _global_impure_ptr
  *(.glue_7)
  *(.glue_7t)
  *(.gnu.linkonce.t.*)
-                0x0000000000003610                . = ALIGN (0x4)
+                0x0000000000003624                . = ALIGN (0x4)
 
-.rela.dyn       0x0000000000003610        0x0
+.rela.dyn       0x0000000000003624        0x0
  .rela.text._sbrk
-                0x0000000000003610        0x0 ./src/TFTc/TFT_CAD.o
+                0x0000000000003624        0x0 ./src/TFTc/TFT_CAD.o
  .rela.sdata.curbrk.3772
-                0x0000000000003610        0x0 ./src/TFTc/TFT_CAD.o
- .rela.init     0x0000000000003610        0x0 ./src/TFTc/TFT_CAD.o
- .rela.vector   0x0000000000003610        0x0 ./src/TFTc/TFT_CAD.o
+                0x0000000000003624        0x0 ./src/TFTc/TFT_CAD.o
+ .rela.init     0x0000000000003624        0x0 ./src/TFTc/TFT_CAD.o
+ .rela.vector   0x0000000000003624        0x0 ./src/TFTc/TFT_CAD.o
  .rela.handle_reset
-                0x0000000000003610        0x0 ./src/TFTc/TFT_CAD.o
+                0x0000000000003624        0x0 ./src/TFTc/TFT_CAD.o
  .rela.text._sbrk_r
-                0x0000000000003610        0x0 ./src/TFTc/TFT_CAD.o
+                0x0000000000003624        0x0 ./src/TFTc/TFT_CAD.o
  .rela.text._vfprintf_r
-                0x0000000000003610        0x0 ./src/TFTc/TFT_CAD.o
+                0x0000000000003624        0x0 ./src/TFTc/TFT_CAD.o
  .rela.text._write_r
-                0x0000000000003610        0x0 ./src/TFTc/TFT_CAD.o
+                0x0000000000003624        0x0 ./src/TFTc/TFT_CAD.o
  .rela.text._close_r
-                0x0000000000003610        0x0 ./src/TFTc/TFT_CAD.o
+                0x0000000000003624        0x0 ./src/TFTc/TFT_CAD.o
  .rela.text._fstat_r
-                0x0000000000003610        0x0 ./src/TFTc/TFT_CAD.o
+                0x0000000000003624        0x0 ./src/TFTc/TFT_CAD.o
  .rela.text._isatty_r
-                0x0000000000003610        0x0 ./src/TFTc/TFT_CAD.o
+                0x0000000000003624        0x0 ./src/TFTc/TFT_CAD.o
  .rela.text._lseek_r
-                0x0000000000003610        0x0 ./src/TFTc/TFT_CAD.o
+                0x0000000000003624        0x0 ./src/TFTc/TFT_CAD.o
  .rela.text._read_r
-                0x0000000000003610        0x0 ./src/TFTc/TFT_CAD.o
+                0x0000000000003624        0x0 ./src/TFTc/TFT_CAD.o
  .rela.text._close
-                0x0000000000003610        0x0 ./src/TFTc/TFT_CAD.o
+                0x0000000000003624        0x0 ./src/TFTc/TFT_CAD.o
  .rela.text._fstat
-                0x0000000000003610        0x0 ./src/TFTc/TFT_CAD.o
+                0x0000000000003624        0x0 ./src/TFTc/TFT_CAD.o
  .rela.text._isatty
-                0x0000000000003610        0x0 ./src/TFTc/TFT_CAD.o
+                0x0000000000003624        0x0 ./src/TFTc/TFT_CAD.o
  .rela.text._lseek
-                0x0000000000003610        0x0 ./src/TFTc/TFT_CAD.o
+                0x0000000000003624        0x0 ./src/TFTc/TFT_CAD.o
  .rela.text._read
-                0x0000000000003610        0x0 ./src/TFTc/TFT_CAD.o
+                0x0000000000003624        0x0 ./src/TFTc/TFT_CAD.o
 
-.fini           0x0000000000003610        0x0
+.fini           0x0000000000003624        0x0
  *(SORT_NONE(.fini))
-                0x0000000000003610                . = ALIGN (0x4)
+                0x0000000000003624                . = ALIGN (0x4)
                 [!provide]                        PROVIDE (_etext = .)
                 [!provide]                        PROVIDE (_eitcm = .)
 
-.preinit_array  0x0000000000003610        0x0
+.preinit_array  0x0000000000003624        0x0
                 [!provide]                        PROVIDE (__preinit_array_start = .)
  *(.preinit_array)
                 [!provide]                        PROVIDE (__preinit_array_end = .)
 
-.init_array     0x0000000000003610        0x0
+.init_array     0x0000000000003624        0x0
                 [!provide]                        PROVIDE (__init_array_start = .)
  *(SORT_BY_INIT_PRIORITY(.init_array.*) SORT_BY_INIT_PRIORITY(.ctors.*))
  *(.init_array EXCLUDE_FILE(*crtend?.o *crtend.o *crtbegin?.o *crtbegin.o) .ctors)
                 [!provide]                        PROVIDE (__init_array_end = .)
 
-.fini_array     0x0000000000003610        0x0
+.fini_array     0x0000000000003624        0x0
                 [!provide]                        PROVIDE (__fini_array_start = .)
  *(SORT_BY_INIT_PRIORITY(.fini_array.*) SORT_BY_INIT_PRIORITY(.dtors.*))
  *(.fini_array EXCLUDE_FILE(*crtend?.o *crtend.o *crtbegin?.o *crtbegin.o) .dtors)
@@ -1188,15 +1188,15 @@ END GROUP
  *(SORT_BY_NAME(.dtors.*))
  *(.dtors)
 
-.dalign         0x0000000020003f18       0xe8 load address 0x0000000000003610
+.dalign         0x0000000020003f18       0xe8 load address 0x0000000000003624
                 0x0000000020004000                . = (ORIGIN (RAM) + MAX (0x800, SIZEOF (.highcode)))
  *fill*         0x0000000020003f18       0xe8 
 
-.dlalign        0x0000000000003610        0x0
-                0x0000000000003610                . = ALIGN (0x4)
-                0x0000000000003610                PROVIDE (_data_lma = .)
+.dlalign        0x0000000000003624        0x0
+                0x0000000000003624                . = ALIGN (0x4)
+                0x0000000000003624                PROVIDE (_data_lma = .)
 
-.data           0x0000000020004000       0x68 load address 0x0000000000003610
+.data           0x0000000020004000       0x68 load address 0x0000000000003624
                 0x0000000020004000                . = ALIGN (0x4)
                 0x0000000020004000                PROVIDE (_data_vma = .)
  *(.gnu.linkonce.r.*)
@@ -1222,7 +1222,7 @@ END GROUP
                 0x0000000020004068                . = ALIGN (0x4)
                 0x0000000020004068                PROVIDE (_edata = .)
 
-.bss            0x0000000020004068       0x48 load address 0x0000000000003678
+.bss            0x0000000020004068       0x48 load address 0x000000000000368c
                 0x0000000020004068                . = ALIGN (0x4)
                 0x0000000020004068                PROVIDE (_sbss = .)
  *(.sbss*)
