@@ -5,16 +5,20 @@
 
 # Add inputs and outputs from these tool invocations to the build variables 
 C_SRCS += \
+../src/M01LaserRangeFinder.c \
 ../src/Main.c 
 
 C_DEPS += \
+./src/M01LaserRangeFinder.d \
 ./src/Main.d 
 
 OBJS += \
+./src/M01LaserRangeFinder.o \
 ./src/Main.o 
 
 
 EXPANDS += \
+./src/M01LaserRangeFinder.c.234r.expand \
 ./src/Main.c.234r.expand 
 
 
