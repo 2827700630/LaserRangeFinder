@@ -14,8 +14,10 @@
 // static uint8_t ENABLE_LASER_MODULE[] = {0xAA, 0x00, 0x01, 0xBE, 0x00, 0x01, 0x00, 0x01, 0xC1};   // 启动激光头
 // static uint8_t DISABLE_LASER_MODULE[] = {0xAA, 0x00, 0x01, 0xBE, 0x00, 0x01, 0x00, 0x00, 0xC0};  // 关闭激光头
 
-void M01LRF_SendEnableCommand (void);
-void M01LRF_SendDisableCommand (void);
+void M01LRF_SendEnableCommand(void);
+void M01LRF_SendDisableCommand(void);
+void M01LRF_SendRawCommand(const uint8_t *command, uint16_t length);
+uint16_t M01LRF_ReceiveRawdata(uint8_t *buffer, uint16_t buffer_len);
+uint16_t M01LRF_ReadModuleStatus(uint8_t *buffer, uint16_t buffer_len);
 
-
-#endif  // __M01LASERRANGEFINDER_H
+#endif // __M01LASERRANGEFINDER_H
