@@ -30,26 +30,37 @@ static const uint8_t StartContinuousMeasurement[] = {0xAA, 0x00, 0x00, 0x21, 0x0
 static const uint8_t SetBaudRate9600[] = {0xAA, 0x00, 0x00, 0x14, 0x00, 0x01, 0x00, 0x00, 0x00, 0x15};       // 设置波特率9600:aa000014000100000015
 static const uint8_t SetBaudRate115200[] = {0xAA, 0x00, 0x00, 0x14, 0x00, 0x01, 0x00, 0x00, 0x01, 0x16};     // 设置波特率115200:aa000014000100000116
 
+/**
+ * @brief 发送原始指令
+ * @param command 指令数组指针
+ * @param length 指令长度
+ */
 void M01LRF_SendRawCommand (const uint8_t *command, uint16_t length) {
 
     // 在下面放入你平台的串口发送代码
     UART0_SendString ((uint8_t *)command, length);
 }
 
+/**
+ * @brief 接收原始数据
+ * @param buffer 接收缓冲区指针
+ * @param buffer_len 缓冲区长度
+ * @return 实际接收到的字节数
+ */
 uint16_t M01LRF_ReceiveRawdata (uint8_t *buffer, uint16_t buffer_len) {
     if ((buffer == NULL) || (buffer_len == 0U)) {
         return 0;
     }
 
     uint16_t total = 0;
-    uint16_t idle_attempts = 50;  // 约 5 ms 超时，100 us * 50
+    uint16_t idle_attempts = 20000;  // 增加超时时间：约 2000 ms 超时，100 us * 20000
 
     while ((idle_attempts > 0U) && (total < buffer_len)) {
         uint16_t chunk = UART0_RecvString (buffer + total);
 
         if (chunk != 0U) {
             total += chunk;
-            idle_attempts = 50;
+            idle_attempts = 5000; // 收到数据后，重置空闲等待时间为 500ms
 
             if (total >= buffer_len) {
                 break;
@@ -63,6 +74,12 @@ uint16_t M01LRF_ReceiveRawdata (uint8_t *buffer, uint16_t buffer_len) {
     return total;
 }
 
+/**
+ * @brief 读取模块状态
+ * @param buffer 接收缓冲区
+ * @param buffer_len 缓冲区长度
+ * @return 接收到的字节数
+ */
 uint16_t M01LRF_ReadModuleStatus (uint8_t *buffer, uint16_t buffer_len) {
     if ((buffer == NULL) || (buffer_len == 0U)) {
         return 0;
@@ -74,14 +91,147 @@ uint16_t M01LRF_ReadModuleStatus (uint8_t *buffer, uint16_t buffer_len) {
     return M01LRF_ReceiveRawdata (buffer, buffer_len);
 }
 
-void M01LRF_ReadHardwareVersion (void) {
+/**
+ * @brief 读取硬件版本号
+ * @param buffer 接收缓冲区
+ * @param buffer_len 缓冲区长度
+ * @return 接收到的字节数
+ */
+uint16_t M01LRF_ReadHardwareVersion (uint8_t *buffer, uint16_t buffer_len) {
+    if ((buffer == NULL) || (buffer_len == 0U)) return 0;
     M01LRF_SendRawCommand (ReadHardwareVersion, sizeof (ReadHardwareVersion));
+    mDelaymS (2);
+    return M01LRF_ReceiveRawdata (buffer, buffer_len);
 }
 
+/**
+ * @brief 发送开启激光指令
+ */
 void M01LRF_SendEnableCommand (void) {
     M01LRF_SendRawCommand (ENABLE_LASER, sizeof (ENABLE_LASER));
 }
 
+/**
+ * @brief 发送关闭激光指令
+ */
 void M01LRF_SendDisableCommand (void) {
     M01LRF_SendRawCommand (DISABLE_LASER, sizeof (DISABLE_LASER));
+}
+
+/**
+ * @brief 读取软件版本号
+ * @param buffer 接收缓冲区
+ * @param buffer_len 缓冲区长度
+ * @return 接收到的字节数
+ */
+uint16_t M01LRF_ReadSoftwareVersion (uint8_t *buffer, uint16_t buffer_len) {
+    if ((buffer == NULL) || (buffer_len == 0U)) return 0;
+    M01LRF_SendRawCommand (ReadSoftwareVersion, sizeof (ReadSoftwareVersion));
+    mDelaymS (2);
+    return M01LRF_ReceiveRawdata (buffer, buffer_len);
+}
+
+/**
+ * @brief 读取模块ID
+ * @param buffer 接收缓冲区
+ * @param buffer_len 缓冲区长度
+ * @return 接收到的字节数
+ */
+uint16_t M01LRF_ReadID (uint8_t *buffer, uint16_t buffer_len) {
+    if ((buffer == NULL) || (buffer_len == 0U)) return 0;
+    M01LRF_SendRawCommand (ReadID, sizeof (ReadID));
+    mDelaymS (2);
+    return M01LRF_ReceiveRawdata (buffer, buffer_len);
+}
+
+/**
+ * @brief 读取输入电压
+ * @param buffer 接收缓冲区
+ * @param buffer_len 缓冲区长度
+ * @return 接收到的字节数
+ */
+uint16_t M01LRF_ReadInputVoltage (uint8_t *buffer, uint16_t buffer_len) {
+    if ((buffer == NULL) || (buffer_len == 0U)) return 0;
+    M01LRF_SendRawCommand (ReadInputVoltage, sizeof (ReadInputVoltage));
+    mDelaymS (2);
+    return M01LRF_ReceiveRawdata (buffer, buffer_len);
+}
+
+/**
+ * @brief 读取模块温度
+ * @param buffer 接收缓冲区
+ * @param buffer_len 缓冲区长度
+ * @return 接收到的字节数
+ */
+uint16_t M01LRF_ReadTemperature (uint8_t *buffer, uint16_t buffer_len) {
+    if ((buffer == NULL) || (buffer_len == 0U)) return 0;
+    M01LRF_SendRawCommand (ReadTemperature, sizeof (ReadTemperature));
+    mDelaymS (2);
+    return M01LRF_ReceiveRawdata (buffer, buffer_len);
+}
+
+/**
+ * @brief 读取测距结果
+ * @param buffer 接收缓冲区
+ * @param buffer_len 缓冲区长度
+ * @return 接收到的字节数
+ */
+uint16_t M01LRF_ReadDistance (uint8_t *buffer, uint16_t buffer_len) {
+    if ((buffer == NULL) || (buffer_len == 0U)) return 0;
+    M01LRF_SendRawCommand (ReadDistance, sizeof (ReadDistance));
+    mDelaymS (50); // 增加延时，给模块更多处理时间
+    return M01LRF_ReceiveRawdata (buffer, buffer_len);
+}
+
+/**
+ * @brief 启动单次测量
+ * @param buffer 接收缓冲区
+ * @param buffer_len 缓冲区长度
+ * @return 接收到的字节数
+ */
+uint16_t M01LRF_StartSingleMeasurement (uint8_t *buffer, uint16_t buffer_len) {
+    if ((buffer == NULL) || (buffer_len == 0U)) return 0;
+    M01LRF_SendRawCommand (StartSingleMeasurement, sizeof (StartSingleMeasurement));
+    mDelaymS (2000); // 测量需要时间，增加延时
+    return M01LRF_ReceiveRawdata (buffer, buffer_len);
+}
+
+/**
+ * @brief 启动快速测量
+ * @param buffer 接收缓冲区
+ * @param buffer_len 缓冲区长度
+ * @return 接收到的字节数
+ */
+uint16_t M01LRF_StartFastMeasurement (uint8_t *buffer, uint16_t buffer_len) {
+    if ((buffer == NULL) || (buffer_len == 0U)) return 0;
+    M01LRF_SendRawCommand (StartFastMeasurement, sizeof (StartFastMeasurement));
+    mDelaymS (2);
+    return M01LRF_ReceiveRawdata (buffer, buffer_len);
+}
+
+/**
+ * @brief 启动连续测量
+ * @param buffer 接收缓冲区
+ * @param buffer_len 缓冲区长度
+ * @return 接收到的字节数
+ */
+uint16_t M01LRF_StartContinuousMeasurement (uint8_t *buffer, uint16_t buffer_len) {
+    if ((buffer == NULL) || (buffer_len == 0U)) return 0;
+    M01LRF_SendRawCommand (StartContinuousMeasurement, sizeof (StartContinuousMeasurement));
+    mDelaymS (2);
+    return M01LRF_ReceiveRawdata (buffer, buffer_len);
+}
+
+/**
+ * @brief 设置波特率为9600
+ */
+void M01LRF_SetBaudRate9600 (void) {
+    M01LRF_SendRawCommand (SetBaudRate9600, sizeof (SetBaudRate9600));
+}
+
+/**
+ * @brief 设置波特率为115200
+ */
+void M01LRF_SetBaudRate115200 (void) {
+    M01LRF_SendRawCommand (SetBaudRate115200, sizeof (SetBaudRate115200));
 }

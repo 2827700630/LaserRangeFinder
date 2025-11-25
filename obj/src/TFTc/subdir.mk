@@ -1,5 +1,5 @@
 ################################################################################
-# MRS Version: 2.2.0
+# MRS Version: 2.3.0
 # Automatically-generated file. Do not edit!
 ################################################################################
 
@@ -25,14 +25,14 @@ OBJS += \
 ./src/TFTc/TFT_text.o \
 ./src/TFTc/font.o 
 
+DIR_OBJS += \
+./src/TFTc/*.o \
 
-EXPANDS += \
-./src/TFTc/TFT_CAD.c.234r.expand \
-./src/TFTc/TFT_init.c.234r.expand \
-./src/TFTc/TFT_io.c.234r.expand \
-./src/TFTc/TFT_text.c.234r.expand \
-./src/TFTc/font.c.234r.expand 
+DIR_DEPS += \
+./src/TFTc/*.d \
 
+DIR_EXPANDS += \
+./src/TFTc/*.234r.expand \
 
 
 # Each subdirectory must supply rules for building sources it contributes

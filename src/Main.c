@@ -10,6 +10,7 @@
  */
 
 #include "CH57x_common.h"
+#include <stdio.h> // 引入 snprintf
 
 #include "M01LaserRangeFinder.h"
 
@@ -101,34 +102,26 @@ int main()
 
     while (1) // 循环
     {
-        /* 三种颜色填充，检查你的颜色显示是否正确 */
-        TFT_Fill_Area(&htft1, 0, 40, WIDTH, HEIGHT, RED);
-        TFT_Fill_Area(&htft1, 0, 40, WIDTH, HEIGHT, GREEN);
-        TFT_Fill_Area(&htft1, 0, 40, WIDTH, HEIGHT, BLUE);
-        DelayMs(500);
-        M01LRF_SendEnableCommand();
+        // M01LRF_SendEnableCommand();
         DelayMs(2000);
-        M01LRF_SendDisableCommand();
-        DelayMs(2000);
-
-        uint8_t status_frame[32] = {0};
-        uint16_t status_len = M01LRF_ReadModuleStatus(status_frame, sizeof(status_frame));
-
-        if (status_len > 0U)
+        uint8_t dist_buf[64] = {0};
+        uint8_t dist_buf2[64] = {0};
+        uint16_t len =13;
+        //M01LRF_SendEnableCommand();
+        UART0_RecvString(dist_buf2);
+         M01LRF_StartFastMeasurement(dist_buf, sizeof(dist_buf));
+        
+        if (len > 0)
         {
-            PRINT("Status frame (%u bytes): ", status_len);
-            for (uint16_t i = 0; i < status_len; ++i)
+            PRINT("Distance raw: ");
+            for (uint16_t i = 0; i < len; i++)
             {
-                PRINT("%02X ", status_frame[i]);
+                PRINT("%02X ", dist_buf[i]);
             }
             PRINT("\n");
         }
-        else
-        {
-            PRINT("Status frame timeout\n");
-        }
 
-        DelayMs(2000);
+
     }
 }
 
@@ -163,6 +156,37 @@ GPIOB_IRQHandler(void)
     if (GPIOB_ReadITFlagBit(KEY1_PIN))
     {
         PRINT("key1 按下\n");
+        uint8_t dist_buf[64] = {0};
+        uint16_t len =12;
+        M01LRF_SendEnableCommand();
+         M01LRF_StartSingleMeasurement(dist_buf, sizeof(dist_buf));
+        if (len > 0)
+        {
+            PRINT("Distance raw: ");
+            for (uint16_t i = 0; i < len; i++)
+            {
+                PRINT("%02X ", dist_buf[i]);
+            }
+            PRINT("\n");
+
+            // 简单的解析示例：假设返回格式符合协议，距离数据在特定位置
+            // 根据协议：AA 80 00 22 00 04 XX XX XX XX CS
+            // 数据域从第6字节开始（下标5），共4字节
+            if (len >= 11 && dist_buf[0] == 0xAA && dist_buf[3] == 0x22)
+            {
+                uint32_t distance_mm = (dist_buf[6] << 24) | (dist_buf[7] << 16) | (dist_buf[8] << 8) | dist_buf[9];
+                PRINT("Distance: %d mm\n", distance_mm);
+
+                // 在屏幕上显示
+                char disp_str[32];
+                snprintf(disp_str, sizeof(disp_str), "Dist: %d mm", distance_mm);
+                TFT_Show_String(&htft1, 20, 60, disp_str, WHITE, BLACK, 16, 0);
+            }
+        }
+        else
+        {
+            PRINT("Read distance timeout\n");
+        }
     }
     if (GPIOB_ReadITFlagBit(KEY2_PIN))
     {

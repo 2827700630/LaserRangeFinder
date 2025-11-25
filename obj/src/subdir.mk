@@ -1,5 +1,5 @@
 ################################################################################
-# MRS Version: 2.2.0
+# MRS Version: 2.3.0
 # Automatically-generated file. Do not edit!
 ################################################################################
 
@@ -16,11 +16,14 @@ OBJS += \
 ./src/M01LaserRangeFinder.o \
 ./src/Main.o 
 
+DIR_OBJS += \
+./src/*.o \
 
-EXPANDS += \
-./src/M01LaserRangeFinder.c.234r.expand \
-./src/Main.c.234r.expand 
+DIR_DEPS += \
+./src/*.d \
 
+DIR_EXPANDS += \
+./src/*.234r.expand \
 
 
 # Each subdirectory must supply rules for building sources it contributes
