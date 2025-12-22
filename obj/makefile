@@ -13,6 +13,11 @@ RM := rm -rf
 -include StdPeriphDriver/subdir.mk
 -include Startup/subdir.mk
 -include RVMSIS/subdir.mk
+-include LaserRangeFinderch592F/User/TFTc/subdir.mk
+-include LaserRangeFinderch592F/User/subdir.mk
+-include LaserRangeFinderch592F/StdPeriphDriver/subdir.mk
+-include LaserRangeFinderch592F/Startup/subdir.mk
+-include LaserRangeFinderch592F/RVMSIS/subdir.mk
 -include subdir.mk
 -include objects.mk
 

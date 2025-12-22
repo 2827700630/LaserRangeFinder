@@ -10,7 +10,7 @@
 				"useLocalOpenOCD": true,
 				"executable": "d:/WCH/MounRiver_Studio2/resources/app/resources/win32/components/WCH/OpenOCD/OpenOCD/bin/openocd.exe",
 				"configOptions": [
-					"-f \"d:/WCH/MounRiver_Studio2/resources/app/resources/win32/components/WCH/OpenOCD/OpenOCD/bin/wch-riscv.cfg\" -c \"chip_id CH57x\""
+					"-f \"d:/WCH/MounRiver_Studio2/resources/app/resources/win32/components/WCH/OpenOCD/OpenOCD/bin/wch-riscv.cfg\" -c \"chip_id CH59x\""
 				],
 				"gdbport": 3333,
 				"telnetport": 4444,

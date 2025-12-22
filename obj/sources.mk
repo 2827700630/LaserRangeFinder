@@ -27,6 +27,11 @@ SECONDARY_SIZE :=
 CALLGRAPH_DOT := callgraph.dot \
 # Every subdirectory with source files must be described here
 SUBDIRS := \
+LaserRangeFinderch592F/RVMSIS \
+LaserRangeFinderch592F/Startup \
+LaserRangeFinderch592F/StdPeriphDriver \
+LaserRangeFinderch592F/User \
+LaserRangeFinderch592F/User/TFTc \
 RVMSIS \
 Startup \
 StdPeriphDriver \
