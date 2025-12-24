@@ -48,6 +48,55 @@ SPI_HandleTypeDef SPI0;  // 第一个TFT屏幕把手
 #define HEIGHT 320
 #define WIDTH 240
 
+// 测量历史记录全局变量
+uint32_t history_dists[3] = {0};
+
+void DrawStaticUI(void)
+{
+    // 清屏为白色
+    TFT_Fill_Area(&htft1, 0, 0, WIDTH, HEIGHT, WHITE);
+
+    // 顶部状态栏 (占位符)
+    TFT_Show_String(&htft1, 5, 5, "20", BLACK, WHITE, 16, 0);
+    // 图标...
+
+    // 测量基准图标 (测量区域左上角)
+    // 简单的矩形
+    for (int i = 0; i < 20; i++)
+    {
+        TFT_Draw_Point(&htft1, 20 + i, 40, BLACK); // 顶部
+        TFT_Draw_Point(&htft1, 20 + i, 60, RED);   // 底部 (红色)
+    }
+    for (int i = 0; i < 20; i++)
+    {
+        TFT_Draw_Point(&htft1, 20, 40 + i, BLACK); // 左侧
+        TFT_Draw_Point(&htft1, 40, 40 + i, BLACK); // 右侧
+    }
+}
+
+void UpdateMeasurementDisplay(void)
+{
+    char buf[32];
+
+    // 清除测量区域 (简单填充)
+    // 区域: x=50, y=40 到 200. 宽度=190.
+    TFT_Fill_Area(&htft1, 50, 40, WIDTH, 200, WHITE);
+
+    // 第1行 (顶部) - 历史记录[2]
+    snprintf(buf, sizeof(buf), "%d.%03d m", history_dists[2] / 1000, history_dists[2] % 1000);
+    // 大致右对齐
+    TFT_Show_String(&htft1, 100, 50, buf, GRAY, WHITE, 16, 0);
+
+    // 第2行 (中间) - 历史记录[1]
+    snprintf(buf, sizeof(buf), "%d.%03d m", history_dists[1] / 1000, history_dists[1] % 1000);
+    TFT_Show_String(&htft1, 100, 90, buf, GRAY, WHITE, 16, 0);
+
+    // 第3行 (底部) - 历史记录[0] (当前)
+    snprintf(buf, sizeof(buf), "%d.%03d m", history_dists[0] / 1000, history_dists[0] % 1000);
+    // 大字体 24x12
+    TFT_Show_String(&htft1, 60, 140, buf, BLACK, WHITE, 16, 0);
+}
+
 /**
  * @fn     main
  * @brief   主函数
@@ -83,19 +132,20 @@ int main()
     TFT_Config_Pins(&htft1, TFT_DC_GPIO_Port, TFT_DC_Pin, TFT_RES_GPIO_Port, TFT_RES_Pin, TFT_BLK_GPIO_Port, TFT_BLK_Pin); // 必须手动设置引脚
     TFT_Config_Display(&htft1, 2, 0, 0);                                                                                   // 设置方向、X/Y偏移
 
-    TFT_Init_ST7789v3(&htft1);                         // ST7789v3屏幕初始化,右键进入tft_init.c查看更多屏幕的初始化函数
-    TFT_Fill_Area(&htft1, 0, 0, WIDTH, HEIGHT, BLACK); // 全屏黑色填充
-    TFT_Show_String(&htft1, 20, 20, "now ST7789v3", WHITE, BLACK, 16, 0);
+    TFT_Init_ST7789v3(&htft1); // ST7789v3屏幕初始化,右键进入tft_init.c查看更多屏幕的初始化函数
+
+    DrawStaticUI();
+    UpdateMeasurementDisplay();
 
     /* 按键中断配置 */
     // 配置GPIOA中断
-    GPIOA_ModeCfg(HOME_KEY, GPIO_ModeIN_PU);         // 上拉输入
-    GPIOA_ITModeCfg(HOME_KEY, GPIO_ITMode_FallEdge); // 下降沿触发
-    GPIOA_ModeCfg(UP_KEY, GPIO_ModeIN_PU);           // 上拉输入
-    GPIOA_ITModeCfg(UP_KEY, GPIO_ITMode_FallEdge);   // 下降沿触发
-     GPIOA_ModeCfg(MEASURE_KEY, GPIO_ModeIN_PU);           // 上拉输入
-    GPIOA_ITModeCfg(MEASURE_KEY, GPIO_ITMode_FallEdge);   // 下降沿触发
-    PFIC_EnableIRQ(GPIO_A_IRQn);                     // 开启GPIOA中断
+    GPIOA_ModeCfg(HOME_KEY, GPIO_ModeIN_PU);            // 上拉输入
+    GPIOA_ITModeCfg(HOME_KEY, GPIO_ITMode_FallEdge);    // 下降沿触发
+    GPIOA_ModeCfg(UP_KEY, GPIO_ModeIN_PU);              // 上拉输入
+    GPIOA_ITModeCfg(UP_KEY, GPIO_ITMode_FallEdge);      // 下降沿触发
+    GPIOA_ModeCfg(MEASURE_KEY, GPIO_ModeIN_PU);         // 上拉输入
+    GPIOA_ITModeCfg(MEASURE_KEY, GPIO_ITMode_FallEdge); // 下降沿触发
+    PFIC_EnableIRQ(GPIO_A_IRQn);                        // 开启GPIOA中断
 
     // 配置GPIOB中断
     GPIOB_ModeCfg(SET_KEY, GPIO_ModeIN_PU);             // 上拉输入
@@ -110,25 +160,42 @@ int main()
     while (1) // 循环
     {
         // M01LRF_SendEnableCommand();
-        DelayMs(2000);
+        // 每隔3秒测量一次，因为我录制视频腾不出手来按按键
+        DelayMs(1000);
         uint8_t dist_buf[64] = {0};
-        uint8_t dist_buf2[64] = {0};
-        uint16_t len = 13;
+        uint16_t len = 0;
         // M01LRF_SendEnableCommand();
-        // DelayMs(2000);
-        // M01LRF_SendDisableCommand();
-        // UART0_RecvString(dist_buf2);
-        // M01LRF_StartFastMeasurement(dist_buf, sizeof(dist_buf));
+        DelayMs(100);
+        len = M01LRF_StartFastMeasurement(dist_buf, sizeof(dist_buf));
+        if (len > 0)
+        {
+            PRINT("Distance raw: ");
+            for (uint16_t i = 0; i < len; i++)
+            {
+                PRINT("%02X ", dist_buf[i]);
+            }
+            PRINT("\n");
 
-        // if (len > 0)
-        // {
-        //     PRINT("Distance raw: ");
-        //     for (uint16_t i = 0; i < len; i++)
-        //     {
-        //         PRINT("%02X ", dist_buf[i]);
-        //     }
-        //     PRINT("\n");
-        // }
+            // 根据协议：AA 80 00 22 00 04 AA BB CC DD YY ZZ Checksum
+            // 数据为BCD码，如 0xAABBCCDD = 0x12345678, 表示：12345.678m
+            if (len >= 11 && dist_buf[0] == 0xAA && dist_buf[3] == 0x22)
+            {
+                uint32_t d1 = (dist_buf[6] >> 4) * 10 + (dist_buf[6] & 0x0F);
+                uint32_t d2 = (dist_buf[7] >> 4) * 10 + (dist_buf[7] & 0x0F);
+                uint32_t d3 = (dist_buf[8] >> 4) * 10 + (dist_buf[8] & 0x0F);
+                uint32_t d4 = (dist_buf[9] >> 4) * 10 + (dist_buf[9] & 0x0F);
+
+                uint32_t distance_mm = d1 * 1000000 + d2 * 10000 + d3 * 100 + d4;
+                PRINT("Distance: %d mm\n", distance_mm);
+
+                // 更新历史记录
+                history_dists[2] = history_dists[1];
+                history_dists[1] = history_dists[0];
+                history_dists[0] = distance_mm;
+
+                UpdateMeasurementDisplay();
+            }
+        }
     }
 }
 
@@ -163,7 +230,6 @@ void GPIOA_IRQHandler(void)
     if (GPIOA_ReadITFlagBit(MEASURE_KEY))
     {
         PRINT("key按下\n");
-        TFT_Fill_Area(&htft1, 0, 0, WIDTH, HEIGHT, BLACK);
         uint8_t dist_buf[64] = {0};
         uint16_t len = 0;
         // M01LRF_SendEnableCommand();
@@ -186,30 +252,17 @@ void GPIOA_IRQHandler(void)
                 uint32_t d2 = (dist_buf[7] >> 4) * 10 + (dist_buf[7] & 0x0F);
                 uint32_t d3 = (dist_buf[8] >> 4) * 10 + (dist_buf[8] & 0x0F);
                 uint32_t d4 = (dist_buf[9] >> 4) * 10 + (dist_buf[9] & 0x0F);
-                
+
                 uint32_t distance_mm = d1 * 1000000 + d2 * 10000 + d3 * 100 + d4;
                 PRINT("Distance: %d mm\n", distance_mm);
 
-                // 在屏幕上显示
-                char disp_str[32];
-                snprintf(disp_str, sizeof(disp_str), "Dist: %d.%03d m", distance_mm / 1000, distance_mm % 1000);
-                TFT_Show_String(&htft1, 20, 60, disp_str, WHITE, BLACK, 16, 0);
-            }
+                // 更新历史记录
+                history_dists[2] = history_dists[1];
+                history_dists[1] = history_dists[0];
+                history_dists[0] = distance_mm;
 
-            // 显示原始数据
-            TFT_Show_String(&htft1, 20, 80, "Raw:", WHITE, BLACK, 16, 0);
-            char raw_part1[40] = {0};
-            char raw_part2[40] = {0};
-            int off1 = 0, off2 = 0;
-            for (uint16_t i = 0; i < len; i++)
-            {
-                if (i < 8)
-                    off1 += snprintf(raw_part1 + off1, sizeof(raw_part1) - off1, "%02X ", dist_buf[i]);
-                else if (i < 16)
-                    off2 += snprintf(raw_part2 + off2, sizeof(raw_part2) - off2, "%02X ", dist_buf[i]);
+                UpdateMeasurementDisplay();
             }
-            TFT_Show_String(&htft1, 20, 100, raw_part1, WHITE, BLACK, 16, 0);
-            TFT_Show_String(&htft1, 20, 120, raw_part2, WHITE, BLACK, 16, 0);
         }
         else
         {

@@ -85,7 +85,9 @@ void TFT_Show_String(TFT_HandleTypeDef *htft, uint16_t x, uint16_t y, const uint
         TFT_Show_Char(htft, current_x, y, *str, color, back_color, size, mode);
 
         // 根据字体大小更新 X 坐标
-        if (size == 16)
+        if (size == 24)
+            char_width = afont24x12.w;
+        else if (size == 16)
             char_width = afont16x8.w;
         else if (size == 12)
             char_width = afont12x6.w;
@@ -117,7 +119,12 @@ void TFT_Show_Char(TFT_HandleTypeDef *htft, uint16_t x, uint16_t y, uint8_t chr,
     uint16_t bytes_per_char;
 
     // 根据字体大小选择对应字库
-    if (size == 16)
+    if (size == 24)
+    {
+        ascii_font = &afont24x12;
+        bytes_per_char = 36; // 12列×24行，每列3字节，共36字节
+    }
+    else if (size == 16)
     {
         ascii_font = &afont16x8;
         bytes_per_char = 16; // 8列×16行，每列2字节，共16字节
