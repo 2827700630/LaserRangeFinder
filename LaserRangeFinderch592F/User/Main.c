@@ -33,7 +33,7 @@
 /* TFT屏幕相关定义 */
 // TFT屏幕句柄和SPI句柄定义
 TFT_HandleTypeDef htft1; // 第一个TFT屏幕把手
-SPI_HandleTypeDef SPI0;  // 第一个TFT屏幕把手
+SPI_HandleTypeDef SPI0;  // SPI句柄
 // TFT屏幕引脚定义，根据实际连接修改
 #define TFT_CS_GPIO_Port 0 // 0是GPIOA，1是GPIOB
 #define TFT_CS_Pin GPIO_Pin_4
