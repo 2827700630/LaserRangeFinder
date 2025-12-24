@@ -1,5 +1,5 @@
 ################################################################################
-# MRS Version: 2.2.0
+# MRS Version: 2.3.0
 # Automatically-generated file. Do not edit!
 ################################################################################
 
@@ -9,7 +9,9 @@ ASM_DEPS :=
 ASM_UPPER_DEPS :=
 C_DEPS :=
 OBJS :=
-EXPANDS :=
+DIR_OBJS :=
+DIR_DEPS :=
+DIR_EXPANDS :=
 ELF_SRCS :=
 OBJ_SRCS :=
 O_SRCS :=
@@ -25,6 +27,11 @@ SECONDARY_SIZE :=
 CALLGRAPH_DOT := callgraph.dot \
 # Every subdirectory with source files must be described here
 SUBDIRS := \
+LaserRangeFinderch592F/RVMSIS \
+LaserRangeFinderch592F/Startup \
+LaserRangeFinderch592F/StdPeriphDriver \
+LaserRangeFinderch592F/User \
+LaserRangeFinderch592F/User/TFTc \
 RVMSIS \
 Startup \
 StdPeriphDriver \

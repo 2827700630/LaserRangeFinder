@@ -20,388 +20,388 @@ extern "C" {
 /**
  * @brief	LINE error and status define
  */
-#define STA_ERR_BREAK     RB_LSR_BREAK_ERR    // Êý¾Ý¼ä¸ô´íÎó
-#define STA_ERR_FRAME     RB_LSR_FRAME_ERR    // Êý¾ÝÖ¡´íÎó
-#define STA_ERR_PAR       RB_LSR_PAR_ERR      // ÆæÅ¼Ð£ÑéÎ»³ö´í
-#define STA_ERR_FIFOOV    RB_LSR_OVER_ERR     // ½ÓÊÕÊý¾ÝÒç³ö
+#define STA_ERR_BREAK     RB_LSR_BREAK_ERR    // ï¿½ï¿½ï¿½Ý¼ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+#define STA_ERR_FRAME     RB_LSR_FRAME_ERR    // ï¿½ï¿½ï¿½ï¿½Ö¡ï¿½ï¿½ï¿½ï¿½
+#define STA_ERR_PAR       RB_LSR_PAR_ERR      // ï¿½ï¿½Å¼Ð£ï¿½ï¿½Î»ï¿½ï¿½ï¿½ï¿½
+#define STA_ERR_FIFOOV    RB_LSR_OVER_ERR     // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 
-#define STA_TXFIFO_EMP    RB_LSR_TX_FIFO_EMP  // µ±Ç°·¢ËÍFIFO¿Õ£¬¿ÉÒÔ¼ÌÐøÌî³ä·¢ËÍÊý¾Ý
-#define STA_TXALL_EMP     RB_LSR_TX_ALL_EMP   // µ±Ç°ËùÓÐ·¢ËÍÊý¾Ý¶¼·¢ËÍÍê³É
-#define STA_RECV_DATA     RB_LSR_DATA_RDY     // µ±Ç°ÓÐ½ÓÊÕµ½Êý¾Ý
+#define STA_TXFIFO_EMP    RB_LSR_TX_FIFO_EMP  // ï¿½ï¿½Ç°ï¿½ï¿½ï¿½ï¿½FIFOï¿½Õ£ï¿½ï¿½ï¿½ï¿½Ô¼ï¿½ï¿½ï¿½ï¿½ï¿½ä·¢ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+#define STA_TXALL_EMP     RB_LSR_TX_ALL_EMP   // ï¿½ï¿½Ç°ï¿½ï¿½ï¿½Ð·ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ý¶ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+#define STA_RECV_DATA     RB_LSR_DATA_RDY     // ï¿½ï¿½Ç°ï¿½Ð½ï¿½ï¿½Õµï¿½ï¿½ï¿½ï¿½ï¿½
 
 /**
  * @brief  Configuration UART TrigByte num
  */
 typedef enum
 {
-    UART_1BYTE_TRIG = 0, // 1×Ö½Ú´¥·¢
-    UART_2BYTE_TRIG,     // 2×Ö½Ú´¥·¢
-    UART_4BYTE_TRIG,     // 4×Ö½Ú´¥·¢
-    UART_7BYTE_TRIG,     // 7×Ö½Ú´¥·¢
+    UART_1BYTE_TRIG = 0, // 1ï¿½Ö½Ú´ï¿½ï¿½ï¿½
+    UART_2BYTE_TRIG,     // 2ï¿½Ö½Ú´ï¿½ï¿½ï¿½
+    UART_4BYTE_TRIG,     // 4ï¿½Ö½Ú´ï¿½ï¿½ï¿½
+    UART_7BYTE_TRIG,     // 7ï¿½Ö½Ú´ï¿½ï¿½ï¿½
 
 } UARTByteTRIGTypeDef;
 
 /**
- * @brief   ´®¿ÚÄ¬ÈÏ³õÊ¼»¯ÅäÖÃ
+ * @brief   ï¿½ï¿½ï¿½ï¿½Ä¬ï¿½Ï³ï¿½Ê¼ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
  */
 void UART0_DefInit(void);
 
 /**
- * @brief   ´®¿Ú²¨ÌØÂÊÅäÖÃ
+ * @brief   ï¿½ï¿½ï¿½Ú²ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
  *
- * @param   baudrate    - ²¨ÌØÂÊ
+ * @param   baudrate    - ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
  */
 void UART0_BaudRateCfg(uint32_t baudrate);
 
 /**
- * @brief   ´®¿Ú×Ö½Ú´¥·¢ÖÐ¶ÏÅäÖÃ
+ * @brief   ï¿½ï¿½ï¿½ï¿½ï¿½Ö½Ú´ï¿½ï¿½ï¿½ï¿½Ð¶ï¿½ï¿½ï¿½ï¿½ï¿½
  *
- * @param   b       - ´¥·¢×Ö½ÚÊý refer to UARTByteTRIGTypeDef
+ * @param   b       - ï¿½ï¿½ï¿½ï¿½ï¿½Ö½ï¿½ï¿½ï¿½ refer to UARTByteTRIGTypeDef
  */
 void UART0_ByteTrigCfg(UARTByteTRIGTypeDef b);
 
 /**
- * @brief   ´®¿ÚÖÐ¶ÏÅäÖÃ
+ * @brief   ï¿½ï¿½ï¿½ï¿½ï¿½Ð¶ï¿½ï¿½ï¿½ï¿½ï¿½
  *
- * @param   s       - ÖÐ¶Ï¿ØÖÆ×´Ì¬£¬ÊÇ·ñÊ¹ÄÜÏàÓ¦ÖÐ¶Ï
- * @param   i       - ÖÐ¶ÏÀàÐÍ
- *                    RB_IER_MODEM_CHG  - µ÷ÖÆ½âµ÷Æ÷ÊäÈë×´Ì¬±ä»¯ÖÐ¶ÏÊ¹ÄÜÎ»£¨½ö UART0 Ö§³Ö£©
- *                    RB_IER_LINE_STAT  - ½ÓÊÕÏßÂ·×´Ì¬ÖÐ¶Ï
- *                    RB_IER_THR_EMPTY  - ·¢ËÍ±£³Ö¼Ä´æÆ÷¿ÕÖÐ¶Ï
- *                    RB_IER_RECV_RDY   - ½ÓÊÕÊý¾ÝÖÐ¶Ï
+ * @param   s       - ï¿½Ð¶Ï¿ï¿½ï¿½ï¿½×´Ì¬ï¿½ï¿½ï¿½Ç·ï¿½Ê¹ï¿½ï¿½ï¿½ï¿½Ó¦ï¿½Ð¶ï¿½
+ * @param   i       - ï¿½Ð¶ï¿½ï¿½ï¿½ï¿½ï¿½
+ *                    RB_IER_MODEM_CHG  - ï¿½ï¿½ï¿½Æ½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½×´Ì¬ï¿½ä»¯ï¿½Ð¶ï¿½Ê¹ï¿½ï¿½Î»ï¿½ï¿½ï¿½ï¿½ UART0 Ö§ï¿½Ö£ï¿½
+ *                    RB_IER_LINE_STAT  - ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Â·×´Ì¬ï¿½Ð¶ï¿½
+ *                    RB_IER_THR_EMPTY  - ï¿½ï¿½ï¿½Í±ï¿½ï¿½Ö¼Ä´ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ð¶ï¿½
+ *                    RB_IER_RECV_RDY   - ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ð¶ï¿½
  */
 void UART0_INTCfg(FunctionalState s, uint8_t i);
 
 /**
- * @brief   ´®¿ÚÈí¼þ¸´Î»
+ * @brief   ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Î»
  */
 void UART0_Reset(void);
 
 /**
- * @brief   Çå³ýµ±Ç°½ÓÊÕFIFO
+ * @brief   ï¿½ï¿½ï¿½ï¿½ï¿½Ç°ï¿½ï¿½ï¿½ï¿½FIFO
  */
 #define UART0_CLR_RXFIFO()    (R8_UART0_FCR |= RB_FCR_RX_FIFO_CLR)
 
 /**
- * @brief   Çå³ýµ±Ç°·¢ËÍFIFO
+ * @brief   ï¿½ï¿½ï¿½ï¿½ï¿½Ç°ï¿½ï¿½ï¿½ï¿½FIFO
  */
 #define UART0_CLR_TXFIFO()    (R8_UART0_FCR |= RB_FCR_TX_FIFO_CLR)
 
 /**
- * @brief   »ñÈ¡µ±Ç°ÖÐ¶Ï±êÖ¾
+ * @brief   ï¿½ï¿½È¡ï¿½ï¿½Ç°ï¿½Ð¶Ï±ï¿½Ö¾
  *
- * @return  µ±Ç°ÖÐ¶Ï±êÖ¾
+ * @return  ï¿½ï¿½Ç°ï¿½Ð¶Ï±ï¿½Ö¾
  */
 #define UART0_GetITFlag()     (R8_UART0_IIR & RB_IIR_INT_MASK)
 
 /**
- * @brief   »ñÈ¡µ±Ç°Í¨Ñ¶×´Ì¬
+ * @brief   ï¿½ï¿½È¡ï¿½ï¿½Ç°Í¨Ñ¶×´Ì¬
  *
  * @return  refer to LINE error and status define
  */
 #define UART0_GetLinSTA()     (R8_UART0_LSR)
 
 /**
- * @brief   ´®¿Úµ¥×Ö½Ú·¢ËÍ
+ * @brief   ï¿½ï¿½ï¿½Úµï¿½ï¿½Ö½Ú·ï¿½ï¿½ï¿½
  *
- * @param   b       ´ý·¢ËÍµÄ×Ö½Ú
+ * @param   b       ï¿½ï¿½ï¿½ï¿½ï¿½Íµï¿½ï¿½Ö½ï¿½
  */
 #define UART0_SendByte(b)     (R8_UART0_THR = b)
 
 /**
- * @brief   ´®¿Ú¶à×Ö½Ú·¢ËÍ
+ * @brief   ï¿½ï¿½ï¿½Ú¶ï¿½ï¿½Ö½Ú·ï¿½ï¿½ï¿½
  *
- * @param   buf     - ´ý·¢ËÍµÄÊý¾ÝÄÚÈÝÊ×µØÖ·
- * @param   l       - ´ý·¢ËÍµÄÊý¾Ý³¤¶È
+ * @param   buf     - ï¿½ï¿½ï¿½ï¿½ï¿½Íµï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½×µï¿½Ö·
+ * @param   l       - ï¿½ï¿½ï¿½ï¿½ï¿½Íµï¿½ï¿½ï¿½ï¿½Ý³ï¿½ï¿½ï¿½
  */
 void UART0_SendString(uint8_t *buf, uint16_t l);
 
 /**
- * @brief   ´®¿Ú¶ÁÈ¡µ¥×Ö½Ú
+ * @brief   ï¿½ï¿½ï¿½Ú¶ï¿½È¡ï¿½ï¿½ï¿½Ö½ï¿½
  *
- * @return  ¶ÁÈ¡µ½µÄµ¥×Ö½Ú
+ * @return  ï¿½ï¿½È¡ï¿½ï¿½ï¿½Äµï¿½ï¿½Ö½ï¿½
  */
 #define UART0_RecvByte()    (R8_UART0_RBR)
 
 /**
- * @brief   ´®¿Ú¶ÁÈ¡¶à×Ö½Ú
+ * @brief   ï¿½ï¿½ï¿½Ú¶ï¿½È¡ï¿½ï¿½ï¿½Ö½ï¿½
  *
- * @param   buf     - ¶ÁÈ¡Êý¾Ý´æ·Å»º´æÇøÊ×µØÖ·
+ * @param   buf     - ï¿½ï¿½È¡ï¿½ï¿½ï¿½Ý´ï¿½Å»ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½×µï¿½Ö·
  *
- * @return  ¶ÁÈ¡Êý¾Ý³¤¶È
+ * @return  ï¿½ï¿½È¡ï¿½ï¿½ï¿½Ý³ï¿½ï¿½ï¿½
  */
 uint16_t UART0_RecvString(uint8_t *buf);
 
 /**
- * @brief   ´®¿ÚÄ¬ÈÏ³õÊ¼»¯ÅäÖÃ
+ * @brief   ï¿½ï¿½ï¿½ï¿½Ä¬ï¿½Ï³ï¿½Ê¼ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
  */
 void UART1_DefInit(void);
 
 /**
- * @brief   ´®¿Ú²¨ÌØÂÊÅäÖÃ
+ * @brief   ï¿½ï¿½ï¿½Ú²ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
  *
- * @param   baudrate    - ²¨ÌØÂÊ
+ * @param   baudrate    - ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
  */
 void UART1_BaudRateCfg(uint32_t baudrate);
 
 /**
- * @brief   ´®¿Ú×Ö½Ú´¥·¢ÖÐ¶ÏÅäÖÃ
+ * @brief   ï¿½ï¿½ï¿½ï¿½ï¿½Ö½Ú´ï¿½ï¿½ï¿½ï¿½Ð¶ï¿½ï¿½ï¿½ï¿½ï¿½
  *
- * @param   b       - ´¥·¢×Ö½ÚÊý refer to UARTByteTRIGTypeDef
+ * @param   b       - ï¿½ï¿½ï¿½ï¿½ï¿½Ö½ï¿½ï¿½ï¿½ refer to UARTByteTRIGTypeDef
  */
 void UART1_ByteTrigCfg(UARTByteTRIGTypeDef b);
 
 /**
- * @brief   ´®¿ÚÖÐ¶ÏÅäÖÃ
+ * @brief   ï¿½ï¿½ï¿½ï¿½ï¿½Ð¶ï¿½ï¿½ï¿½ï¿½ï¿½
  *
- * @param   s       - ÖÐ¶Ï¿ØÖÆ×´Ì¬£¬ÊÇ·ñÊ¹ÄÜÏàÓ¦ÖÐ¶Ï
- * @param   i       - ÖÐ¶ÏÀàÐÍ
- *                    RB_IER_MODEM_CHG  - µ÷ÖÆ½âµ÷Æ÷ÊäÈë×´Ì¬±ä»¯ÖÐ¶ÏÊ¹ÄÜÎ»£¨½ö UART0 Ö§³Ö£©
- *                    RB_IER_LINE_STAT  - ½ÓÊÕÏßÂ·×´Ì¬ÖÐ¶Ï
- *                    RB_IER_THR_EMPTY  - ·¢ËÍ±£³Ö¼Ä´æÆ÷¿ÕÖÐ¶Ï
- *                    RB_IER_RECV_RDY   - ½ÓÊÕÊý¾ÝÖÐ¶Ï
+ * @param   s       - ï¿½Ð¶Ï¿ï¿½ï¿½ï¿½×´Ì¬ï¿½ï¿½ï¿½Ç·ï¿½Ê¹ï¿½ï¿½ï¿½ï¿½Ó¦ï¿½Ð¶ï¿½
+ * @param   i       - ï¿½Ð¶ï¿½ï¿½ï¿½ï¿½ï¿½
+ *                    RB_IER_MODEM_CHG  - ï¿½ï¿½ï¿½Æ½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½×´Ì¬ï¿½ä»¯ï¿½Ð¶ï¿½Ê¹ï¿½ï¿½Î»ï¿½ï¿½ï¿½ï¿½ UART0 Ö§ï¿½Ö£ï¿½
+ *                    RB_IER_LINE_STAT  - ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Â·×´Ì¬ï¿½Ð¶ï¿½
+ *                    RB_IER_THR_EMPTY  - ï¿½ï¿½ï¿½Í±ï¿½ï¿½Ö¼Ä´ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ð¶ï¿½
+ *                    RB_IER_RECV_RDY   - ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ð¶ï¿½
  */
 void UART1_INTCfg(FunctionalState s, uint8_t i);
 
 /**
- * @brief   ´®¿ÚÈí¼þ¸´Î»
+ * @brief   ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Î»
  */
 void UART1_Reset(void);
 
 /**
- * @brief   Çå³ýµ±Ç°½ÓÊÕFIFO
+ * @brief   ï¿½ï¿½ï¿½ï¿½ï¿½Ç°ï¿½ï¿½ï¿½ï¿½FIFO
  */
 #define UART1_CLR_RXFIFO()    (R8_UART1_FCR |= RB_FCR_RX_FIFO_CLR)
 
 /**
- * @brief   Çå³ýµ±Ç°·¢ËÍFIFO
+ * @brief   ï¿½ï¿½ï¿½ï¿½ï¿½Ç°ï¿½ï¿½ï¿½ï¿½FIFO
  */
 #define UART1_CLR_TXFIFO()    (R8_UART1_FCR |= RB_FCR_TX_FIFO_CLR)
 
 /**
- * @brief   »ñÈ¡µ±Ç°ÖÐ¶Ï±êÖ¾
+ * @brief   ï¿½ï¿½È¡ï¿½ï¿½Ç°ï¿½Ð¶Ï±ï¿½Ö¾
  *
- * @return  µ±Ç°ÖÐ¶Ï±êÖ¾
+ * @return  ï¿½ï¿½Ç°ï¿½Ð¶Ï±ï¿½Ö¾
  */
 #define UART1_GetITFlag()     (R8_UART1_IIR & RB_IIR_INT_MASK)
 
 /**
- * @brief   »ñÈ¡µ±Ç°Í¨Ñ¶×´Ì¬
+ * @brief   ï¿½ï¿½È¡ï¿½ï¿½Ç°Í¨Ñ¶×´Ì¬
  *
  * @return  refer to LINE error and status define
  */
 #define UART1_GetLinSTA()     (R8_UART1_LSR)
 
 /**
- * @brief   ´®¿Úµ¥×Ö½Ú·¢ËÍ
+ * @brief   ï¿½ï¿½ï¿½Úµï¿½ï¿½Ö½Ú·ï¿½ï¿½ï¿½
  *
- * @param   b       ´ý·¢ËÍµÄ×Ö½Ú
+ * @param   b       ï¿½ï¿½ï¿½ï¿½ï¿½Íµï¿½ï¿½Ö½ï¿½
  */
 #define UART1_SendByte(b)     (R8_UART1_THR = b)
 
 /**
- * @brief   ´®¿Ú¶à×Ö½Ú·¢ËÍ
+ * @brief   ï¿½ï¿½ï¿½Ú¶ï¿½ï¿½Ö½Ú·ï¿½ï¿½ï¿½
  *
- * @param   buf     - ´ý·¢ËÍµÄÊý¾ÝÄÚÈÝÊ×µØÖ·
- * @param   l       - ´ý·¢ËÍµÄÊý¾Ý³¤¶È
+ * @param   buf     - ï¿½ï¿½ï¿½ï¿½ï¿½Íµï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½×µï¿½Ö·
+ * @param   l       - ï¿½ï¿½ï¿½ï¿½ï¿½Íµï¿½ï¿½ï¿½ï¿½Ý³ï¿½ï¿½ï¿½
  */
 void UART1_SendString(uint8_t *buf, uint16_t l);
 
 /**
- * @brief   ´®¿Ú¶ÁÈ¡µ¥×Ö½Ú
+ * @brief   ï¿½ï¿½ï¿½Ú¶ï¿½È¡ï¿½ï¿½ï¿½Ö½ï¿½
  *
- * @return  ¶ÁÈ¡µ½µÄµ¥×Ö½Ú
+ * @return  ï¿½ï¿½È¡ï¿½ï¿½ï¿½Äµï¿½ï¿½Ö½ï¿½
  */
 #define UART1_RecvByte()    (R8_UART1_RBR)
 
 /**
- * @brief   ´®¿Ú¶ÁÈ¡¶à×Ö½Ú
+ * @brief   ï¿½ï¿½ï¿½Ú¶ï¿½È¡ï¿½ï¿½ï¿½Ö½ï¿½
  *
- * @param   buf     - ¶ÁÈ¡Êý¾Ý´æ·Å»º´æÇøÊ×µØÖ·
+ * @param   buf     - ï¿½ï¿½È¡ï¿½ï¿½ï¿½Ý´ï¿½Å»ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½×µï¿½Ö·
  *
- * @return  ¶ÁÈ¡Êý¾Ý³¤¶È
+ * @return  ï¿½ï¿½È¡ï¿½ï¿½ï¿½Ý³ï¿½ï¿½ï¿½
  */
 uint16_t UART1_RecvString(uint8_t *buf);
 
 /**
- * @brief   ´®¿ÚÄ¬ÈÏ³õÊ¼»¯ÅäÖÃ
+ * @brief   ï¿½ï¿½ï¿½ï¿½Ä¬ï¿½Ï³ï¿½Ê¼ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
  */
 void UART2_DefInit(void);
 
 /**
- * @brief   ´®¿Ú²¨ÌØÂÊÅäÖÃ
+ * @brief   ï¿½ï¿½ï¿½Ú²ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
  *
- * @param   baudrate    - ²¨ÌØÂÊ
+ * @param   baudrate    - ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
  */
 void UART2_BaudRateCfg(uint32_t baudrate);
 
 /**
- * @brief   ´®¿Ú×Ö½Ú´¥·¢ÖÐ¶ÏÅäÖÃ
+ * @brief   ï¿½ï¿½ï¿½ï¿½ï¿½Ö½Ú´ï¿½ï¿½ï¿½ï¿½Ð¶ï¿½ï¿½ï¿½ï¿½ï¿½
  *
- * @param   b       - ´¥·¢×Ö½ÚÊý refer to UARTByteTRIGTypeDef
+ * @param   b       - ï¿½ï¿½ï¿½ï¿½ï¿½Ö½ï¿½ï¿½ï¿½ refer to UARTByteTRIGTypeDef
  */
 void UART2_ByteTrigCfg(UARTByteTRIGTypeDef b);
 
 /**
- * @brief   ´®¿ÚÖÐ¶ÏÅäÖÃ
+ * @brief   ï¿½ï¿½ï¿½ï¿½ï¿½Ð¶ï¿½ï¿½ï¿½ï¿½ï¿½
  *
- * @param   s       - ÖÐ¶Ï¿ØÖÆ×´Ì¬£¬ÊÇ·ñÊ¹ÄÜÏàÓ¦ÖÐ¶Ï
- * @param   i       - ÖÐ¶ÏÀàÐÍ
- *                    RB_IER_MODEM_CHG  - µ÷ÖÆ½âµ÷Æ÷ÊäÈë×´Ì¬±ä»¯ÖÐ¶ÏÊ¹ÄÜÎ»£¨½ö UART0 Ö§³Ö£©
- *                    RB_IER_LINE_STAT  - ½ÓÊÕÏßÂ·×´Ì¬ÖÐ¶Ï
- *                    RB_IER_THR_EMPTY  - ·¢ËÍ±£³Ö¼Ä´æÆ÷¿ÕÖÐ¶Ï
- *                    RB_IER_RECV_RDY   - ½ÓÊÕÊý¾ÝÖÐ¶Ï
+ * @param   s       - ï¿½Ð¶Ï¿ï¿½ï¿½ï¿½×´Ì¬ï¿½ï¿½ï¿½Ç·ï¿½Ê¹ï¿½ï¿½ï¿½ï¿½Ó¦ï¿½Ð¶ï¿½
+ * @param   i       - ï¿½Ð¶ï¿½ï¿½ï¿½ï¿½ï¿½
+ *                    RB_IER_MODEM_CHG  - ï¿½ï¿½ï¿½Æ½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½×´Ì¬ï¿½ä»¯ï¿½Ð¶ï¿½Ê¹ï¿½ï¿½Î»ï¿½ï¿½ï¿½ï¿½ UART0 Ö§ï¿½Ö£ï¿½
+ *                    RB_IER_LINE_STAT  - ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Â·×´Ì¬ï¿½Ð¶ï¿½
+ *                    RB_IER_THR_EMPTY  - ï¿½ï¿½ï¿½Í±ï¿½ï¿½Ö¼Ä´ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ð¶ï¿½
+ *                    RB_IER_RECV_RDY   - ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ð¶ï¿½
  */
 void UART2_INTCfg(FunctionalState s, uint8_t i);
 
 /**
- * @brief   ´®¿ÚÈí¼þ¸´Î»
+ * @brief   ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Î»
  */
 void UART2_Reset(void);
 
 /**
- * @brief   Çå³ýµ±Ç°½ÓÊÕFIFO
+ * @brief   ï¿½ï¿½ï¿½ï¿½ï¿½Ç°ï¿½ï¿½ï¿½ï¿½FIFO
  */
 #define UART2_CLR_RXFIFO()    (R8_UART2_FCR |= RB_FCR_RX_FIFO_CLR)
 
 /**
- * @brief   Çå³ýµ±Ç°·¢ËÍFIFO
+ * @brief   ï¿½ï¿½ï¿½ï¿½ï¿½Ç°ï¿½ï¿½ï¿½ï¿½FIFO
  */
 #define UART2_CLR_TXFIFO()    (R8_UART2_FCR |= RB_FCR_TX_FIFO_CLR)
 
 /**
- * @brief   »ñÈ¡µ±Ç°ÖÐ¶Ï±êÖ¾
+ * @brief   ï¿½ï¿½È¡ï¿½ï¿½Ç°ï¿½Ð¶Ï±ï¿½Ö¾
  *
- * @return  µ±Ç°ÖÐ¶Ï±êÖ¾
+ * @return  ï¿½ï¿½Ç°ï¿½Ð¶Ï±ï¿½Ö¾
  */
 #define UART2_GetITFlag()     (R8_UART2_IIR & RB_IIR_INT_MASK)
 
 /**
- * @brief   »ñÈ¡µ±Ç°Í¨Ñ¶×´Ì¬
+ * @brief   ï¿½ï¿½È¡ï¿½ï¿½Ç°Í¨Ñ¶×´Ì¬
  *
  * @return  refer to LINE error and status define
  */
 #define UART2_GetLinSTA()     (R8_UART2_LSR)
 
 /**
- * @brief   ´®¿Úµ¥×Ö½Ú·¢ËÍ
+ * @brief   ï¿½ï¿½ï¿½Úµï¿½ï¿½Ö½Ú·ï¿½ï¿½ï¿½
  *
- * @param   b       ´ý·¢ËÍµÄ×Ö½Ú
+ * @param   b       ï¿½ï¿½ï¿½ï¿½ï¿½Íµï¿½ï¿½Ö½ï¿½
  */
 #define UART2_SendByte(b)     (R8_UART2_THR = b)
 
 /**
- * @brief   ´®¿Ú¶à×Ö½Ú·¢ËÍ
+ * @brief   ï¿½ï¿½ï¿½Ú¶ï¿½ï¿½Ö½Ú·ï¿½ï¿½ï¿½
  *
- * @param   buf     - ´ý·¢ËÍµÄÊý¾ÝÄÚÈÝÊ×µØÖ·
- * @param   l       - ´ý·¢ËÍµÄÊý¾Ý³¤¶È
+ * @param   buf     - ï¿½ï¿½ï¿½ï¿½ï¿½Íµï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½×µï¿½Ö·
+ * @param   l       - ï¿½ï¿½ï¿½ï¿½ï¿½Íµï¿½ï¿½ï¿½ï¿½Ý³ï¿½ï¿½ï¿½
  */
 void UART2_SendString(uint8_t *buf, uint16_t l);
 
 /**
- * @brief   ´®¿Ú¶ÁÈ¡µ¥×Ö½Ú
+ * @brief   ï¿½ï¿½ï¿½Ú¶ï¿½È¡ï¿½ï¿½ï¿½Ö½ï¿½
  *
- * @return  ¶ÁÈ¡µ½µÄµ¥×Ö½Ú
+ * @return  ï¿½ï¿½È¡ï¿½ï¿½ï¿½Äµï¿½ï¿½Ö½ï¿½
  */
 #define UART2_RecvByte()    (R8_UART2_RBR)
 
 /**
- * @brief   ´®¿Ú¶ÁÈ¡¶à×Ö½Ú
+ * @brief   ï¿½ï¿½ï¿½Ú¶ï¿½È¡ï¿½ï¿½ï¿½Ö½ï¿½
  *
- * @param   buf     - ¶ÁÈ¡Êý¾Ý´æ·Å»º´æÇøÊ×µØÖ·
+ * @param   buf     - ï¿½ï¿½È¡ï¿½ï¿½ï¿½Ý´ï¿½Å»ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½×µï¿½Ö·
  *
- * @return  ¶ÁÈ¡Êý¾Ý³¤¶È
+ * @return  ï¿½ï¿½È¡ï¿½ï¿½ï¿½Ý³ï¿½ï¿½ï¿½
  */
 uint16_t UART2_RecvString(uint8_t *buf);
 
 /**
- * @brief   ´®¿ÚÄ¬ÈÏ³õÊ¼»¯ÅäÖÃ
+ * @brief   ï¿½ï¿½ï¿½ï¿½Ä¬ï¿½Ï³ï¿½Ê¼ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
  */
 void UART3_DefInit(void);
 
 /**
- * @brief   ´®¿Ú²¨ÌØÂÊÅäÖÃ
+ * @brief   ï¿½ï¿½ï¿½Ú²ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
  *
- * @param   baudrate    - ²¨ÌØÂÊ
+ * @param   baudrate    - ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
  */
 void UART3_BaudRateCfg(uint32_t baudrate);
 
 /**
- * @brief   ´®¿Ú×Ö½Ú´¥·¢ÖÐ¶ÏÅäÖÃ
+ * @brief   ï¿½ï¿½ï¿½ï¿½ï¿½Ö½Ú´ï¿½ï¿½ï¿½ï¿½Ð¶ï¿½ï¿½ï¿½ï¿½ï¿½
  *
- * @param   b       - ´¥·¢×Ö½ÚÊý refer to UARTByteTRIGTypeDef
+ * @param   b       - ï¿½ï¿½ï¿½ï¿½ï¿½Ö½ï¿½ï¿½ï¿½ refer to UARTByteTRIGTypeDef
  */
 void UART3_ByteTrigCfg(UARTByteTRIGTypeDef b);
 
 /**
- * @brief   ´®¿ÚÖÐ¶ÏÅäÖÃ
+ * @brief   ï¿½ï¿½ï¿½ï¿½ï¿½Ð¶ï¿½ï¿½ï¿½ï¿½ï¿½
  *
- * @param   s       - ÖÐ¶Ï¿ØÖÆ×´Ì¬£¬ÊÇ·ñÊ¹ÄÜÏàÓ¦ÖÐ¶Ï
- * @param   i       - ÖÐ¶ÏÀàÐÍ
- *                    RB_IER_MODEM_CHG  - µ÷ÖÆ½âµ÷Æ÷ÊäÈë×´Ì¬±ä»¯ÖÐ¶ÏÊ¹ÄÜÎ»£¨½ö UART0 Ö§³Ö£©
- *                    RB_IER_LINE_STAT  - ½ÓÊÕÏßÂ·×´Ì¬ÖÐ¶Ï
- *                    RB_IER_THR_EMPTY  - ·¢ËÍ±£³Ö¼Ä´æÆ÷¿ÕÖÐ¶Ï
- *                    RB_IER_RECV_RDY   - ½ÓÊÕÊý¾ÝÖÐ¶Ï
+ * @param   s       - ï¿½Ð¶Ï¿ï¿½ï¿½ï¿½×´Ì¬ï¿½ï¿½ï¿½Ç·ï¿½Ê¹ï¿½ï¿½ï¿½ï¿½Ó¦ï¿½Ð¶ï¿½
+ * @param   i       - ï¿½Ð¶ï¿½ï¿½ï¿½ï¿½ï¿½
+ *                    RB_IER_MODEM_CHG  - ï¿½ï¿½ï¿½Æ½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½×´Ì¬ï¿½ä»¯ï¿½Ð¶ï¿½Ê¹ï¿½ï¿½Î»ï¿½ï¿½ï¿½ï¿½ UART0 Ö§ï¿½Ö£ï¿½
+ *                    RB_IER_LINE_STAT  - ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Â·×´Ì¬ï¿½Ð¶ï¿½
+ *                    RB_IER_THR_EMPTY  - ï¿½ï¿½ï¿½Í±ï¿½ï¿½Ö¼Ä´ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ð¶ï¿½
+ *                    RB_IER_RECV_RDY   - ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ð¶ï¿½
  */
 void UART3_INTCfg(FunctionalState s, uint8_t i);
 
 /**
- * @brief   ´®¿ÚÈí¼þ¸´Î»
+ * @brief   ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Î»
  */
 void UART3_Reset(void);
 
 /**
- * @brief   Çå³ýµ±Ç°½ÓÊÕFIFO
+ * @brief   ï¿½ï¿½ï¿½ï¿½ï¿½Ç°ï¿½ï¿½ï¿½ï¿½FIFO
  */
 #define UART3_CLR_RXFIFO()    (R8_UART3_FCR |= RB_FCR_RX_FIFO_CLR)
 
 /**
- * @brief   Çå³ýµ±Ç°·¢ËÍFIFO
+ * @brief   ï¿½ï¿½ï¿½ï¿½ï¿½Ç°ï¿½ï¿½ï¿½ï¿½FIFO
  */
 #define UART3_CLR_TXFIFO()    (R8_UART3_FCR |= RB_FCR_TX_FIFO_CLR)
 
 /**
- * @brief   »ñÈ¡µ±Ç°ÖÐ¶Ï±êÖ¾
+ * @brief   ï¿½ï¿½È¡ï¿½ï¿½Ç°ï¿½Ð¶Ï±ï¿½Ö¾
  *
- * @return  µ±Ç°ÖÐ¶Ï±êÖ¾
+ * @return  ï¿½ï¿½Ç°ï¿½Ð¶Ï±ï¿½Ö¾
  */
 #define UART3_GetITFlag()     (R8_UART3_IIR & RB_IIR_INT_MASK)
 
 /**
- * @brief   »ñÈ¡µ±Ç°Í¨Ñ¶×´Ì¬
+ * @brief   ï¿½ï¿½È¡ï¿½ï¿½Ç°Í¨Ñ¶×´Ì¬
  *
  * @return  refer to LINE error and status define
  */
 #define UART3_GetLinSTA()     (R8_UART3_LSR)
 
 /**
- * @brief   ´®¿Úµ¥×Ö½Ú·¢ËÍ
+ * @brief   ï¿½ï¿½ï¿½Úµï¿½ï¿½Ö½Ú·ï¿½ï¿½ï¿½
  *
- * @param   b       ´ý·¢ËÍµÄ×Ö½Ú
+ * @param   b       ï¿½ï¿½ï¿½ï¿½ï¿½Íµï¿½ï¿½Ö½ï¿½
  */
 #define UART3_SendByte(b)     (R8_UART3_THR = b)
 
 /**
- * @brief   ´®¿Ú¶à×Ö½Ú·¢ËÍ
+ * @brief   ï¿½ï¿½ï¿½Ú¶ï¿½ï¿½Ö½Ú·ï¿½ï¿½ï¿½
  *
- * @param   buf     - ´ý·¢ËÍµÄÊý¾ÝÄÚÈÝÊ×µØÖ·
- * @param   l       - ´ý·¢ËÍµÄÊý¾Ý³¤¶È
+ * @param   buf     - ï¿½ï¿½ï¿½ï¿½ï¿½Íµï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½×µï¿½Ö·
+ * @param   l       - ï¿½ï¿½ï¿½ï¿½ï¿½Íµï¿½ï¿½ï¿½ï¿½Ý³ï¿½ï¿½ï¿½
  */
 void UART3_SendString(uint8_t *buf, uint16_t l);
 
 /**
- * @brief   ´®¿Ú¶ÁÈ¡µ¥×Ö½Ú
+ * @brief   ï¿½ï¿½ï¿½Ú¶ï¿½È¡ï¿½ï¿½ï¿½Ö½ï¿½
  *
- * @return  ¶ÁÈ¡µ½µÄµ¥×Ö½Ú
+ * @return  ï¿½ï¿½È¡ï¿½ï¿½ï¿½Äµï¿½ï¿½Ö½ï¿½
  */
 #define UART3_RecvByte()    (R8_UART3_RBR)
 
 /**
- * @brief   ´®¿Ú¶ÁÈ¡¶à×Ö½Ú
+ * @brief   ï¿½ï¿½ï¿½Ú¶ï¿½È¡ï¿½ï¿½ï¿½Ö½ï¿½
  *
- * @param   buf     - ¶ÁÈ¡Êý¾Ý´æ·Å»º´æÇøÊ×µØÖ·
+ * @param   buf     - ï¿½ï¿½È¡ï¿½ï¿½ï¿½Ý´ï¿½Å»ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½×µï¿½Ö·
  *
- * @return  ¶ÁÈ¡Êý¾Ý³¤¶È
+ * @return  ï¿½ï¿½È¡ï¿½ï¿½ï¿½Ý³ï¿½ï¿½ï¿½
  */
 uint16_t UART3_RecvString(uint8_t *buf);
 

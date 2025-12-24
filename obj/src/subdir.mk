@@ -1,22 +1,29 @@
 ################################################################################
-# MRS Version: 2.2.0
+# MRS Version: 2.3.0
 # Automatically-generated file. Do not edit!
 ################################################################################
 
 # Add inputs and outputs from these tool invocations to the build variables 
 C_SRCS += \
+../src/M01LaserRangeFinder.c \
 ../src/Main.c 
 
 C_DEPS += \
+./src/M01LaserRangeFinder.d \
 ./src/Main.d 
 
 OBJS += \
+./src/M01LaserRangeFinder.o \
 ./src/Main.o 
 
+DIR_OBJS += \
+./src/*.o \
 
-EXPANDS += \
-./src/Main.c.234r.expand 
+DIR_DEPS += \
+./src/*.d \
 
+DIR_EXPANDS += \
+./src/*.234r.expand \
 
 
 # Each subdirectory must supply rules for building sources it contributes

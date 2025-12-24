@@ -1,34 +1,37 @@
 /**
  ******************************************************************************
  * @file    Main.c
- * @author  Ñ©±ª
+ * @author  é›ªè±¹
  * @version V1.0.0
  * @date    2025-10-3
- * @brief   ¼¤¹â²â¾àÒÇÖ÷º¯Êı
+ * @brief   æ¿€å…‰æµ‹è·ä»ªä¸»å‡½æ•°
  ******************************************************************************
  * @attention
  */
 
 #include "CH57x_common.h"
+#include <stdio.h> // å¼•å…¥ snprintf
 
-// °üº¬TFTÇı¶¯ËùĞèµÄÍ·ÎÄ¼ş
-#include "TFTh/TFT_CAD.h" // °üº¬»æÍ¼º¯ÊıºÍ IO º¯Êı
+#include "M01LaserRangeFinder.h"
+
+// åŒ…å«TFTé©±åŠ¨æ‰€éœ€çš„å¤´æ–‡ä»¶
+#include "TFTh/TFT_CAD.h" // åŒ…å«ç»˜å›¾å‡½æ•°å’Œ IO å‡½æ•°
 #include "TFTh/TFT_init.h"
 #include "TFTh/TFT_text.h"
-#include "TFTh/TFT_io.h" // °üº¬RGB×ª»»º¯Êı
+#include "TFTh/TFT_io.h" // åŒ…å«RGBè½¬æ¢å‡½æ•°
 
-/* °´¼üÏà¹Ø¶¨Òå */
-#define KEY1_PIN GPIO_Pin_10 // PB10°´¼ü
-#define KEY2_PIN GPIO_Pin_11 // PB11°´¼ü
-#define KEY3_PIN GPIO_Pin_12 // PB12°´¼ü
-#define KEY4_PIN GPIO_Pin_13 // PB13°´¼ü
+/* æŒ‰é”®ç›¸å…³å®šä¹‰ */
+#define KEY1_PIN GPIO_Pin_10 // PB10æŒ‰é”®
+#define KEY2_PIN GPIO_Pin_11 // PB11æŒ‰é”®
+#define KEY3_PIN GPIO_Pin_12 // PB12æŒ‰é”®
+#define KEY4_PIN GPIO_Pin_13 // PB13æŒ‰é”®
 
-/* TFTÆÁÄ»Ïà¹Ø¶¨Òå */
-// TFTÆÁÄ»¾ä±úºÍSPI¾ä±ú¶¨Òå
-TFT_HandleTypeDef htft1; // µÚÒ»¸öTFTÆÁÄ»°ÑÊÖ
-SPI_HandleTypeDef SPI0;  // µÚÒ»¸öTFTÆÁÄ»°ÑÊÖ
-// TFTÆÁÄ»Òı½Å¶¨Òå£¬¸ù¾İÊµ¼ÊÁ¬½ÓĞŞ¸Ä
-#define TFT_CS_GPIO_Port 0 // 0ÊÇGPIOA£¬1ÊÇGPIOB
+/* TFTå±å¹•ç›¸å…³å®šä¹‰ */
+// TFTå±å¹•å¥æŸ„å’ŒSPIå¥æŸ„å®šä¹‰
+TFT_HandleTypeDef htft1; // ç¬¬ä¸€ä¸ªTFTå±å¹•æŠŠæ‰‹
+SPI_HandleTypeDef SPI0;  // ç¬¬ä¸€ä¸ªTFTå±å¹•æŠŠæ‰‹
+// TFTå±å¹•å¼•è„šå®šä¹‰ï¼Œæ ¹æ®å®é™…è¿æ¥ä¿®æ”¹
+#define TFT_CS_GPIO_Port 0 // 0æ˜¯GPIOAï¼Œ1æ˜¯GPIOB
 #define TFT_CS_Pin GPIO_Pin_12
 #define TFT_DC_GPIO_Port 0
 #define TFT_DC_Pin GPIO_Pin_10
@@ -36,73 +39,98 @@ SPI_HandleTypeDef SPI0;  // µÚÒ»¸öTFTÆÁÄ»°ÑÊÖ
 #define TFT_RES_Pin GPIO_Pin_11
 #define TFT_BLK_GPIO_Port 1
 #define TFT_BLK_Pin GPIO_Pin_22
-// SPI0Òı½Å¶¨ÒåÔÚTFTio.cÎÄ¼şÖĞµÄSPI0_MasterDefInitº¯ÊıÖ®Ç°¡£CH573FÖ»ÓĞÒ»¸öÓ²¼şSPI
-// ÆÁÄ»·Ö±æÂÊ¶¨Òå£¬¸ù¾İÊµ¼ÊÆÁÄ»ĞŞ¸Ä
+// SPI0å¼•è„šå®šä¹‰åœ¨TFTio.cæ–‡ä»¶ä¸­çš„SPI0_MasterDefInitå‡½æ•°ä¹‹å‰ã€‚CH573Fåªæœ‰ä¸€ä¸ªç¡¬ä»¶SPI
+// å±å¹•åˆ†è¾¨ç‡å®šä¹‰ï¼Œæ ¹æ®å®é™…å±å¹•ä¿®æ”¹
 #define HEIGHT 320
 #define WIDTH 240
 
 /**
  * @fn     main
- * @brief   Ö÷º¯Êı
+ * @brief   ä¸»å‡½æ•°
  * @return  none
  */
 int main()
 {
     SetSysClock(CLK_SOURCE_PLL_60MHz);
 
-    /* ÅäÖÃ´®¿Úµ÷ÊÔ */
+    /* é…ç½®ä¸²å£1è°ƒè¯• */
     GPIOA_SetBits(GPIO_Pin_9);
     GPIOA_ModeCfg(GPIO_Pin_8, GPIO_ModeIN_PU);
     GPIOA_ModeCfg(GPIO_Pin_9, GPIO_ModeOut_PP_5mA);
     UART1_DefInit();
     PRINT("Start @ChipID=%02X\n", R8_CHIP_ID);
-    /* ÅäÖÃÆÁÄ»Òı½Å£¬ÇßºãµÄµ¥Æ¬»úGPIOAºÍGPIOB²Ù×÷º¯ÊıÊÇ·Ö¿ªµÄ¡£±ØĞëÉèÖÃ²»È»ÆÁÄ»ÎŞ·¨ÏÔÊ¾ */
+
+    /* é…ç½®ä¸²å£0ä¸æ¿€å…‰æ¨¡å—é€šè®¯ */
+    uint8_t TxBuff[] = "This is a tx exam\r\n";
+    uint8_t RxBuff[100];
+    GPIOB_SetBits(GPIO_Pin_7);
+    GPIOB_ModeCfg(GPIO_Pin_4, GPIO_ModeIN_PU);
+    GPIOB_ModeCfg(GPIO_Pin_7, GPIO_ModeOut_PP_5mA);
+    UART0_DefInit();
+    UART0_BaudRateCfg(9600);
+
+    /* é…ç½®å±å¹•å¼•è„šï¼Œæ²æ’çš„å•ç‰‡æœºGPIOAå’ŒGPIOBæ“ä½œå‡½æ•°æ˜¯åˆ†å¼€çš„ã€‚å¿…é¡»è®¾ç½®ä¸ç„¶å±å¹•æ— æ³•æ˜¾ç¤º */
     GPIOA_ModeCfg(TFT_CS_Pin, GPIO_ModeOut_PP_5mA);
     GPIOA_ModeCfg(TFT_RES_Pin, GPIO_ModeOut_PP_5mA);
     GPIOA_ModeCfg(TFT_DC_Pin, GPIO_ModeOut_PP_5mA);
     GPIOB_ModeCfg(TFT_BLK_Pin, GPIO_ModeOut_PP_5mA);
-    /* ÆÁÄ»ÉèÖÃ */
+    /* å±å¹•è®¾ç½® */
     TFT_Init_Instance(&htft1, &SPI0, TFT_CS_GPIO_Port, TFT_CS_Pin);
-    TFT_Config_Pins(&htft1, TFT_DC_GPIO_Port, TFT_DC_Pin, TFT_RES_GPIO_Port, TFT_RES_Pin, TFT_BLK_GPIO_Port, TFT_BLK_Pin); // ±ØĞëÊÖ¶¯ÉèÖÃÒı½Å
-    TFT_Config_Display(&htft1, 0, 0, 0);                                                                                   // ÉèÖÃ·½Ïò¡¢X/YÆ«ÒÆ
-    TFT_Init_ST7789v3(&htft1);                                                                                             // ST7789v3ÆÁÄ»³õÊ¼»¯,ÓÒ¼ü½øÈëtft_init.c²é¿´¸ü¶àÆÁÄ»µÄ³õÊ¼»¯º¯Êı
+    TFT_Config_Pins(&htft1, TFT_DC_GPIO_Port, TFT_DC_Pin, TFT_RES_GPIO_Port, TFT_RES_Pin, TFT_BLK_GPIO_Port, TFT_BLK_Pin); // å¿…é¡»æ‰‹åŠ¨è®¾ç½®å¼•è„š
+    TFT_Config_Display(&htft1, 0, 0, 0);                                                                                   // è®¾ç½®æ–¹å‘ã€X/Yåç§»
+    TFT_Init_ST7789v3(&htft1);                                                                                             // ST7789v3å±å¹•åˆå§‹åŒ–,å³é”®è¿›å…¥tft_init.cæŸ¥çœ‹æ›´å¤šå±å¹•çš„åˆå§‹åŒ–å‡½æ•°
     TFT_Show_String(&htft1, 20, 20, "now ST7789v3", WHITE, BLACK, 16, 0);
 
-    /* °´¼üÖĞ¶ÏÅäÖÃ */
-    // // ÅäÖÃGPIOAÖĞ¶Ï£¬ÒÔPA4ÎªÀı
-    // GPIOA_ModeCfg(GPIO_Pin_4, GPIO_ModeIN_PU);         // PA4ÉÏÀ­ÊäÈë
-    // GPIOA_ITModeCfg(GPIO_Pin_4, GPIO_ITMode_FallEdge); // PA4ÏÂ½µÑØ´¥·¢
-    // PFIC_EnableIRQ(GPIO_A_IRQn);                       // ¿ªÆôGPIOAÖĞ¶Ï
+    /* æŒ‰é”®ä¸­æ–­é…ç½® */
+    // // é…ç½®GPIOAä¸­æ–­ï¼Œä»¥PA4ä¸ºä¾‹
+    // GPIOA_ModeCfg(GPIO_Pin_4, GPIO_ModeIN_PU);         // PA4ä¸Šæ‹‰è¾“å…¥
+    // GPIOA_ITModeCfg(GPIO_Pin_4, GPIO_ITMode_FallEdge); // PA4ä¸‹é™æ²¿è§¦å‘
+    // PFIC_EnableIRQ(GPIO_A_IRQn);                       // å¼€å¯GPIOAä¸­æ–­
 
-    // ÅäÖÃGPIOBÖĞ¶Ï£¬ÒÔPB11ÎªÀı
-    GPIOB_ModeCfg(KEY1_PIN, GPIO_ModeIN_PU);         // °´¼ü1ÉÏÀ­ÊäÈë
-    GPIOB_ITModeCfg(KEY1_PIN, GPIO_ITMode_FallEdge); // °´¼ü1ÏÂ½µÑØ´¥·¢
-    GPIOB_ModeCfg(KEY2_PIN, GPIO_ModeIN_PU);         // °´¼ü2ÉÏÀ­ÊäÈë
-    GPIOB_ITModeCfg(KEY2_PIN, GPIO_ITMode_FallEdge); // °´¼ü2ÏÂ½µÑØ´¥·¢
-    GPIOB_ModeCfg(KEY3_PIN, GPIO_ModeIN_PU);         // °´¼ü3ÉÏÀ­ÊäÈë
-    GPIOB_ITModeCfg(KEY3_PIN, GPIO_ITMode_FallEdge); // °´¼ü3ÏÂ½µÑØ´¥·¢
-    GPIOB_ModeCfg(KEY4_PIN, GPIO_ModeIN_PU);         // °´¼ü4ÉÏÀ­ÊäÈë
-    GPIOB_ITModeCfg(KEY4_PIN, GPIO_ITMode_FallEdge); // °´¼ü4ÏÂ½µÑØ´¥·¢
-    PFIC_EnableIRQ(GPIO_B_IRQn);                     // ¿ªÆôGPIOBÖĞ¶Ï
+    // é…ç½®GPIOBä¸­æ–­ï¼Œä»¥PB11ä¸ºä¾‹
+    GPIOB_ModeCfg(KEY1_PIN, GPIO_ModeIN_PU);         // æŒ‰é”®1ä¸Šæ‹‰è¾“å…¥
+    GPIOB_ITModeCfg(KEY1_PIN, GPIO_ITMode_FallEdge); // æŒ‰é”®1ä¸‹é™æ²¿è§¦å‘
+    GPIOB_ModeCfg(KEY2_PIN, GPIO_ModeIN_PU);         // æŒ‰é”®2ä¸Šæ‹‰è¾“å…¥
+    GPIOB_ITModeCfg(KEY2_PIN, GPIO_ITMode_FallEdge); // æŒ‰é”®2ä¸‹é™æ²¿è§¦å‘
+    GPIOB_ModeCfg(KEY3_PIN, GPIO_ModeIN_PU);         // æŒ‰é”®3ä¸Šæ‹‰è¾“å…¥
+    GPIOB_ITModeCfg(KEY3_PIN, GPIO_ITMode_FallEdge); // æŒ‰é”®3ä¸‹é™æ²¿è§¦å‘
+    GPIOB_ModeCfg(KEY4_PIN, GPIO_ModeIN_PU);         // æŒ‰é”®4ä¸Šæ‹‰è¾“å…¥
+    GPIOB_ITModeCfg(KEY4_PIN, GPIO_ITMode_FallEdge); // æŒ‰é”®4ä¸‹é™æ²¿è§¦å‘
+    PFIC_EnableIRQ(GPIO_B_IRQn);                     // å¼€å¯GPIOBä¸­æ–­
 
-    PRINT("¿ÉÒÔ°´ÏÂ°´¼üÁË\n");
+    PRINT("å¯ä»¥æŒ‰ä¸‹æŒ‰é”®äº†\n");
 
-    while (1) // Ñ­»·
+    while (1) // å¾ªç¯
     {
-        /* ÈıÖÖÑÕÉ«Ìî³ä£¬¼ì²éÄãµÄÑÕÉ«ÏÔÊ¾ÊÇ·ñÕıÈ· */
-        TFT_Fill_Area(&htft1, 0, 40, WIDTH, HEIGHT, RED);
-        TFT_Fill_Area(&htft1, 0, 40, WIDTH, HEIGHT, GREEN);
-        TFT_Fill_Area(&htft1, 0, 40, WIDTH, HEIGHT, BLUE);
-        DelayMs(500);
+        // M01LRF_SendEnableCommand();
+        DelayMs(2000);
+        uint8_t dist_buf[64] = {0};
+        uint8_t dist_buf2[64] = {0};
+        uint16_t len =13;
+        //M01LRF_SendEnableCommand();
+        UART0_RecvString(dist_buf2);
+         M01LRF_StartFastMeasurement(dist_buf, sizeof(dist_buf));
+        
+        if (len > 0)
+        {
+            PRINT("Distance raw: ");
+            for (uint16_t i = 0; i < len; i++)
+            {
+                PRINT("%02X ", dist_buf[i]);
+            }
+            PRINT("\n");
+        }
+
+
     }
 }
 
-// // ÉèÖÃÍâ²¿ÖĞ¶ÏÏà¹Øº¯ÊıÊôĞÔ£¬Ö¸¶¨ÉùÃ÷Ïà¹ØÌØÕ÷
+// // è®¾ç½®å¤–éƒ¨ä¸­æ–­ç›¸å…³å‡½æ•°å±æ€§ï¼ŒæŒ‡å®šå£°æ˜ç›¸å…³ç‰¹å¾
 // __attribute__((interrupt("WCH-Interrupt-fast")))
 // __attribute__((section(".highcode")))
 // /**
-//  * @brief GPIOA¶Ë¿ÚµÄÖĞ¶Ï´¦Àíº¯Êı
-//  * @note ¼ÇµÃÇå³ıÖĞ¶Ï±êÖ¾Î»¡£Èñ¿Ì5 RISC-VĞ¾Æ¬¶ÔÓ¦µÄÖĞ¶Ïº¯ÊıÃûÔÚStartup\startup_CH573.SÎÄ¼şÀï²é¿´
+//  * @brief GPIOAç«¯å£çš„ä¸­æ–­å¤„ç†å‡½æ•°
+//  * @note è®°å¾—æ¸…é™¤ä¸­æ–­æ ‡å¿—ä½ã€‚é”åˆ»5 RISC-VèŠ¯ç‰‡å¯¹åº”çš„ä¸­æ–­å‡½æ•°ååœ¨Startup\startup_CH573.Sæ–‡ä»¶é‡ŒæŸ¥çœ‹
 //  */
 // void
 // GPIOA_IRQHandler(void)
@@ -110,36 +138,67 @@ int main()
 //     if (GPIOA_ReadITFlagBit(GPIO_Pin_4))
 //     {
 //         PRINT("GPIOA \n");
-//         // DelayMs (500); // ²»½¨ÒéÔÚÖĞ¶ÏÖĞ³¤Ê±¼äÑÓÊ±
-//         GPIOA_ClearITFlagBit(GPIO_Pin_4); // Çå³ıÖĞ¶Ï±êÖ¾Î»
+//         // DelayMs (500); // ä¸å»ºè®®åœ¨ä¸­æ–­ä¸­é•¿æ—¶é—´å»¶æ—¶
+//         GPIOA_ClearITFlagBit(GPIO_Pin_4); // æ¸…é™¤ä¸­æ–­æ ‡å¿—ä½
 //     }
 // }
 
-// ÉèÖÃÍâ²¿ÖĞ¶ÏÏà¹Øº¯ÊıÊôĞÔ£¬Ö¸¶¨ÉùÃ÷Ïà¹ØÌØÕ÷
+// è®¾ç½®å¤–éƒ¨ä¸­æ–­ç›¸å…³å‡½æ•°å±æ€§ï¼ŒæŒ‡å®šå£°æ˜ç›¸å…³ç‰¹å¾
 __attribute__((interrupt("WCH-Interrupt-fast")))
 __attribute__((section(".highcode")))
 /**
- * @brief GPIOB¶Ë¿ÚµÄÖĞ¶Ï´¦Àíº¯Êı
- * @note ¼ÇµÃÇå³ıÖĞ¶Ï±êÖ¾Î»¡£Èñ¿Ì5 RISC-VĞ¾Æ¬¶ÔÓ¦µÄÖĞ¶Ïº¯ÊıÃûÔÚStartup\startup_CH573.SÎÄ¼şÀï²é¿´
+ * @brief GPIOBç«¯å£çš„ä¸­æ–­å¤„ç†å‡½æ•°
+ * @note è®°å¾—æ¸…é™¤ä¸­æ–­æ ‡å¿—ä½ã€‚é”åˆ»5 RISC-VèŠ¯ç‰‡å¯¹åº”çš„ä¸­æ–­å‡½æ•°ååœ¨Startup\startup_CH573.Sæ–‡ä»¶é‡ŒæŸ¥çœ‹
  */
 void
 GPIOB_IRQHandler(void)
 {
     if (GPIOB_ReadITFlagBit(KEY1_PIN))
     {
-        PRINT("key1 °´ÏÂ\n");
+        PRINT("key1 æŒ‰ä¸‹\n");
+        uint8_t dist_buf[64] = {0};
+        uint16_t len =12;
+        M01LRF_SendEnableCommand();
+         M01LRF_StartSingleMeasurement(dist_buf, sizeof(dist_buf));
+        if (len > 0)
+        {
+            PRINT("Distance raw: ");
+            for (uint16_t i = 0; i < len; i++)
+            {
+                PRINT("%02X ", dist_buf[i]);
+            }
+            PRINT("\n");
+
+            // ç®€å•çš„è§£æç¤ºä¾‹ï¼šå‡è®¾è¿”å›æ ¼å¼ç¬¦åˆåè®®ï¼Œè·ç¦»æ•°æ®åœ¨ç‰¹å®šä½ç½®
+            // æ ¹æ®åè®®ï¼šAA 80 00 22 00 04 XX XX XX XX CS
+            // æ•°æ®åŸŸä»ç¬¬6å­—èŠ‚å¼€å§‹ï¼ˆä¸‹æ ‡5ï¼‰ï¼Œå…±4å­—èŠ‚
+            if (len >= 11 && dist_buf[0] == 0xAA && dist_buf[3] == 0x22)
+            {
+                uint32_t distance_mm = (dist_buf[6] << 24) | (dist_buf[7] << 16) | (dist_buf[8] << 8) | dist_buf[9];
+                PRINT("Distance: %d mm\n", distance_mm);
+
+                // åœ¨å±å¹•ä¸Šæ˜¾ç¤º
+                char disp_str[32];
+                snprintf(disp_str, sizeof(disp_str), "Dist: %d mm", distance_mm);
+                TFT_Show_String(&htft1, 20, 60, disp_str, WHITE, BLACK, 16, 0);
+            }
+        }
+        else
+        {
+            PRINT("Read distance timeout\n");
+        }
     }
     if (GPIOB_ReadITFlagBit(KEY2_PIN))
     {
-        PRINT("key2 °´ÏÂ\n");
+        PRINT("key2 æŒ‰ä¸‹\n");
     }
     if (GPIOB_ReadITFlagBit(KEY3_PIN))
     {
-        PRINT("key3 °´ÏÂ\n");
+        PRINT("key3 æŒ‰ä¸‹\n");
     }
     if (GPIOB_ReadITFlagBit(KEY4_PIN))
     {
-        PRINT("key4 °´ÏÂ\n");
+        PRINT("key4 æŒ‰ä¸‹\n");
     }
-    GPIOB_ClearITFlagBit(KEY1_PIN | KEY2_PIN | KEY3_PIN | KEY4_PIN); // Çå³ıËùÓĞ°´¼üµÄÖĞ¶Ï±êÖ¾Î»
+    GPIOB_ClearITFlagBit(KEY1_PIN | KEY2_PIN | KEY3_PIN | KEY4_PIN); // æ¸…é™¤æ‰€æœ‰æŒ‰é”®çš„ä¸­æ–­æ ‡å¿—ä½
 }

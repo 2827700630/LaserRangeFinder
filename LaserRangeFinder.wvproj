@@ -5,10 +5,11 @@
 		"chipInfo": {
 			"vendor": "WCH",
 			"toolchain": "RISC-V",
-			"series": "CH57X",
+			"series": "CH59X",
 			"rtos": "NoneOS",
-			"mcu": "CH573F",
+			"mcu": "CH592F",
 			"description": "Website: http://www.wch.cn/products/CH573.html?\\nROM(byte): 448K, SRAMX(byte): 24K,SRAMS(byte): 32K, CHIP PINS: 28, GPIO PORTS: 20.\\nCH573F is simplified based on CH573F, which eliminates USB host, touch button detection module, 8-bit PWM module and two serial ports. The total capacity of flashrom is only 256Kb, and only supports power supply voltage above 2.3V. In addition to the above differences, others are basically the same as CH573. You can refer to CH573 manual and materials directly.",
+			"artifactType": "executable",
 			"link": "WCH-Link",
 			"peripheral_version": "2.6",
 			"calibrateSupport": false,
@@ -309,6 +310,7 @@
 					"show_totals": false,
 					"other_flags": ""
 				},
+				"configVariables": [],
 				"riscvTargetProcessor": {
 					"architecture": "rv32i",
 					"multiply_extension": true,
@@ -328,13 +330,12 @@
 					"other_target_flags": ""
 				},
 				"component_toolchain": "${WCH:Toolchain:GCC8}",
-				"name": "obj",
-				"configVariables": []
+				"name": "obj"
 			}
 		]
 	},
 	"flashConfig": {
-		"mcutype": "CH57x",
+		"mcutype": "CH59x",
 		"address": "0x00000000",
 		"target_path": "obj/LaserRangeFinder.hex",
 		"clkSpeed": "High",

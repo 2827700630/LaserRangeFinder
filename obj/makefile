@@ -1,5 +1,5 @@
 ################################################################################
-# MRS Version: 2.2.0
+# MRS Version: 2.3.0
 # Automatically-generated file. Do not edit!
 ################################################################################
 -include ../makefile.init
@@ -13,6 +13,11 @@ RM := rm -rf
 -include StdPeriphDriver/subdir.mk
 -include Startup/subdir.mk
 -include RVMSIS/subdir.mk
+-include LaserRangeFinderch592F/User/TFTc/subdir.mk
+-include LaserRangeFinderch592F/User/subdir.mk
+-include LaserRangeFinderch592F/StdPeriphDriver/subdir.mk
+-include LaserRangeFinderch592F/Startup/subdir.mk
+-include LaserRangeFinderch592F/RVMSIS/subdir.mk
 -include subdir.mk
 -include objects.mk
 
@@ -54,8 +59,8 @@ all:
 main-build: LaserRangeFinder.elf secondary-outputs
 
 # Tool invocations
-LaserRangeFinder.elf: $(OBJS) $(USER_OBJS)
-	@	riscv-none-embed-gcc -march=rv32imac -mabi=ilp32 -mcmodel=medany -msmall-data-limit=8 -mno-save-restore -fmax-errors=20 -Os -fmessage-length=0 -fsigned-char -ffunction-sections -fdata-sections -fno-common -Wunused -g -T "d:/CH573FEVT/LaserRangeFinder/Ld/Link.ld" -nostartfiles -Xlinker --gc-sections -L"d:/CH573FEVT/LaserRangeFinder/StdPeriphDriver" -Xlinker --print-memory-usage -Xlinker --print-memory-usage -Wl,-Map,"LaserRangeFinder.map" --specs=nano.specs --specs=nosys.specs -o "LaserRangeFinder.elf" $(OBJS)  $(LIBS)
+LaserRangeFinder.elf: $(OBJS) $(USER_OBJS_ESCAPE)
+	@	riscv-none-embed-gcc -march=rv32imac -mabi=ilp32 -mcmodel=medany -msmall-data-limit=8 -mno-save-restore -fmax-errors=20 -Os -fmessage-length=0 -fsigned-char -ffunction-sections -fdata-sections -fno-common -Wunused -g -T "d:/CH573FEVT/LaserRangeFinder/Ld/Link.ld" -nostartfiles -Xlinker --gc-sections -L"d:/CH573FEVT/LaserRangeFinder/StdPeriphDriver" -Xlinker --print-memory-usage -Wl,-Map,"LaserRangeFinder.map" --specs=nano.specs --specs=nosys.specs -o "LaserRangeFinder.elf" $(OBJS) $(LIBS)
 LaserRangeFinder.hex: LaserRangeFinder.elf
 	@	riscv-none-embed-objcopy -O ihex "LaserRangeFinder.elf" "LaserRangeFinder.hex"
 LaserRangeFinder.lst: LaserRangeFinder.elf
@@ -65,8 +70,9 @@ LaserRangeFinder.siz: LaserRangeFinder.elf
 
 # Other Targets
 clean:
-	-$(RM) $(OBJS) $(EXPANDS) $(CALLGRAPH_DOT) $(SECONDARY_FLASH)$(SECONDARY_LIST)$(SECONDARY_SIZE)$(S_DEPS)$(S_UPPER_DEPS)$(ASM_DEPS)$(ASM_UPPER_DEPS)$(C_DEPS) LaserRangeFinder.elf
-
+	-$(RM) $(DIR_OBJS) $(SECONDARY_FLASH)$(SECONDARY_LIST)$(SECONDARY_SIZE) LaserRangeFinder.elf
+	-$(RM) $(DIR_EXPANDS) $(CALLGRAPH_DOT)
+	-$(RM) $(DIR_DEPS)
 secondary-outputs: $(SECONDARY_FLASH) $(SECONDARY_LIST) $(SECONDARY_SIZE)
 
 .PHONY: all clean dependents

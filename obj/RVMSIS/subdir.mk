@@ -1,5 +1,5 @@
 ################################################################################
-# MRS Version: 2.2.0
+# MRS Version: 2.3.0
 # Automatically-generated file. Do not edit!
 ################################################################################
 
@@ -13,10 +13,14 @@ C_DEPS += \
 OBJS += \
 ./RVMSIS/core_riscv.o 
 
+DIR_OBJS += \
+./RVMSIS/*.o \
 
-EXPANDS += \
-./RVMSIS/core_riscv.c.234r.expand 
+DIR_DEPS += \
+./RVMSIS/*.d \
 
+DIR_EXPANDS += \
+./RVMSIS/*.234r.expand \
 
 
 # Each subdirectory must supply rules for building sources it contributes

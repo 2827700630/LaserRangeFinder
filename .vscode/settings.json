@@ -2,6 +2,7 @@
     "files.associations": {
         "ch57x_common.h": "c",
         "tft_cad.h": "c",
-        "tft_init.h": "c"
+        "tft_init.h": "c",
+        "m01laserrangefinder.h": "c"
     }
 }

@@ -1,5 +1,5 @@
 ################################################################################
-# MRS Version: 2.2.0
+# MRS Version: 2.3.0
 # Automatically-generated file. Do not edit!
 ################################################################################
 
@@ -37,18 +37,14 @@ OBJS += \
 ./StdPeriphDriver/CH57x_uart0.o \
 ./StdPeriphDriver/CH57x_uart1.o 
 
+DIR_OBJS += \
+./StdPeriphDriver/*.o \
 
-EXPANDS += \
-./StdPeriphDriver/CH57x_adc.c.234r.expand \
-./StdPeriphDriver/CH57x_clk.c.234r.expand \
-./StdPeriphDriver/CH57x_flash.c.234r.expand \
-./StdPeriphDriver/CH57x_gpio.c.234r.expand \
-./StdPeriphDriver/CH57x_pwr.c.234r.expand \
-./StdPeriphDriver/CH57x_spi0.c.234r.expand \
-./StdPeriphDriver/CH57x_sys.c.234r.expand \
-./StdPeriphDriver/CH57x_uart0.c.234r.expand \
-./StdPeriphDriver/CH57x_uart1.c.234r.expand 
+DIR_DEPS += \
+./StdPeriphDriver/*.d \
 
+DIR_EXPANDS += \
+./StdPeriphDriver/*.234r.expand \
 
 
 # Each subdirectory must supply rules for building sources it contributes
