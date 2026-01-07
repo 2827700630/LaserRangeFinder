@@ -51,6 +51,12 @@ SPI_HandleTypeDef SPI0;  // SPI句柄
 // 测量历史记录全局变量
 uint32_t history_dists[3] = {0};
 
+// 开机时间纪录相关的全局变量
+uint32_t max_uptime_sec = 0; // 历史最长开机时间
+uint32_t current_uptime_sec = 0;
+
+#define EEPROM_ADDR_MAX_UPTIME 0x0000 // EEPROM/Data-Flash 存储地址
+
 void DrawStaticUI(void)
 {
     // 清屏为白色
@@ -93,8 +99,55 @@ void UpdateMeasurementDisplay(void)
 
     // 第3行 (底部) - 历史记录[0] (当前)
     snprintf(buf, sizeof(buf), "%d.%03d m", history_dists[0] / 1000, history_dists[0] % 1000);
-    // 大字体 24x12
-    TFT_Show_String(&htft1, 60, 140, buf, BLACK, WHITE, 16, 0);
+    // 使用16号字体 (24号显示可能异常)
+    TFT_Show_String(&htft1, 60, 140, (uint8_t *)buf, BLACK, WHITE, 16, 0);
+}
+
+void UpdateUptime(void)
+{
+    static uint32_t last_sec = 0xFFFFFFFF;
+    static uint32_t last_sync_sec = 0;
+    uint32_t total_sec = (uint32_t)(SysTick->CNT / GetSysClock());
+    current_uptime_sec = total_sec;
+
+    // 每秒更新一次显示
+    if (total_sec != last_sec)
+    {
+        last_sec = total_sec;
+        char buf[24];
+        uint32_t hour, min, sec;
+
+        // 更新历史最长开机记录 (实时)
+        if (current_uptime_sec > max_uptime_sec)
+        {
+            max_uptime_sec = current_uptime_sec;
+        }
+
+        // 计算当前开机时间 (时:分:秒)
+        hour = total_sec / 3600;
+        min = (total_sec % 3600) / 60;
+        sec = total_sec % 60;
+        snprintf(buf, sizeof(buf), "Up: %02d:%02d:%02d", hour, min, sec);
+        TFT_Show_String(&htft1, WIDTH - 100, 5, (uint8_t *)buf, BLACK, WHITE, 16, 0);
+
+        // 计算历史最长开机时间 (时:分:秒)
+        hour = max_uptime_sec / 3600;
+        min = (max_uptime_sec % 3600) / 60;
+        sec = max_uptime_sec % 60;
+        snprintf(buf, sizeof(buf), "Max:%02d:%02d:%02d", hour, min, sec);
+        TFT_Show_String(&htft1, WIDTH - 100, 22, (uint8_t *)buf, RED, WHITE, 16, 0);
+
+        // 每隔 1 秒如果记录增加则保存一次到 Flash，避免频繁擦写
+        if (total_sec - last_sync_sec >= 1)
+        {
+            last_sync_sec = total_sec;
+            // 只有当当前时长突破了历史记录，且满足同步时间间隔时，才执行写入
+            if (current_uptime_sec >= max_uptime_sec) 
+            {
+                EEPROM_WRITE(EEPROM_ADDR_MAX_UPTIME, &max_uptime_sec, sizeof(max_uptime_sec));
+            }
+        }
+    }
 }
 
 /**
@@ -134,6 +187,15 @@ int main()
 
     TFT_Init_ST7789v3(&htft1); // ST7789v3屏幕初始化,右键进入tft_init.c查看更多屏幕的初始化函数
 
+    /* 从 Flash 读取历史最长开机记录 */
+    EEPROM_READ(EEPROM_ADDR_MAX_UPTIME, &max_uptime_sec, sizeof(max_uptime_sec));
+    // 如果读取到的是 0xFFFFFFFF (空 Flash 状态)，重置为 0
+    if (max_uptime_sec == 0xFFFFFFFF)
+        max_uptime_sec = 0;
+
+    /* 开启系统计数器 (SysTick) 用于显示开机时间 */
+    SysTick->CTLR |= SysTick_CTLR_STE | SysTick_CTLR_STCLK;
+
     DrawStaticUI();
     UpdateMeasurementDisplay();
 
@@ -159,26 +221,20 @@ int main()
 
     while (1) // 循环
     {
-        // M01LRF_SendEnableCommand();
-        // 每隔3秒测量一次，因为我录制视频腾不出手来按按键
-        DelayMs(1000);
+        // 持续更新开机时间显示
+        UpdateUptime();
+
+        // 连续自动测量逻辑 (移除之前的 3 秒间隔限制)
         uint8_t dist_buf[64] = {0};
         uint16_t len = 0;
-        // M01LRF_SendEnableCommand();
-        DelayMs(100);
+
+        // 发送测量指令并获取结果
         len = M01LRF_StartFastMeasurement(dist_buf, sizeof(dist_buf));
+
         if (len > 0)
         {
-            PRINT("Distance raw: ");
-            for (uint16_t i = 0; i < len; i++)
-            {
-                PRINT("%02X ", dist_buf[i]);
-            }
-            PRINT("\n");
-
-            // 根据协议：AA 80 00 22 00 04 AA BB CC DD YY ZZ Checksum
-            // 数据为BCD码，如 0xAABBCCDD = 0x12345678, 表示：12345.678m
-            if (len >= 11 && dist_buf[0] == 0xAA && dist_buf[3] == 0x22)
+            // 收到有效数据，根据协议解析：AA 80 00 22 ... 数据为 BCD 码
+            if (len >= 11 && dist_buf[0] == 0xAA && (dist_buf[3] == 0x22 || dist_buf[3] == 0x20))
             {
                 uint32_t d1 = (dist_buf[6] >> 4) * 10 + (dist_buf[6] & 0x0F);
                 uint32_t d2 = (dist_buf[7] >> 4) * 10 + (dist_buf[7] & 0x0F);
@@ -186,9 +242,11 @@ int main()
                 uint32_t d4 = (dist_buf[9] >> 4) * 10 + (dist_buf[9] & 0x0F);
 
                 uint32_t distance_mm = d1 * 1000000 + d2 * 10000 + d3 * 100 + d4;
-                PRINT("Distance: %d mm\n", distance_mm);
+                
+                // 仅当距离发生有效变化或收到新数据时打印并记录 (可选：也可直接刷新)
+                PRINT("Continuous Distance: %d mm\n", distance_mm);
 
-                // 更新历史记录
+                // 更新历史记录 (前移旧数据)
                 history_dists[2] = history_dists[1];
                 history_dists[1] = history_dists[0];
                 history_dists[0] = distance_mm;
@@ -196,6 +254,9 @@ int main()
                 UpdateMeasurementDisplay();
             }
         }
+        
+        // 连续测量模式下，加入一个极小延时确保系统响应按键或时间刷新
+        DelayMs(10);
     }
 }
 
